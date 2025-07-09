@@ -1,0 +1,62 @@
+{
+	"common": {
+		"back": "Terug",
+		"decrease": "Verminder",
+		"increase": "Verhoog",
+		"next": "Volgende",
+		"player": "speler",
+		"points": "punten | punt | punten",
+		"remove": "Verwijder",
+		"tile": "stenen | steen | stenen"
+	},
+	"errorMessages": {
+		"hasCurrentRound": "Ongeldige actie, er is al een huidige ronde.",
+		"noActiveGame": "Ongeldige actie, er is geen actief spel.",
+		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde.",
+		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler."
+	},
+	"playerNames": {
+		"headingPlayers": "Spelers",
+		"infoMessage": "Geef de namen op van de spelers. Er zijn minstens twee spelers nodig om te spelen.",
+		"labelAdd": "Toevoegen",
+		"labelName": "Nieuwe spelersnaam",
+		"namePlaceholder": "Geef naam speler op",
+		"title": "Spelersnamen"
+	},
+	"playerSelect": {
+		"infoMessage": "Elke speler krijgt <strong>{0} stenen</strong>. Kies de speler die de ronde zal beginnen.",
+		"title": "Start ronde {0}"
+	},
+	"messages": {
+		"confirmRemovePlayer": "Weet je zeker dat je speler {0} wilt verwijderen?"
+	},
+	"validationMessages": {
+		"startingPlayerRequired": "Je moet een speler selecteren die de ronde zal beginnen.",
+		"tooFewPlayers": "Het spel vereist minstens {0} spelers om te spelen.",
+		"tooManyPlayers": "Het spel vereist maximaal {0} spelers om te spelen."
+	},
+	"gameLimit": {
+		"infoMessage": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaard&shy;waarde is 400 punten.",
+		"title": "Puntendoel"
+	},
+	"roundView": {
+		"playerStats": "{0} @:common.points | {1} @:common.tiles"
+	},
+	"settingsView": {
+		"labelColorScheme": "Kleurthema",
+		"labelLanguage": "Taal",
+		"themeAuto": "Automatisch",
+		"themeDark": "Donker",
+		"themeLight": "Licht",
+		"title": "Instellingen"
+	},
+	"turnView": {
+		"isTripleStone": "De gespeelde steen is een triple, alle zijden hebben dezelfde waarde (+{0} bonus punten)."
+	},
+	"collectPoints": {
+		"pointsCollected": "{0} punten over",
+		"pointsNotCollected": "Nog geen punten geteld",
+		"winner": "Winnaar van de ronde"
+	}
+
+}

@@ -2,6 +2,10 @@
 # the package manager.
 node_modules
 
+# Build output directory, which contains the compiled code and other build
+# artifacts.
+dist
+
 # The folder where mkcert will store its certificates, these should not be
 # committed to the repository.
 ssl

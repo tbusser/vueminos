@@ -1,0 +1,21 @@
+@use "../01-settings/colors" as *;
+
+:root {
+	color-scheme: light dark;
+
+	--button-text-color-hover: #{$prime-color-base03};
+
+	--color-background: light-dark(#{$prime-color-base3}, #{$prime-color-base02});
+	--color-border: light-dark(#{$prime-color-base2}, #{$prime-color-base02});
+	--color-text: light-dark(#{$prime-color-base01}, #{$prime-color-base0});
+	--color-title: light-dark(#{$prime-color-base01}, #{$prime-color-base1});
+
+	--color-informative: #{$prime-color-blue};
+	--color-warning: #{$prime-color-orange};
+
+	--spacing-base: 20px;
+
+	--input-background-color: light-dark(#{$prime-color-base2}, #{$prime-color-base02});
+	--input-border-color: light-dark(#{$prime-color-base01}, #{$prime-color-base02});
+	--input-border-color-hover: light-dark(#D3AF86, #{$prime-color-base0});
+}

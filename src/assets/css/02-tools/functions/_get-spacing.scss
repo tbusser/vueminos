@@ -1,0 +1,29 @@
+@use "sass:map";
+
+/* ========================================================================== */
+
+$sizes: (
+	"xx-small": 0.25,
+	"x-small": 0.5,
+	"small": 0.75,
+	"default": 1,
+	"medium": 1.25,
+	"large": 1.5,
+	"x-large": 2,
+);
+
+/* ========================================================================== */
+
+@function get-spacing($size: "default") {
+	@if not (map.has-key($map: $sizes, $key: $size)) {
+		@error "Invalid size: #{$size}. Valid sizes are: #{map-keys($sizes)}.";
+	}
+
+	$multiplier: map.get($map: $sizes, $key: $size);
+
+	@if $multiplier == 1 {
+		@return var(--spacing-base);
+	} @else {
+		@return calc(var(--spacing-base) * #{$multiplier});
+	}
+}
