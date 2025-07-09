@@ -1,0 +1,9 @@
+@use "../02-tools/functions/index"	as *;
+
+/* ========================================================================== */
+
+section {
+	display: flex;
+	flex-direction: column;
+	gap: get-spacing(x-small);
+}

@@ -1,6 +1,7 @@
 {
   "name": "triominos-scoretracker",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "repository": "https://github.com/tbusser/vueminos",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,7 +15,8 @@
     "format": "prettier --write src/",
     "story:dev": "histoire dev",
     "story:build": "histoire build",
-    "story:preview": "histoire preview"
+    "story:preview": "histoire preview",
+    "ghpages": "gh-pages -d dist"
   },
   "dependencies": {
     "pinia": "^3.0.1",

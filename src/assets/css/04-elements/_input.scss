@@ -1,0 +1,20 @@
+@use "../02-tools/functions/index"	as *;
+
+/* ========================================================================== */
+
+input[type="text"] {
+	background-color: var(--input-background-color);
+	border: 1px solid var(--input-border-color);
+	font: inherit;
+	padding: get-spacing(x-small);
+
+	&:focus,
+	&:hover {
+		border-color: var(--input-border-color-hover);
+		outline: none;
+	}
+
+	&::placeholder {
+		color: #93a1a1aa;
+	}
+}

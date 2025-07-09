@@ -1,0 +1,15 @@
+@use "../02-tools/functions/index"	as *;
+
+/* ========================================================================== */
+
+ol {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		& + li {
+			margin-top: get-spacing(x-small);
+		}
+	}
+}

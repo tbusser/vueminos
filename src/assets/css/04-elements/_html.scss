@@ -1,0 +1,9 @@
+html {
+	&.dark-theme {
+		color-scheme: dark;
+	}
+
+	&.light-theme {
+		color-scheme: light;
+	}
+}
