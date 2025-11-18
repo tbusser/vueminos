@@ -4,7 +4,7 @@ import { createApp, watch } from 'vue';
 import { createPinia, storeToRefs } from 'pinia';
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate';
 
-import { i18n } from '@/i18n';
+import { i18n, type Locale } from '@/i18n';
 
 import App from './App.vue';
 import { router } from './router';
@@ -29,7 +29,10 @@ const settings = useSettingsStore();
 const { colorScheme, locale } = storeToRefs(settings);
 
 watch(locale, selectedLocale => {
-	i18n.global.locale = selectedLocale ?? i18n.global.fallbackLocale;
+	const validLocale: Locale = (selectedLocale === 'en' || selectedLocale === 'nl')
+		? selectedLocale
+		: 'en';
+	i18n.global.locale = validLocale;
 }, {
 	immediate: true
 });
