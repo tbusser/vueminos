@@ -10,6 +10,5 @@ import { AppError } from './AppError';
 export class CurrentRoundAlreadyExistsError extends AppError {
 	constructor(message = 'A current round already exists.') {
 		super(message);
-		this.name = 'CurrentRoundAlreadyExistsError';
 	}
 }

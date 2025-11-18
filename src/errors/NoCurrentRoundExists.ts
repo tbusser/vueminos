@@ -10,6 +10,5 @@ import { AppError } from './AppError';
 export class NoCurrentRoundExistsError extends AppError {
 	constructor(message = 'No current round present') {
 		super(message);
-		this.name = 'NoCurrentRoundExistsError';
 	}
 }
