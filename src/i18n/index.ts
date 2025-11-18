@@ -5,16 +5,17 @@ import nl from './nl.json';
 
 /* ========================================================================== */
 
+export type Locale = 'en' | 'nl';
 type MessageSchema = typeof en;
 
 /* ========================================================================== */
 
-export const i18n = createI18n<[MessageSchema], 'en' | 'nl'>({
+export const i18n = createI18n<[MessageSchema], Locale>({
 	fallbackLocale: 'en',
 	legacy: false,
 	messages: { en, nl }
 });
 
 export function useGlobalI18n() {
-	return useI18n<[MessageSchema], 'en' | 'nl'>({ useScope: 'global' });
+	return useI18n<[MessageSchema], Locale>({ useScope: 'global' });
 }

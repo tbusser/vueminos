@@ -1,6 +1,8 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
+import { type Locale } from '@/i18n';
+
 /* ========================================================================== */
 
 export type ColorScheme = 'dark' | 'light';
@@ -18,7 +20,7 @@ export const useSettingsStore = defineStore('settings', () => {
 	 * The locale of the application. This is a string representing the locale,
 	 * or undefined if no locale is set.
 	 */
-	const locale = ref<string | undefined>();
+	const locale = ref<Locale | undefined>();
 
 	/* ====================================================================== */
 
@@ -48,7 +50,7 @@ export const useSettingsStore = defineStore('settings', () => {
 	 * @param newLocale The new locale to set. This can be a string representing
 	 *        the locale, or undefined to set the locale to auto.
 	 */
-	function setLocale(newLocale?: string): void {
+	function setLocale(newLocale?: Locale): void {
 		locale.value = newLocale;
 	}
 
