@@ -42,6 +42,7 @@ The application I am building is a score keeping app for the game called Triomin
 - Comments must not exceed 80 characters per line
 - Comments cannot end with a line containing only a single word (wrap or extend)
 - Code lines must not exceed 120 characters
+- Exceptions: String literals and URLs may exceed these limits
 - Break long lines appropriately to maintain readability
 
 ### ID Generation
