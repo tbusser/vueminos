@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue';
+import { onUnmounted, watch } from 'vue';
 
 import { useBottomSheet } from '@/composables/useBottomSheet';
 
@@ -45,6 +45,10 @@ function removeEventListenersFromDocument(): void {
 
 /* -------------------------------------------------------------------------- */
 
+onUnmounted(removeEventListenersFromDocument);
+
+/* -------------------------------------------------------------------------- */
+
 function onClose(): void {
 	emit('close');
 }
@@ -61,7 +65,7 @@ function onKeyDown(event: KeyboardEvent): void {
 <template>
 	<Teleport to="body">
 	<transition name="slide-in">
-		<div v-if="open"class="sheet" role="dialog" aria-modal="true">
+		<div v-if="open" class="sheet" role="dialog" aria-modal="true">
 			<!-- <button type="button" class="close-button" @click="onClose">
 				X
 			</button> -->

@@ -5,9 +5,11 @@ import { useGlobalI18n } from '@/i18n';
 import { useGameStore } from '@/stores/game';
 import { usePlayersStore } from '@/stores/players';
 import { useRoundsStore, type Scores } from '@/stores/rounds';
+import { useTurnsStore } from '@/stores/turns';
+
+import { generateId } from '@/utilities/id';
 
 import { useRules } from './useRules';
-import { useTurnsStore } from '@/stores/turns';
 
 /* ========================================================================== */
 
@@ -91,7 +93,7 @@ export function useRoundsLogic() {
 
 		const turn: Turn = {
 			...turnInput,
-			id: crypto.randomUUID(),
+			id: generateId(),
 			playerId: currentPlayerId.value,
 			roundId: currentRound.value.id
 		};
@@ -103,7 +105,7 @@ export function useRoundsLogic() {
 		roundsStore.updateCurrentRoundPlayerStats(
 			currentPlayerId.value,
 			turn.tilesDrawn - turn.tilesPlayed,
-			turn.score ?? 0
+			turn.score
 		);
 
 		return { success: true };

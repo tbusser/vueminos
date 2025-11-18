@@ -21,10 +21,10 @@ const props = withDefaults(defineProps<{
 	tag: 'div'
 });
 
-function onToggleChecked(event: InputEvent) {
-	console.log('onToggleChecked', event);
-	if ((event.target as HTMLInputElement).checked) {
-		emits('update:modelValue', (event.target as HTMLInputElement).value);
+function onToggleChecked(event: Event) {
+	const target = event.target as HTMLInputElement;
+	if (target.checked) {
+		emits('update:modelValue', target.value);
 	} else {
 		emits('update:modelValue', undefined);
 	}

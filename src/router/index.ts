@@ -55,7 +55,7 @@ router.beforeEach((to) => {
 	// We know now that there are active players, so we can check if the route
 	// requires an active game. When no active game is present, redirect to the
 	// game limit view.
-	if (to.meta.requireActiveGame && gameStore.startTimestamp === undefined) {
+	if (to.meta.requireActiveGame && !gameStore.hasActiveGame) {
 		return { name: routeName.gameLimit };
 	}
 });
