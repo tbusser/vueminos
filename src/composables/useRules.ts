@@ -140,25 +140,30 @@ export function useRules() {
 	});
 
 	function calculateTurnScore(turn: TurnInput): number {
+		const hasPlayedTile = turn.tileValue === 1;
+
 		// Initialize the score. When no tiles have been played, the score is
 		// the penalty for skipping a turn. Otherwise, it is the value of the
 		// tile played in the turn.
-		let score = turn.tilesPlayed === 0
-			? scoreModifiers.skippedTurn
-			: (turn.tileValue ?? 0);
-
-		// Add bonus points for the played tile if it is a triple, this can only
-		// be true for the first turn of a round.
-		if (turn.triple) score += calculateStartingStoneBonus(turn.tileValue);
+		let score = hasPlayedTile
+			? (turn.tileValue ?? 0)
+			: scoreModifiers.skippedTurn;
 
 		// When tiles have been taken from the well, subtract the penalty for
 		// each tile drawn.
 		if (turn.tilesDrawn > 0) score += scoreModifiers.tileDrawn * turn.tilesDrawn;
 
-		// Check for the special bonuses that can be applied to the turn score.
-		if (turn.bonusBridge) score += scoreModifiers.bridge;
-		if (turn.bonusDouble) score += scoreModifiers.doubleSided;
-		if (turn.bonusHexagon) score += scoreModifiers.hexagon;
+		if (hasPlayedTile) {
+			// Add bonus points for the played tile if it is a triple, this can
+			// only be true for the first turn of a round.
+			if (turn.triple) score += calculateStartingStoneBonus(turn.tileValue);
+
+			// Check for the special bonuses that can be applied to the
+			// turn score.
+			if (turn.bonusBridge) score += scoreModifiers.bridge;
+			if (turn.bonusDouble) score += scoreModifiers.doubleSided;
+			if (turn.bonusHexagon) score += scoreModifiers.hexagon;
+		}
 
 		// Return the final score for the turn.
 		return score;
