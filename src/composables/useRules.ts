@@ -61,7 +61,7 @@ export function useRules() {
 		// are subtracted from the total points of all players, while the points
 		// of the other players are added to the total.
 		const points: number = playerIds.reduce((sum, id) => {
-			return id == winnerPlayer.id
+			return id === winnerPlayer.id
 				? sum - leftoverPoints[id]
 				: sum + leftoverPoints[id];
 		}, 0);
