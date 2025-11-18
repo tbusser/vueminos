@@ -51,7 +51,7 @@ export const useTurnsStore = defineStore('turns', () => {
 			throw new TurnIdNotFoundError(`Unable to update turn, turn with ID ${id} not found`);
 		}
 
-		turns.value[index] = { ...turns.value[index], ...update };
+		turns.value[index] = { ...turns.value[index], ...update } as Turn;
 	}
 
 	/* ---------------------------------------------------------------------- */
