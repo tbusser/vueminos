@@ -17,7 +17,7 @@ defineProps<{
 
 /* -------------------------------------------------------------------------- */
 
-function onKeyClicked(event: MouseEvent) {
+function onKeyClicked(event: Event) {
 	const target = event.target as HTMLButtonElement;
 	const value = target.dataset.value;
 

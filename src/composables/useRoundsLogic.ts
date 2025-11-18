@@ -133,7 +133,7 @@ export function useRoundsLogic() {
 		}
 
 		roundsStore.addRound({
-			id: crypto.randomUUID(),
+			id: generateId(),
 			isCurrentRound: true,
 			phase: 'player-select',
 			playerStats: initializePlayerStats()

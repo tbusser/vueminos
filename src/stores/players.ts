@@ -95,8 +95,8 @@ export const usePlayersStore = defineStore('players', () => {
 	 * @param field The field of the player to update.
 	 * @param value The new value to set for the specified field.
 	 *
- 	 * @throws {PlayersStoreError} If the player with the specified ID is not
-	 *         found, an error is thrown.
+ 	 * @throws {PlayerIdNotFoundError} If the player with the specified ID is
+	 *         not found in the players store.
 	 */
 	function updatePlayerById<K extends keyof UpdatableFields>
 	(id: Id, field: keyof UpdatableFields, value: UpdatableFields[K]): void {

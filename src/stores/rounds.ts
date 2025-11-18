@@ -84,7 +84,7 @@ export const useRoundsStore = defineStore('round', () => {
 
 	/**
 	 * Retrieves the index of the current round.
-	 *	 *
+	 *
 	 * @returns The index of the current round in the rounds array.
 	 *
 	 * @throws {RoundIdNotFoundError} If the round with the specified ID is
@@ -225,7 +225,7 @@ export const useRoundsStore = defineStore('round', () => {
 	 * @throws {NoCurrentRoundExistsError} If there is no current round present
 	 *         in the store, an error is thrown to prevent updating a
 	 *         non-existent round.
-	 * @throws {NoCurrentPlayerError} If there is no current player present in
+	 * @throws {PlayerIdNotFoundError} If there is no current player present in
 	 *         the current round with the specified ID.
 	 */
 	function updateCurrentRoundPlayerStats(playerId: Id, tilesDelta: number, scoreDelta: number): void {
