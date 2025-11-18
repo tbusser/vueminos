@@ -10,6 +10,5 @@ import { AppError } from './AppError';
 export class TurnIdNotFoundError extends AppError {
 	constructor(message: string) {
 		super(message);
-		this.name = 'TurnIdNotFoundError';
 	}
 }
