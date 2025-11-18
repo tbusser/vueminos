@@ -116,7 +116,7 @@ export function useRoundsLogic() {
 	 * @returns True if the round was successfully started, false otherwise.
 	 */
 	function startNewRound(): Feedback {
-		if (gameStore.id === undefined) {
+		if (!gameStore.hasActiveGame) {
 			return {
 				message: t('errorMessages.noActiveGame'),
 				success: false
@@ -131,7 +131,6 @@ export function useRoundsLogic() {
 		}
 
 		roundsStore.addRound({
-			gameId: gameStore.id,
 			id: crypto.randomUUID(),
 			isCurrentRound: true,
 			phase: 'player-select',
