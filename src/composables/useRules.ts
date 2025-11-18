@@ -140,13 +140,13 @@ export function useRules() {
 	});
 
 	function calculateTurnScore(turn: TurnInput): number {
-		const hasPlayedTile = turn.tileValue === 1;
+		const hasPlayedTile = turn.tilesPlayed === 1;
 
 		// Initialize the score. When no tiles have been played, the score is
 		// the penalty for skipping a turn. Otherwise, it is the value of the
 		// tile played in the turn.
 		let score = hasPlayedTile
-			? (turn.tileValue ?? 0)
+			? turn.tileValue
 			: scoreModifiers.skippedTurn;
 
 		// When tiles have been taken from the well, subtract the penalty for
