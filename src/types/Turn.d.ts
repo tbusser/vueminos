@@ -4,10 +4,10 @@ export {};
 
 type TurnBase = {
 	/**
-		 * The ID of the turn.
-		 *
-		 * @example '123e4567-e89b-12d3-a456-426614174000'
-		 */
+	 * The ID of the turn.
+	 *
+	 * @example '123e4567-e89b-12d3-a456-426614174000'
+	 */
 	id: Id;
 
 	/**
