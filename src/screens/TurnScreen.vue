@@ -5,6 +5,7 @@ import BaseScreen from '@/components/BaseScreen.vue';
 import NumberDisplay from '@/components/NumberDisplay.vue';
 import NumberInput from '@/components/NumberInput.vue';
 import NumberSpinner from '@/components/NumberSpinner.vue';
+import ShapeToggleButton from '@/components/ShapeToggleButton.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
 
@@ -101,23 +102,26 @@ function onToggleIsTripleStone(value: boolean) {
 				<number-spinner v-model="tilesDrawn" :max="99" />
 			</div>
 
-			<ToggleButtonGroup
-				orientation="horizontal"
-			>
-				<ToggleButton id="bridge">
-					<img src="@/assets/images/bridge.png" alt="Bridge" />
-					bridge
-				</ToggleButton>
-				<ToggleButton id="double">
-					<img src="@/assets/images/double-sided.png" alt="Double" />
-					double
-				</ToggleButton>
-				<ToggleButton id="hexagon">
-					<img src="@/assets/images/hexagon.png" alt="Hexagon" />
-					hexagon
-				</ToggleButton>
-			</ToggleButtonGroup>
+			<div>
+				<label>Bonus scoring</label>
 
+				<ToggleButtonGroup
+					orientation="horizontal"
+				>
+					<ShapeToggleButton id="bridge">
+						<img src="@/assets/images/bridge.png" alt="Bridge" />
+						bridge
+					</ShapeToggleButton>
+					<ShapeToggleButton id="double">
+						<img src="@/assets/images/double-sided.png" alt="Double" />
+						double
+					</ShapeToggleButton>
+					<ShapeToggleButton id="hexagon">
+						<img src="@/assets/images/hexagon.png" alt="Hexagon" />
+						hexagon
+					</ShapeToggleButton>
+				</ToggleButtonGroup>
+			</div>
 		</template>
 
 		<template #primary-action>
@@ -129,6 +133,18 @@ function onToggleIsTripleStone(value: boolean) {
 </template>
 
 <style scoped lang="scss">
+.completed-shape {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: get-spacing(x-small);
+
+	img {
+		width: 48px;
+		height: 48px;
+	}
+}
+
 .tiles-drawn-wrapper {
 	align-items: center;
 	display: flex;
