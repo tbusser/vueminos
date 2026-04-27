@@ -2,6 +2,7 @@ import { globalIgnores } from 'eslint/config';
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
 import stylistic from '@stylistic/eslint-plugin';
 import pluginVue from 'eslint-plugin-vue';
+import pluginUnusedImports from 'eslint-plugin-unused-imports';
 import pluginVitest from '@vitest/eslint-plugin';
 
 export default [
@@ -16,6 +17,26 @@ export default [
 		pluginVue.configs['flat/essential'],
 		vueTsConfigs.recommended
 	),
+
+	{
+		name: 'app/unused-imports',
+		plugins: {
+			'unused-imports': pluginUnusedImports
+		},
+		rules: {
+			'@typescript-eslint/no-unused-vars': 'off',
+			'unused-imports/no-unused-imports': 'error',
+			'unused-imports/no-unused-vars': ['error', {
+				vars: 'all',
+				varsIgnorePattern: '^_',
+				args: 'after-used',
+				argsIgnorePattern: '^_',
+				ignoreRestSiblings: true,
+				caughtErrors: 'none',
+				destructuredArrayIgnorePattern: '^_'
+			}]
+		}
+	},
 
 	{
 		...pluginVitest.configs.recommended,
