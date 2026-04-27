@@ -1,0 +1,15 @@
+---
+description: Composable business logic and orchestration rules
+globs: src/composables/**/*.ts
+alwaysApply: false
+---
+
+# Composables
+
+- Use composables for business logic, validation, and multi-store
+  orchestration.
+- Return `Feedback` objects for user-facing operations.
+- Do not throw user-facing errors from composables.
+- Use `storeToRefs` when accessing store state reactively.
+- Composables can orchestrate multiple stores for complex operations.
+- Keep composables testable and prefer pure functions where practical.

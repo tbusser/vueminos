@@ -1,0 +1,32 @@
+---
+description: General code quality, imports, and file organization
+globs: src/**/*.{ts,vue,d.ts}
+alwaysApply: false
+---
+
+# Code Quality
+
+- Follow `eslint.config.ts` for formatting and mechanical style rules.
+- Remove `console.log` statements before committing.
+- Remove commented-out code unless there is a documented reason to keep it.
+- Clean up event listeners in `onUnmounted` hooks.
+- Use meaningful names that express intent.
+
+# File Organization
+
+- Components live in `src/components/`.
+- Composables live in `src/composables/`.
+- Stores live in `src/stores/`.
+- Types live in `src/types/` as `.d.ts` files.
+- Utilities live in `src/utilities/`.
+- Errors live in `src/errors/`.
+- Views live in `src/views/` as route-level components.
+- Screens live in `src/screens/` as screen-level components used in views.
+
+# Imports
+
+- Use `@/` for imports from `src/`.
+- Use narrower aliases only when they are configured and already used in nearby
+  code.
+- Group imports in this order: Vue imports, third-party imports, then local
+  imports.

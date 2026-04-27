@@ -1,0 +1,12 @@
+---
+description: Project tooling and validation commands
+alwaysApply: true
+---
+
+# Tooling
+
+- Use `pnpm` for package commands.
+- Use `pnpm type-check` for TypeScript validation.
+- Use `pnpm test:unit` for unit tests.
+- Use `pnpm lint` for lint fixes, but expect it to modify files.
+- Use `pnpm format` only when formatting source files intentionally.

@@ -1,0 +1,19 @@
+---
+description: Domain types, unions, IDs, and error handling
+globs: src/**/*.{ts,vue,d.ts}
+alwaysApply: false
+---
+
+# Domain Types
+
+- Use `generateId()` from `@/utilities/id`.
+- Do not call `crypto.randomUUID()` directly in business logic.
+- Custom errors must extend the `AppError` base class.
+- Stores throw errors for invalid state operations.
+- Composables return `Feedback` objects with `success` and `message`.
+- Use specific error types, such as `PlayerIdNotFoundError` or
+  `NoCurrentRoundExistsError`.
+- Validate discriminated unions with type guards before accessing
+  variant-specific fields.
+- Do not use `Omit` directly on union types; apply it to each variant.
+- Global `.d.ts` files using `declare global` must include `export {};`.
