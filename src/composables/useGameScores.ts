@@ -1,68 +1,62 @@
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useGameStore } from '@/stores/game';
 import { useRoundsStore } from '@/stores/rounds';
+import { usePlayersStore } from '@/stores/players';
 
 /* ========================================================================== */
 
 export function useGameScores() {
 	const gameStore = useGameStore();
 	const roundsStore = useRoundsStore();
+	const playersStore = usePlayersStore();
 
 	/* ---------------------------------------------------------------------- */
 
-	const { id, pointsLimit } = storeToRefs(gameStore);
-	const { roundsForGame, currentRound } = storeToRefs(roundsStore);
+	const { pointsLimit } = storeToRefs(gameStore);
+	const { playerScores } = storeToRefs(roundsStore);
 
-	const currentRoundScore = ref<Record<Id, number>>({});
-	const finishedRoundsScore = ref<Record<Id, number>>({});
+	const hasReachedPointsLimit = computed<boolean>(() => {
+		const scores = Object.values(playerScores.value);
 
-	const totalScore = computed<Record<Id, number>>(() => {
-		const keys = new Set<Id>([
-			...Object.keys(currentRoundScore.value) as Id[], ...Object.keys(finishedRoundsScore.value) as Id[]
-		]);
-
-		const result: Record<Id, number> = {};
-		keys.forEach((key) => {
-			result[key] = (currentRoundScore.value[key] ?? 0) + (finishedRoundsScore.value[key] ?? 0);
-		});
-
-		return result;
+		return Math.max(...scores) >= pointsLimit.value;
 	});
 
 	/* ---------------------------------------------------------------------- */
 
-	watch(() => currentRound.value?.playerStats, playerStats => {
-		if (playerStats === undefined) return {};
+	const winningPlayerId = computed<Id | undefined>(() => {
+		if (!hasReachedPointsLimit.value) return undefined;
 
-		currentRoundScore.value = playerStats?.reduce((acc,playerStat) => {
-			return {
-				...acc,
-				[playerStat.id]: playerStat.score
-			};
-		}, {} as Record<Id, number>);
-	}, {
-		immediate: true
+		const [winner, ...players] = Object.entries(playerScores.value) as [Id, number][];
+
+		return players.reduce((winner, player) =>
+			player[1] > winner[1] ? player : winner
+		, winner)[0];
 	});
 
-	watch(roundsForGame, (rounds) => {
-		finishedRoundsScore.value = rounds.reduce((acc, round) => {
-			if (round.isCurrentRound === true) return acc;
+	const winner = computed<Player | undefined>(() => {
+		if (winningPlayerId.value === undefined) return undefined;
 
-			(Object.keys(round.scores) as Id[]).forEach((playerId) => {
-				acc[playerId] = (acc[playerId] ?? 0) + round.scores[playerId];
-			});
-
-			return acc;
-		}, {} as Record<Id, number>);
-	}, {
-		immediate: true
+		return playersStore.getPlayerById(winningPlayerId.value);
 	});
 
 	/* ---------------------------------------------------------------------- */
 
 	return {
-		totalScore
+		/**
+		 * Indicates whether the points limit has been reached.
+		 */
+		hasReachedPointsLimit,
+
+		/**
+		 * The points scored, per player, over the completed and current rounds.
+		 */
+		totalScore: playerScores,
+
+		/**
+		 * The player who has won the game.
+		 */
+		winner
 	};
 }
