@@ -30,9 +30,13 @@ import { computed, provide, type ComputedRef } from 'vue';
 
 /* ========================================================================== */
 
+export type ToggleButtonGroupOrientation = 'horizontal' | 'vertical';
+
+/* ========================================================================== */
+
 const props = withDefaults(defineProps<{
 	isDisabled?: boolean;
-	orientation?: 'horizontal' | 'vertical';
+	orientation?: ToggleButtonGroupOrientation;
 	multiple?: boolean;
 }>(), {
 	isDisabled: false,
