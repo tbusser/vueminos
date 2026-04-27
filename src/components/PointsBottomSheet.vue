@@ -36,7 +36,6 @@ function onClose(): void {
 <template>
 	<BottomSheet
 		:open
-		:title="playerName"
 		@close="onCancel"
 	>
 		<template #header>
