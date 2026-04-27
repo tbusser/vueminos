@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig, UserConfig } from 'vite';
+import { defineConfig } from 'vite';
 
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
@@ -33,7 +33,6 @@ export default defineConfig({
 	css: {
 		preprocessorOptions: {
 			scss: {
-				api: 'modern-compiler',
 				additionalData: `
 					@use "/src/assets/css/02-tools/functions/_index.scss" as *;
 					@use "/src/assets/css/02-tools/mixins/_index.scss" as *;
@@ -41,4 +40,4 @@ export default defineConfig({
 			}
 		}
 	}
-}) satisfies UserConfig;
+});

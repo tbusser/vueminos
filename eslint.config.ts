@@ -4,13 +4,7 @@ import stylistic from '@stylistic/eslint-plugin';
 import pluginVue from 'eslint-plugin-vue';
 import pluginVitest from '@vitest/eslint-plugin';
 
-// To allow more languages other than `ts` in `.vue` files, uncomment the
-// following lines:
-// import { configureVueProject } from '@vue/eslint-config-typescript'
-// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
-
-export default defineConfigWithVueTs(
+export default [
 	{
 		name: 'app/files-to-lint',
 		files: ['**/*.{ts,mts,tsx,vue}']
@@ -18,8 +12,10 @@ export default defineConfigWithVueTs(
 
 	globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
 
-	pluginVue.configs['flat/essential'],
-	vueTsConfigs.recommended,
+	...defineConfigWithVueTs(
+		pluginVue.configs['flat/essential'],
+		vueTsConfigs.recommended
+	),
 
 	{
 		...pluginVitest.configs.recommended,
@@ -28,8 +24,7 @@ export default defineConfigWithVueTs(
 
 	{
 		name: 'app/stylistic',
-		plugins: { stylistic },
-		...stylistic.configs['recommended'],
+		...stylistic.configs.recommended,
 
 		rules: {
 			'@stylistic/comma-dangle': ['error', 'never'],
@@ -51,4 +46,4 @@ export default defineConfigWithVueTs(
 			'@stylistic/type-annotation-spacing': ['error']
 		}
 	}
-);
+];
