@@ -1,1 +1,5 @@
-useNodeVersion: 22.11.0
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+
+useNodeVersion: 24.14.1
