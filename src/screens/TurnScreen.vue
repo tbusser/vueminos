@@ -57,7 +57,7 @@ function createScoredTurnInput(): ScoredTurnInput {
 		tilesDrawn: tilesDrawn.value,
 		tilesPlayed: tileValue.value === undefined ? 0 : 1,
 		tileValue: tileValue.value,
-		triple: isTripleStone.value
+		triple: isTripleStoneEnabled.value && isTripleStone.value
 	};
 
 	return {
@@ -87,11 +87,10 @@ function onToggleIsTripleStone(value: boolean) {
 		<NumberInput v-model="tileValue" />
 
 		<template v-if="isInitialTurn">
-			<ToggleButton
+			<ToggleButton v-if="isTripleStoneEnabled"
 				@toggle="onToggleIsTripleStone"
 				:allow-wrap="true"
 				:is-selected="isTripleStone"
-				:is-disabled="!isTripleStoneEnabled"
 			>
 				{{ $t('turnView.isTripleStone', [openingTurnBonus]) }}
 			</ToggleButton>
