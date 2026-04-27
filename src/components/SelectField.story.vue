@@ -17,6 +17,7 @@ const state = reactive({
 			placeholder="This is the placeholder"
 			v-model="state.text"
 			:hide-label="state.hideLabel"
+			:options="[]"
 		>
 			This is the label
 		</SelectField>
