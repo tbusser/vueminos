@@ -4,7 +4,7 @@ import SelectField, { type SelectOption } from '@/components/SelectField.vue';
 
 /* ========================================================================== */
 
-const model = defineModel();
+const model = defineModel<string | undefined>();
 
 const options = computed<SelectOption[]>(() => [
 	{
