@@ -1,4 +1,6 @@
 <script setup lang="ts">
+type SelectOptionValue = string | number | boolean | undefined;
+
 export type SelectOption = {
 	/**
 	 * Optional prop to disable the option.
@@ -18,12 +20,12 @@ export type SelectOption = {
 	/**
 	 * The value of the option.
 	 */
-	value: string | number | boolean | undefined;
+	value: SelectOptionValue;
 };
 
 /* ========================================================================== */
 
-const model = defineModel();
+const model = defineModel<SelectOptionValue>();
 
 defineProps<{
 	/**
