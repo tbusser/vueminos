@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import MessageBox from './MessageBox.vue';
+import MessageBox, { type MessageBoxType } from './MessageBox.vue';
 
 /* ========================================================================== */
 
-const state = reactive({
+const state = reactive<{
+	content: string;
+	type: MessageBoxType;
+}>({
 	content: 'This is the content',
-	type: 'info',
+	type: 'info'
 });
 </script>
 

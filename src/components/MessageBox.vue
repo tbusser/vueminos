@@ -1,8 +1,12 @@
 <script setup lang="ts">
+export type MessageBoxType = 'info' | 'warning';
+
+/* ========================================================================== */
+
 withDefaults(defineProps<{
-	type?: 'info' | 'warning'
+	type?: MessageBoxType
 }>(), {
-	type: 'info',
+	type: 'info'
 });
 </script>
 
