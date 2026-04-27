@@ -6,7 +6,7 @@ import HeaderBar from './HeaderBar.vue';
 
 const state = reactive({
 	subtitle: '',
-	title: 'Title',
+	title: 'Title'
 });
 </script>
 

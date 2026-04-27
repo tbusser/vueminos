@@ -14,7 +14,7 @@ type GenerateKeyPaths<T, Prefix extends string = ''> = T extends object
 type Locale = typeof en;
 
 declare global {
-  type I18nKeys = GenerateKeyPaths<Locale>;
+	type I18nKeys = GenerateKeyPaths<Locale>;
 }
 
 declare module 'vue' {

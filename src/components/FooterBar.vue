@@ -11,8 +11,8 @@ const slots = defineSlots<{
 
 /* -------------------------------------------------------------------------- */
 
-const { isEmpty: isPrimarySlotEmpty} = useSlot(slots.primary);
-const { isEmpty: isSecondarySlotEmpty} = useSlot(slots.secondary);
+const { isEmpty: isPrimarySlotEmpty } = useSlot(slots.primary);
+const { isEmpty: isSecondarySlotEmpty } = useSlot(slots.secondary);
 
 const hasSlottedContent = computed<boolean>(() =>
 	!isPrimarySlotEmpty.value || !isSecondarySlotEmpty.value

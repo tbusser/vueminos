@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import BaseView from './BaseScreen.vue';
 
 /* ========================================================================== */
 
