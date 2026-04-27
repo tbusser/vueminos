@@ -2,11 +2,15 @@
 import { reactive } from 'vue';
 
 import ToggleButton from './ToggleButton.vue';
-import ToggleButtonGroup from './ToggleButtonGroup.vue';
+import ToggleButtonGroup, { type ToggleButtonGroupOrientation } from './ToggleButtonGroup.vue';
 
 /* ========================================================================== */
 
-const state = reactive({
+const state = reactive<{
+	isDisabled: boolean;
+	orientation: ToggleButtonGroupOrientation;
+	value: string | string[] | undefined;
+}>({
 	isDisabled: false,
 	orientation: 'horizontal',
 	value: undefined
