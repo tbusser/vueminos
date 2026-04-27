@@ -1,0 +1,14 @@
+---
+description: Vue component structure and UI state boundaries
+globs: src/**/*.vue
+alwaysApply: false
+---
+
+# Vue Components
+
+- Prefer `<script setup lang="ts">`.
+- Keep route-level orchestration in `src/views/`.
+- Keep screen-level UI flows in `src/screens/`.
+- Keep reusable UI in `src/components/`.
+- Prefer composables for business logic instead of embedding it in templates.
+- Keep component state local unless it belongs to a shared domain store.

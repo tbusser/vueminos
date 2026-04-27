@@ -1,0 +1,14 @@
+---
+description: Vue 3.5 and TypeScript conventions
+globs: src/**/*.{vue,ts}
+alwaysApply: false
+---
+
+# Vue And TypeScript
+
+- Use TypeScript with `<script setup>` for Vue components.
+- Prefer the Composition API for Vue code outside `<script setup>`.
+- Use strict TypeScript typing.
+- Prefer explicit types when they improve clarity.
+- Use `Event` for Vue event handlers, then cast `event.target` as needed.
+- Use the `Locale` type from `@/i18n` for locale values.

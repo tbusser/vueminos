@@ -1,0 +1,17 @@
+---
+description: Pinia setup-store architecture rules
+globs: src/stores/**/*.ts
+alwaysApply: false
+---
+
+# Pinia Stores
+
+- Use Pinia setup stores, not options stores.
+- Stores handle data persistence and basic CRUD operations.
+- Use localStorage persistence via `pinia-plugin-persistedstate`.
+- Expose state, computed getters, and actions.
+- Throw custom errors extending `AppError` for invalid operations.
+- Keep stores focused on one domain, such as game, players, rounds,
+  settings, or turns.
+- When updating existing discriminated union instances in stores, use type
+  assertions like `as Turn` only when preserving a known valid variant.

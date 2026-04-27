@@ -1,0 +1,14 @@
+---
+description: Vue Router guard and route metadata rules
+globs: src/router/**/*.ts
+alwaysApply: false
+---
+
+# Router
+
+- Use computed store properties in router guards, such as `hasActiveGame`,
+  instead of direct state property checks.
+- Keep route names centralized in `src/router/routerName.ts`.
+- Prefer extracting complex guard logic to composables when it needs tests.
+- Use route metadata for route-level requirements such as active players or an
+  active game.
