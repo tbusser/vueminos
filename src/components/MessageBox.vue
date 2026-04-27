@@ -11,7 +11,10 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-	<article class="message" :class="{ 'is-warning': type === 'warning' }">
+	<article
+		class="message"
+		:class="{ 'is-warning': type === 'warning' }"
+	>
 		<slot />
 	</article>
 </template>

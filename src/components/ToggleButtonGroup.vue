@@ -94,7 +94,11 @@ provide(toggleGroupInjectionKey, {
 </script>
 
 <template>
-	<div class="toggle-button-group" :class="{ 'is-vertical': orientation === 'vertical'}" role="radiogroup">
+	<div
+		class="toggle-button-group"
+		:class="{ 'is-vertical': orientation === 'vertical'}"
+		role="radiogroup"
+	>
 		<slot />
 	</div>
 </template>

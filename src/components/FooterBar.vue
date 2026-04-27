@@ -20,7 +20,10 @@ const hasSlottedContent = computed<boolean>(() =>
 </script>
 
 <template>
-	<nav class="footer-bar" v-if="hasSlottedContent">
+	<nav
+		v-if="hasSlottedContent"
+		class="footer-bar"
+	>
 		<div class="container secondary">
 			<slot name="secondary" />
 		</div>

@@ -29,7 +29,11 @@ const options = computed<SelectOption[]>(() => [
 </script>
 
 <template>
-	<SelectField id="language-select" v-model="model" :options>
+	<SelectField
+		id="language-select"
+		v-model="model"
+		:options
+	>
 		{{ $t('settingsView.labelLanguage') }}
 	</SelectField>
 </template>

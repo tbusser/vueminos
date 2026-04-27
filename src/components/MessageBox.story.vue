@@ -16,12 +16,21 @@ const state = reactive<{
 <template>
 	<Story title="Components/Message Box">
 		<template #controls>
-			<HstText v-model="state.content" title="Content" placeholder="Enter message"/>
+			<HstText
+				v-model="state.content"
+				title="Content"
+				placeholder="Enter message"
+			/>
 
-			<HstSelect :options="{
-				'info': 'Info',
-				'warning': 'Warning',
-			}" v-model="state.type" title="Type" placeholder="Select type"/>
+			<HstSelect
+				v-model="state.type"
+				:options="{
+					'info': 'Info',
+					'warning': 'Warning',
+				}"
+				title="Type"
+				placeholder="Select type"
+			/>
 		</template>
 
 		<MessageBox :type="state.type">

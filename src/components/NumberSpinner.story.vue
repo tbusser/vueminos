@@ -14,7 +14,10 @@ const state = reactive({
 <template>
 	<Story title="Number Spinner">
 		<div style="padding: 5px">
-			<NumberSpinner :min="state.min" :max="state.max"/>
+			<NumberSpinner
+				:min="state.min"
+				:max="state.max"
+			/>
 		</div>
 	</Story>
 </template>

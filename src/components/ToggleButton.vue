@@ -76,7 +76,10 @@ function onClick() {
 		:class="{ 'selected': selected }"
 		@click="onClick"
 	>
-		<div class="label" :class="{ 'truncated': !allowWrap }">
+		<div
+			class="label"
+			:class="{ 'truncated': !allowWrap }"
+		>
 			<slot />
 		</div>
 	</button>

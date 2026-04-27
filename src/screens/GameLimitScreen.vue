@@ -52,16 +52,25 @@ function onNavigateForward() {
 		</MessageBox>
 
 		<NumberDisplay :value="limit" />
-		<NumberInput v-model="limit" :show-clear="true" />
+		<NumberInput
+			v-model="limit"
+			:show-clear="true"
+		/>
 
 		<template #primary-action>
-			<button type="button" @click="onNavigateForward">
+			<button
+				type="button"
+				@click="onNavigateForward"
+			>
 				{{ $t('common.next') }}
 			</button>
 		</template>
 
 		<template #secondary-action>
-			<button type="button" @click="onNavigateBack">
+			<button
+				type="button"
+				@click="onNavigateBack"
+			>
 				{{ $t('common.back') }}
 			</button>
 		</template>

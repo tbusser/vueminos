@@ -36,7 +36,11 @@ const options: ComputedRef<SelectOption[]> = computed(() => ([
 </script>
 
 <template>
-	<SelectField id="color-scheme-select" v-model="model" :options="options">
+	<SelectField
+		id="color-scheme-select"
+		v-model="model"
+		:options="options"
+	>
 		{{ $t('settingsView.labelColorScheme') }}
 	</SelectField>
 </template>

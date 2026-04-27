@@ -61,26 +61,41 @@ function onNavigateForward(): void {
 			<div v-html="$t('playerSelect.infoMessage', [startingStoneCount])" />
 		</MessageBox>
 
-		<ToggleButtonGroup v-model="selectedId" orientation="vertical">
-			<template v-for="player in activePlayers" :key="player.id">
+		<ToggleButtonGroup
+			v-model="selectedId"
+			orientation="vertical"
+		>
+			<template
+				v-for="player in activePlayers"
+				:key="player.id"
+			>
 				<ToggleButton :id="player.id">
 					{{ player.name }}
 				</ToggleButton>
 			</template>
 		</ToggleButtonGroup>
 
-		<MessageBox v-if="showValidationMessage" type="warning">
+		<MessageBox
+			v-if="showValidationMessage"
+			type="warning"
+		>
 			<div v-html="$t('validationMessages.startingPlayerRequired')" />
 		</MessageBox>
 
 		<template #primary-action>
-			<button type="button" @click="onNavigateForward">
+			<button
+				type="button"
+				@click="onNavigateForward"
+			>
 				{{ $t('common.next') }}
 			</button>
 		</template>
 
 		<template #secondary-action>
-			<button type="button" @click="onNavigateBack">
+			<button
+				type="button"
+				@click="onNavigateBack"
+			>
 				{{ $t('common.back') }}
 			</button>
 		</template>

@@ -44,5 +44,8 @@ function onInput(value: KeyValue) {
 </script>
 
 <template>
-	<NumberPad @input="onInput" :show-clear="showClear" />
+	<NumberPad
+		:show-clear="showClear"
+		@input="onInput"
+	/>
 </template>

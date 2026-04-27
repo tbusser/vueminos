@@ -11,7 +11,10 @@ const state = reactive({
 
 <template>
 	<Story title="Base/View">
-		<BaseScreen :subtitle="state.subtitle" :title="state.title">
+		<BaseScreen
+			:subtitle="state.subtitle"
+			:title="state.title"
+		>
 			<div>
 				This is the slot content.
 			</div>

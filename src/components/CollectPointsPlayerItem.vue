@@ -56,7 +56,12 @@ function onClick(): void {
 </script>
 
 <template>
-	<button type="button" :disabled="isWinner" @click="onClick" class="button">
+	<button
+		type="button"
+		:disabled="isWinner"
+		class="button"
+		@click="onClick"
+	>
 		<strong>{{ player.name }}</strong>
 		{{ message }}
 	</button>

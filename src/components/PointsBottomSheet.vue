@@ -41,11 +41,23 @@ function onClose(): void {
 	>
 		<template #header>
 			<header class="sheet-header">
-				<button class="bar-button" type="button" @click="onCancel">Cancel</button>
+				<button
+					class="bar-button"
+					type="button"
+					@click="onCancel"
+				>
+					Cancel
+				</button>
 				<h2 class="title">
 					{{ playerName }}
 				</h2>
-				<button class="bar-button" type="button" @click="onClose">Save</button>
+				<button
+					class="bar-button"
+					type="button"
+					@click="onClose"
+				>
+					Save
+				</button>
 			</header>
 		</template>
 

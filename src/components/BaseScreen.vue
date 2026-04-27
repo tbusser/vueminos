@@ -11,7 +11,10 @@ const props = defineProps<{
 
 <template>
 	<article class="base-screen">
-		<HeaderBar :title="props.title" class="header">
+		<HeaderBar
+			:title="props.title"
+			class="header"
+		>
 			<template #subtitle>
 				<slot name="subtitle" />
 			</template>
@@ -67,7 +70,7 @@ const props = defineProps<{
 	position: relative;
 	padding: get-spacing();
 
-	& > * {
+	&>* {
 		flex-shrink: 0;
 	}
 }

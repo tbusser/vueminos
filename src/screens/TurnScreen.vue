@@ -112,10 +112,11 @@ function onToggleIsTripleStone(value: boolean) {
 		<NumberInput v-model="tileValue" />
 
 		<template v-if="isInitialTurn">
-			<ToggleButton v-if="isTripleStoneEnabled"
-				@toggle="onToggleIsTripleStone"
+			<ToggleButton
+				v-if="isTripleStoneEnabled"
 				:allow-wrap="true"
 				:is-selected="isTripleStone"
+				@toggle="onToggleIsTripleStone"
 			>
 				{{ $t('turnView.isTripleStone', [openingTurnBonus]) }}
 			</ToggleButton>
@@ -123,7 +124,10 @@ function onToggleIsTripleStone(value: boolean) {
 		<template v-else>
 			<div class="tiles-drawn-wrapper">
 				<label for="tiles-drawn">Tiles drawn</label>
-				<number-spinner v-model="tilesDrawn" :max="99" />
+				<number-spinner
+					v-model="tilesDrawn"
+					:max="3"
+				/>
 			</div>
 
 			<div>
@@ -134,15 +138,24 @@ function onToggleIsTripleStone(value: boolean) {
 					@update:model-value="onToggleBonusScoring"
 				>
 					<ShapeToggleButton :id="'bridge' satisfies BonusShape">
-						<img src="@/assets/images/bridge.png" alt="Bridge" />
+						<img
+							src="@/assets/images/bridge.png"
+							alt="Bridge"
+						>
 						bridge
 					</ShapeToggleButton>
 					<ShapeToggleButton :id="'double' satisfies BonusShape">
-						<img src="@/assets/images/double-sided.png" alt="Double" />
+						<img
+							src="@/assets/images/double-sided.png"
+							alt="Double"
+						>
 						double
 					</ShapeToggleButton>
 					<ShapeToggleButton :id="'hexagon' satisfies BonusShape">
-						<img src="@/assets/images/hexagon.png" alt="Hexagon" />
+						<img
+							src="@/assets/images/hexagon.png"
+							alt="Hexagon"
+						>
 						hexagon
 					</ShapeToggleButton>
 				</ToggleButtonGroup>
@@ -150,7 +163,10 @@ function onToggleIsTripleStone(value: boolean) {
 		</template>
 
 		<template #primary-action>
-			<button type="button" @click="onNavigateForward">
+			<button
+				type="button"
+				@click="onNavigateForward"
+			>
 				{{ $t('common.next') }}
 			</button>
 		</template>

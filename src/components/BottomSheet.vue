@@ -64,21 +64,26 @@ function onKeyDown(event: KeyboardEvent): void {
 
 <template>
 	<Teleport to="body">
-	<transition name="slide-in">
-		<div v-if="open" class="sheet" role="dialog" aria-modal="true">
-			<!-- <button type="button" class="close-button" @click="onClose">
+		<transition name="slide-in">
+			<div
+				v-if="open"
+				class="sheet"
+				role="dialog"
+				aria-modal="true"
+			>
+				<!-- <button type="button" class="close-button" @click="onClose">
 				X
 			</button> -->
-			<div class="content-container">
-				<slot name="header" />
-				<div class="scroll-container">
-					<div class="slot-wrapper">
-						<slot />
+				<div class="content-container">
+					<slot name="header" />
+					<div class="scroll-container">
+						<div class="slot-wrapper">
+							<slot />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</transition>
+		</transition>
 	</Teleport>
 </template>
 

@@ -27,19 +27,25 @@ defineProps<{
 
 <template>
 	<div class="wrapper">
-		<label :for="id" :class="{ 'visually-hidden': hideLabel }">
+		<label
+			:for="id"
+			:class="{ 'visually-hidden': hideLabel }"
+		>
 			<slot />
 		</label>
 
-		<div class="input-wrapper" :class="{ 'is-disabled': disabled }">
+		<div
+			class="input-wrapper"
+			:class="{ 'is-disabled': disabled }"
+		>
 			<input
-				v-model="model"
 				:id="id"
+				v-model="model"
 				:disabled="disabled"
 				:placeholder="placeholder"
 				class="input"
 				type="text"
-			/>
+			>
 			<slot name="after-input" />
 		</div>
 	</div>

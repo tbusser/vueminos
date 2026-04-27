@@ -57,19 +57,32 @@ defineProps<{
 
 <template>
 	<div class="wrapper">
-		<label :for="id" :class="{ 'visually-hidden': hideLabel }">
+		<label
+			:for="id"
+			:class="{ 'visually-hidden': hideLabel }"
+		>
 			<slot />
 		</label>
 
-		<div class="input-wrapper" :class="{ 'is-disabled': disabled }">
+		<div
+			class="input-wrapper"
+			:class="{ 'is-disabled': disabled }"
+		>
 			<select
 				:id="id"
-				:disabled="disabled"
 				v-model="model"
+				:disabled="disabled"
 				class="select"
 			>
-				<template v-for="option in options" :key="option.id">
-					<option :value="option.value" :disabled="option.disabled" :selected="option.value === model">
+				<template
+					v-for="option in options"
+					:key="option.id"
+				>
+					<option
+						:value="option.value"
+						:disabled="option.disabled"
+						:selected="option.value === model"
+					>
 						{{ option.label }}
 					</option>
 				</template>

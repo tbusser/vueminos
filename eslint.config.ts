@@ -14,7 +14,7 @@ export default [
 	globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
 
 	...defineConfigWithVueTs(
-		pluginVue.configs['flat/essential'],
+		pluginVue.configs['flat/strongly-recommended'],
 		vueTsConfigs.recommended
 	),
 
@@ -64,7 +64,13 @@ export default [
 			'@stylistic/quotes': ['error', 'single'],
 			'@stylistic/semi': ['error', 'always'],
 			'@stylistic/space-infix-ops': ['error'],
-			'@stylistic/type-annotation-spacing': ['error']
+			'@stylistic/type-annotation-spacing': ['error'],
+			'vue/attributes-order': ['error'],
+			'vue/block-order': ['error', {
+				order: ['script:not([setup])', 'script', 'template', 'style']
+			}],
+			'vue/html-indent': ['error', 'tab'],
+			'vue/v-on-event-hyphenation': ['error']
 		}
 	}
 ];
