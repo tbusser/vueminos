@@ -6,6 +6,11 @@ export type SelectOption = {
 	disabled?: boolean;
 
 	/**
+	 * Unique ID for the option.
+	 */
+	id: string;
+
+	/**
 	 * The label of the option.
 	 */
 	label: string;
@@ -63,7 +68,7 @@ defineProps<{
 				v-model="model"
 				class="select"
 			>
-				<template v-for="option in options" :key="option.value">
+				<template v-for="option in options" :key="option.id">
 					<option :value="option.value" :disabled="option.disabled" :selected="option.value === model">
 						{{ option.label }}
 					</option>

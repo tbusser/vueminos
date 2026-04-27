@@ -15,16 +15,19 @@ const { t } = useGlobalI18n();
 
 const options: ComputedRef<SelectOption[]> = computed(() => ([
 	{
+		id: 'auto',
 		label: t('settingsView.themeAuto'),
 		selected: model.value === undefined,
 		value: undefined
 	},
 	{
+		id: 'dark',
 		label: t('settingsView.themeDark'),
 		selected: model.value === 'dark',
 		value: 'dark'
 	},
 	{
+		id: 'light',
 		label: t('settingsView.themeLight'),
 		selected: model.value === 'light',
 		value: 'light'
