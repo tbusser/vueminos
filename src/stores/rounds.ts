@@ -80,6 +80,40 @@ export const useRoundsStore = defineStore('round', () => {
 		return playerStats.tiles;
 	}
 
+	const currentRoundScore = computed<Record<Id, number>>(() => {
+		if (currentRound.value === undefined) return {};
+
+		return currentRound.value.playerStats.reduce((acc, playerStat) => {
+			acc[playerStat.id] = playerStat.score;
+			return acc;
+		}, {} as Record<Id, number>);
+	});
+
+	const finishedRoundsScore = computed<Record<Id, number>>(() => {
+		return completedRounds.value.reduce((acc, round) => {
+			(Object.keys(round.scores) as Id[]).forEach((playerId) => {
+				acc[playerId] = (acc[playerId] ?? 0) + round.scores[playerId];
+			});
+
+			return acc;
+		}, {} as Record<Id, number>);
+	});
+
+	const playerScores = computed<Record<Id, number>>(() => {
+		const keys = new Set<Id>([
+			...Object.keys(currentRoundScore.value) as Id[],
+			...Object.keys(finishedRoundsScore.value) as Id[]
+		]);
+
+		const result: Record<Id, number> = {};
+		keys.forEach((key) => {
+			result[key] =
+				(currentRoundScore.value[key] ?? 0) + (finishedRoundsScore.value[key] ?? 0);
+		});
+
+		return result;
+	});
+
 	/* ---------------------------------------------------------------------- */
 
 	/**
@@ -163,11 +197,19 @@ export const useRoundsStore = defineStore('round', () => {
 			throw new NoCurrentRoundExistsError('Unable to complete round, no current round present for the game');
 		}
 
+		const playerId = round.winnerId;
+		if (playerId === undefined) {
+			throw new PlayerIdNotFoundError(`There is no player ID set for the winner of the round with ID "${round.id}".`);
+		}
+		if (!isPlayerIdInCurrentRoundStats(playerId)) {
+			throw new PlayerIdNotFoundError(`Player with ID ${playerId} not found in player stats of current round with ID "${round.id}".`);
+		}
+
 		const completedRound: CompletedRound = {
 			id: round.id,
 			isCurrentRound: false,
 			scores,
-			winnerId: round.winnerId as Id
+			winnerId: playerId
 		};
 
 		rounds.value = rounds.value.map(item => item.id === round?.id ? completedRound : item);
@@ -269,10 +311,12 @@ export const useRoundsStore = defineStore('round', () => {
 		// Getters
 		completedRounds,
 		currentRound,
+		currentRoundScore,
 		currentPlayerId,
 		currentPlayerStats,
 		getCurrentRoundTileCountForPlayer,
 		hasCurrentRound,
+		playerScores,
 
 		// Actions
 		$reset,
