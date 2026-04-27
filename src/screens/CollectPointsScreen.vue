@@ -97,14 +97,8 @@ function onSavePoints(): void {
 	// This should never happen, but just in case.
 	if (selectedPlayer.value === undefined) return;
 
-	// The lowest tile value in the game is 3, so we can safely assume that
-	// any value below 3 is invalid.
-	const isPointsValid = points.value !== undefined && points.value >= 3;
-
 	// Set the left over points for the selected player.
-	leftOverPointsPerPlayer[selectedPlayer.value.id] = isPointsValid
-		? points.value
-		: undefined;
+	leftOverPointsPerPlayer[selectedPlayer.value.id] = points.value;
 
 	closeSheet();
 }
