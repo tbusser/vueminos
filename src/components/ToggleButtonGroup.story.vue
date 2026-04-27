@@ -21,24 +21,36 @@ const state = reactive<{
 	<Story title="Toggle Button Group">
 		<Variant title="Default">
 			<ToggleButtonGroup
-				:orientation="state.orientation"
 				v-model="state.value"
+				:orientation="state.orientation"
 			>
-				<ToggleButton id="option-1">Option 1</ToggleButton>
-				<ToggleButton id="option-2">Option 2</ToggleButton>
-				<ToggleButton id="option-3">Option 3</ToggleButton>
+				<ToggleButton id="option-1">
+					Option 1
+				</ToggleButton>
+				<ToggleButton id="option-2">
+					Option 2
+				</ToggleButton>
+				<ToggleButton id="option-3">
+					Option 3
+				</ToggleButton>
 			</ToggleButtonGroup>
 		</Variant>
 
 		<Variant title="Multiple">
 			<ToggleButtonGroup
+				v-model="state.value"
 				:orientation="state.orientation"
 				multiple
-				v-model="state.value"
 			>
-				<ToggleButton id="option-1">Option 1</ToggleButton>
-				<ToggleButton id="option-2">Option 2</ToggleButton>
-				<ToggleButton id="option-3">Option 3</ToggleButton>
+				<ToggleButton id="option-1">
+					Option 1
+				</ToggleButton>
+				<ToggleButton id="option-2">
+					Option 2
+				</ToggleButton>
+				<ToggleButton id="option-3">
+					Option 3
+				</ToggleButton>
 			</ToggleButtonGroup>
 		</Variant>
 	</Story>

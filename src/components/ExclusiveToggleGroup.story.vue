@@ -31,14 +31,24 @@ const state = reactive({
 <template>
 	<Story title="Exclusive Toggle Group">
 		<Variant title="default">
-			<ExclusiveToggleGroup v-model="state.value" :options />
+			<ExclusiveToggleGroup
+				v-model="state.value"
+				:options
+			/>
 		</Variant>
 
 		<Variant title="Custom label rendering">
-			<ExclusiveToggleGroup v-model="state.value" :options tag="ul">
+			<ExclusiveToggleGroup
+				v-model="state.value"
+				:options
+				tag="ul"
+			>
 				<template #default="{ option }">
 					<li>
-						<label :for="option.id" class="exclusive-toggle-group__label">
+						<label
+							:for="option.id"
+							class="exclusive-toggle-group__label"
+						>
 							{{ option.checked }}
 							<span class="exclusive-toggle-group__text">custom {{ option.label }}</span>
 						</label>

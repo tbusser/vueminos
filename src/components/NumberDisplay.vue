@@ -30,7 +30,11 @@ const displayValue = computed<string>(() => {
 </script>
 
 <template>
-	<div class="display" aria-live="polite" aria-atomic="true">
+	<div
+		class="display"
+		aria-live="polite"
+		aria-atomic="true"
+	>
 		{{ displayValue }}
 	</div>
 </template>

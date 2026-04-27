@@ -26,12 +26,20 @@ const { isEmpty: subtitleIsMissing } = useSlot(slots.subtitle);
 </script>
 
 <template>
-	<header class="header" :class="{ 'has-subtitle': !subtitleIsMissing }">
+	<header
+		class="header"
+		:class="{ 'has-subtitle': !subtitleIsMissing }"
+	>
 		<slot name="before-title" />
 
 		<div class="title-wrapper">
-			<h1 class="title">{{ props.title }}</h1>
-			<div class="subtitle" v-if="!subtitleIsMissing">
+			<h1 class="title">
+				{{ props.title }}
+			</h1>
+			<div
+				v-if="!subtitleIsMissing"
+				class="subtitle"
+			>
 				<slot name="subtitle" />
 			</div>
 		</div>

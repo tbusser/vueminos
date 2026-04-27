@@ -78,16 +78,22 @@ function onKeyDown(event: KeyboardEvent) {
 </script>
 
 <template>
-	<div class="wrapper" @keydown="onKeyDown">
+	<div
+		class="wrapper"
+		@keydown="onKeyDown"
+	>
 		<button
 			type="button"
 			class="button"
-			@click="onDecrease"
 			:disabled="!canDecrease"
 			:aria-label="$t('common.decrease')"
 			tabindex="-1"
+			@click="onDecrease"
 		>
-			<span aria-hidden="true" class="button-label">-</span>
+			<span
+				aria-hidden="true"
+				class="button-label"
+			>-</span>
 		</button>
 
 		<span
@@ -106,12 +112,15 @@ function onKeyDown(event: KeyboardEvent) {
 		<button
 			type="button"
 			class="button"
-			@click="onIncrease"
 			:disabled="!canIncrease"
 			:aria-label="$t('common.increase')"
 			tabindex="-1"
+			@click="onIncrease"
 		>
-			<span aria-hidden="true" class="button-label">+</span>
+			<span
+				aria-hidden="true"
+				class="button-label"
+			>+</span>
 		</button>
 	</div>
 </template>

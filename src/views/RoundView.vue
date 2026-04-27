@@ -84,19 +84,23 @@ function onTurnPlayed(turn: ScoredTurnInput): void {
 </script>
 
 <template>
-	<StartingPlayerScreen v-if="currentPhase === 'player-select'"
+	<StartingPlayerScreen
+		v-if="currentPhase === 'player-select'"
 		@navigate-back="onNavigateBack"
 		@navigate-forward="onNavigateForwardFromStartingPlayer"
 	/>
 
-	<TurnScreen v-else-if="currentPhase === 'turns'" :key="turnKey"
+	<TurnScreen
+		v-else-if="currentPhase === 'turns'"
+		:key="turnKey"
 		:is-initial-turn="isFirstTurnOfRound"
 		:subtitle
 		:title="currentPlayer?.name ?? ''"
 		@turn-played="onTurnPlayed"
 	/>
 
-	<CollectPointsScreen v-else-if="currentPhase === 'round-end'"
+	<CollectPointsScreen
+		v-else-if="currentPhase === 'round-end'"
 		@navigate-forward="onNavigateForwardFromCollectPoints"
 	/>
 </template>

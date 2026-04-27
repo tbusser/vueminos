@@ -12,6 +12,9 @@ const state = reactive({
 
 <template>
 	<Story title="Components/Header Bar">
-		<HeaderBar :subtitle="state.subtitle" :title="state.title"/>
+		<HeaderBar
+			:subtitle="state.subtitle"
+			:title="state.title"
+		/>
 	</Story>
 </template>

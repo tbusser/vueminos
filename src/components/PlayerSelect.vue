@@ -25,7 +25,10 @@ function onDelete() {
 </script>
 
 <template>
-	<article v-if="player" class="player">
+	<article
+		v-if="player"
+		class="player"
+	>
 		<div class="name">
 			{{ player.name }}
 		</div>

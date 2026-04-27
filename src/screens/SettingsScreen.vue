@@ -47,7 +47,10 @@ function onNavigateBack() {
 		</section>
 
 		<template #secondary-action>
-			<button type="button" @click="onNavigateBack">
+			<button
+				type="button"
+				@click="onNavigateBack"
+			>
 				{{ $t('common.back') }}
 			</button>
 		</template>

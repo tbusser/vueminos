@@ -14,8 +14,8 @@ const state = reactive({
 	<Story title="Select Field">
 		<SelectField
 			id="test"
-			placeholder="This is the placeholder"
 			v-model="state.text"
+			placeholder="This is the placeholder"
 			:hide-label="state.hideLabel"
 			:options="[]"
 		>

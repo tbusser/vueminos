@@ -81,7 +81,12 @@ function onDeletePlayer(id: Id) {
 			{{ $t('playerNames.infoMessage') }}
 		</MessageBox>
 
-		<form @submit="onAddPlayer" autocomplete="off" autocorrect="off" class="form">
+		<form
+			autocomplete="off"
+			autocorrect="off"
+			class="form"
+			@submit="onAddPlayer"
+		>
 			<TextInput
 				id="new-player-name"
 				v-model="name"
@@ -91,7 +96,10 @@ function onDeletePlayer(id: Id) {
 			>
 				{{ $t('playerNames.labelName') }}
 				<template #after-input>
-					<button type="submit" :disabled="hasReachedMaximum">
+					<button
+						type="submit"
+						:disabled="hasReachedMaximum"
+					>
 						{{ $t('playerNames.labelAdd') }}
 					</button>
 				</template>
@@ -103,18 +111,30 @@ function onDeletePlayer(id: Id) {
 				{{ $t('playerNames.headingPlayers') }}
 			</h2>
 			<ol>
-				<li v-for="player in players" :key="player.id">
-					<PlayerSelect :player="player" @delete="onDeletePlayer($event)"/>
+				<li
+					v-for="player in players"
+					:key="player.id"
+				>
+					<PlayerSelect
+						:player="player"
+						@delete="onDeletePlayer($event)"
+					/>
 				</li>
 			</ol>
 		</section>
 
-		<MessageBox v-if="validationError" type="warning">
+		<MessageBox
+			v-if="validationError"
+			type="warning"
+		>
 			{{ validationError }}
 		</MessageBox>
 
 		<template #primary-action>
-			<button @click="onContinue" :disabled="!hasValidNumberOfActivePlayers">
+			<button
+				:disabled="!hasValidNumberOfActivePlayers"
+				@click="onContinue"
+			>
 				{{ $t('common.next') }}
 			</button>
 		</template>

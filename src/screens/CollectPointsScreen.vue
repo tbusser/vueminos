@@ -115,7 +115,10 @@ function onSubmit(): void {
 		</MessageBox>
 
 		<ol>
-			<template v-for="player in activePlayers" :key="player.id">
+			<template
+				v-for="player in activePlayers"
+				:key="player.id"
+			>
 				<li>
 					<CollectPointsPlayerItem
 						:is-winner="hasPlayerWonTheRound(player)"
@@ -128,11 +131,12 @@ function onSubmit(): void {
 		</ol>
 
 		<PointsBottomSheet
+			v-model="points"
 			:open="isSheetOpen"
 			:player-name="selectedPlayer?.name"
-			v-model="points"
 			@cancel="onCloseSheet"
-			@close="onSavePoints" />
+			@close="onSavePoints"
+		/>
 
 		<template #primary-action>
 			<button

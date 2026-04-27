@@ -32,21 +32,34 @@ function onToggleChecked(event: Event) {
 </script>
 
 <template>
-	<template v-for="option in options" :key="option.id">
+	<template
+		v-for="option in options"
+		:key="option.id"
+	>
 		<input
-				type="checkbox"
-				:id="option.id"
-				name="exclusive-toggle-group"
-				:value="option.value"
-				:checked="props.modelValue === option.value"
-				@input="onToggleChecked"
-				class="visually-hidden"
-			/>
+			:id="option.id"
+			type="checkbox"
+			name="exclusive-toggle-group"
+			:value="option.value"
+			:checked="props.modelValue === option.value"
+			class="visually-hidden"
+			@input="onToggleChecked"
+		>
 	</template>
-	<component :is="props.tag" class="toggle-group">
-		<template v-for="option in options" :key="option.id">
+	<component
+		:is="props.tag"
+		class="toggle-group"
+	>
+		<template
+			v-for="option in options"
+			:key="option.id"
+		>
 			<slot :option="{ ...option, checked: props.modelValue === option.value}">
-				<label :for="option.id" class="label" :class="{ selected: props.modelValue === option.value }">
+				<label
+					:for="option.id"
+					class="label"
+					:class="{ selected: props.modelValue === option.value }"
+				>
 					<span>
 						{{ option.label }}
 					</span>
