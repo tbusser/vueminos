@@ -99,9 +99,18 @@ provide(toggleGroupInjectionKey, {
 .toggle-button-group {
 	display: flex;
 	gap: get-spacing(x-small);
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
 
 	&.is-vertical {
 		flex-direction: column;
+		overflow-x: hidden;
+		overflow-y: auto;
+		scroll-snap-type: y mandatory;
+	}
+
+	&:deep(*) {
+		scroll-snap-align: center;
 	}
 }
 </style>
