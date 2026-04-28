@@ -76,6 +76,16 @@ router.beforeEach((to) => {
 	if (to.meta.requireFinishedGame && roundsStore.hasCurrentRound) {
 		return { name: routeName.round };
 	}
+
+	// When arriving at home, forward to the deepest applicable view.
+	if (to.name === routeName.home) {
+		if (playersStore.hasActivePlayers && gameStore.hasActiveGame) {
+			if (roundsStore.hasCurrentRound) {
+				return { name: routeName.round };
+			}
+			return { name: routeName.gameResult };
+		}
+	}
 });
 
 /* ========================================================================== */
