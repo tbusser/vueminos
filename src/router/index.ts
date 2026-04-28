@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import GamePlayersView from '@/views/GamePlayersView.vue';
 import { useGameStore } from '@/stores/game';
 import { usePlayersStore } from '@/stores/players';
+import { useRoundsStore } from '@/stores/rounds';
 
 import { routeName } from '@/router/routerName';
 
@@ -15,7 +15,7 @@ const router = createRouter({
 		{
 			path: '/',
 			name: routeName.home,
-			component: GamePlayersView
+			component: () => import('../views/GamePlayersView.vue')
 		},
 		{
 			path: '/game-limit',
@@ -31,7 +31,8 @@ const router = createRouter({
 			component: () => import('../views/GameResultView.vue'),
 			meta: {
 				requireActiveGame: true,
-				requireActivePlayers: true
+				requireActivePlayers: true,
+				requireFinishedGame: true
 			}
 		},
 		{
@@ -54,6 +55,7 @@ const router = createRouter({
 router.beforeEach((to) => {
 	const gameStore = useGameStore();
 	const playersStore = usePlayersStore();
+	const roundsStore = useRoundsStore();
 
 	// Check first if the route requires active players, if these are not
 	// present redirect to the home view.
@@ -66,6 +68,13 @@ router.beforeEach((to) => {
 	// game limit view.
 	if (to.meta.requireActiveGame && !gameStore.hasActiveGame) {
 		return { name: routeName.gameLimit };
+	}
+
+	// We know there is a game, so we can check if the route requires a finished
+	// game. When there is a current round, the game is not yet finished. In
+	// this case, redirect to the round view.
+	if (to.meta.requireFinishedGame && roundsStore.hasCurrentRound) {
+		return { name: routeName.round };
 	}
 });
 
