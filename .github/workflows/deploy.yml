@@ -25,9 +25,15 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
+      - name: Read Node version from pnpm-workspace.yaml
+        id: node-version
+        run: |
+          NODE_VERSION=$(grep 'useNodeVersion' pnpm-workspace.yaml | sed 's/.*useNodeVersion: *//')
+          echo "version=$NODE_VERSION" >> $GITHUB_OUTPUT
+
       - uses: actions/setup-node@v4
         with:
-          node-version-file: pnpm-workspace.yaml
+          node-version: ${{ steps.node-version.outputs.version }}
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
