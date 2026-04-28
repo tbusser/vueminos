@@ -26,6 +26,15 @@ const router = createRouter({
 			}
 		},
 		{
+			path: '/game-result',
+			name: routeName.gameResult,
+			component: () => import('../views/GameResultView.vue'),
+			meta: {
+				requireActiveGame: true,
+				requireActivePlayers: true
+			}
+		},
+		{
 			path: '/round',
 			name: routeName.round,
 			component: () => import('../views/RoundView.vue'),

@@ -2,27 +2,28 @@
 import { computed, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
+import { useGlobalI18n } from '@/i18n';
+
+import { router } from '@/router';
+import { routeName } from '@/router/routerName';
+
 import CollectPointsScreen from '@/screens/CollectPointsScreen.vue';
 import StartingPlayerScreen from '@/screens/StartingPlayerScreen.vue';
 import TurnScreen from '@/screens/TurnScreen.vue';
 
+import { useGameScores } from '@/composables/useGameScores';
 import { useNavigation } from '@/composables/useNavigation';
 import { useRoundsLogic } from '@/composables/useRoundsLogic';
 import { useRoundManager } from '@/composables/useRoundManager';
 
 import { useRoundsStore } from '@/stores/rounds';
-import { useGlobalI18n } from '@/i18n';
 
 /* ========================================================================== */
 
 const { t } = useGlobalI18n();
 const roundsStore = useRoundsStore();
 
-
-// const { totalScore } = useGameScores();
-// watch(totalScore, newScore => {
-// 	console.log('Total score updated:', newScore);
-// }, { immediate: true });
+const { hasReachedPointsLimit } = useGameScores();
 
 const { safeNavigateBack } = useNavigation();
 const { startNewRound } = useRoundsLogic();
@@ -62,9 +63,13 @@ function onNavigateBack(): void {
 function onNavigateForwardFromCollectPoints(leftoverPoints: Record<Id, number>): void {
 	finishRound(leftoverPoints);
 	// Check if the game is over and when it is, go to the game over screen.
-
-	// The game is not yet finished, start a new round.
-	startNewRound();
+	if (hasReachedPointsLimit.value) {
+		// The game is finished, go to the game over screen.
+		router.replace({ name: routeName.gameResult });
+	} else {
+		// The game is not yet finished, start a new round.
+		startNewRound();
+	}
 }
 
 /**
