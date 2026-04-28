@@ -80,7 +80,8 @@ export const usePlayersStore = defineStore('players', () => {
 	}
 
 	/**
-	 * Removes a player by their ID from the list of players.
+	 * Removes a player by their ID from the list of players. In case of an
+	 * unknown player ID, no action is taken.
 	 *
 	 * @param id The ID of the player to remove.
 	 */
@@ -99,7 +100,7 @@ export const usePlayersStore = defineStore('players', () => {
 	 *         not found in the players store.
 	 */
 	function updatePlayerById<K extends keyof UpdatableFields>
-	(id: Id, field: keyof UpdatableFields, value: UpdatableFields[K]): void {
+	(id: Id, field: K, value: UpdatableFields[K]): void {
 		const index = getPlayerIndexById(id);
 
 		players.value[index] = {

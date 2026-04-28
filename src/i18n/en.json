@@ -11,9 +11,11 @@
 	},
 	"errorMessages": {
 		"hasCurrentRound": "Invalid action, there is already a current round",
+		"invalidLimit": "The limit is invalid",
 		"noActiveGame": "Invalid action, there is no active game",
 		"noCurrentRound": "Invalid action, there is no current round",
-		"noCurrentPlayer": "Invalid action, there is no current player"
+		"noCurrentPlayer": "Invalid action, there is no current player",
+		"noWinner": "Invalid action, there is no winner"
 	},
 	"playerNames": {
 		"headingPlayers": "Players",

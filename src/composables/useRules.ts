@@ -2,7 +2,6 @@ import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { usePlayersStore } from '@/stores/players';
-import { generateId } from '@/utilities/id';
 
 /* ========================================================================== */
 
@@ -51,24 +50,22 @@ export function useRules() {
 	function determineBlockedRoundWinnerAndPoints(leftoverPoints: Record<Id, number>): RoundEndPoints {
 		const playerIds = Object.keys(leftoverPoints) as Id[];
 		// The player with the least points is the winner of a blocked round.
-		const winnerPlayer = playerIds.reduce((winner, id: Id) => {
-			return leftoverPoints[id] < winner.points
-				? { id, points: leftoverPoints[id] }
-				: winner;
-		}, { id: generateId(), points: Infinity });
+		const winnerId = playerIds.reduce<Id>((winner, id) =>
+			leftoverPoints[id] < leftoverPoints[winner] ? id : winner
+		, playerIds[0]);
 
 		// Calculate the points to be awarded to the winner. The winner's points
 		// are subtracted from the total points of all players, while the points
 		// of the other players are added to the total.
 		const points: number = playerIds.reduce((sum, id) => {
-			return id === winnerPlayer.id
+			return id === winnerId
 				? sum - leftoverPoints[id]
 				: sum + leftoverPoints[id];
 		}, 0);
 
 		return {
 			points,
-			winnerId: winnerPlayer.id
+			winnerId
 		};
 	}
 
@@ -91,16 +88,24 @@ export function useRules() {
 	 * @param leftoverPoints A record of leftover points for each player at the
 	 *        end of the round. When the round is not blocked, the player to
 	 *        reach 0 tiles should be excluded.
+	 * @param isBlocked Indicates whether the round is blocked.
+	 * @param winnerId The ID of the player who won the round.
 	 *
 	 * @returns The points to be awarded to the winner of the round and the
 	 *          ID of the player who won the round.
 	 */
 	function determineRoundWinnerAndPoints(
-		leftoverPoints: Record<Id, number>, isBlocked: boolean, winnerId: Id | undefined
+		leftoverPoints: Record<Id, number>, isBlocked: true
+	): RoundEndPoints;
+	function determineRoundWinnerAndPoints(
+		leftoverPoints: Record<Id, number>, isBlocked: false, winnerId: Id
+	): RoundEndPoints;
+	function determineRoundWinnerAndPoints(
+		leftoverPoints: Record<Id, number>, isBlocked: boolean, winnerId?: Id
 	): RoundEndPoints {
 		return isBlocked === true
 			? determineBlockedRoundWinnerAndPoints(leftoverPoints)
-			: determineWonRoundWinnerAndPoints(leftoverPoints, winnerId as Id);
+			: determineWonRoundWinnerAndPoints(leftoverPoints, winnerId!);
 	}
 
 	/**

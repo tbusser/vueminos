@@ -45,7 +45,7 @@ export const useSettingsStore = defineStore('settings', () => {
 
 	/**
 	 * Sets the locale of the application. If no locale is provided, it will
-	 * default to auto..
+	 * default to auto.
 	 *
 	 * @param newLocale The new locale to set. This can be a string representing
 	 *        the locale, or undefined to set the locale to auto.

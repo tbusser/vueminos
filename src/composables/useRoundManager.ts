@@ -121,8 +121,19 @@ export function useRoundManager() {
 			};
 		}
 
-		const isBlocked = round.isBlocked ?? false;
-		const pointsForWinner = determineRoundWinnerAndPoints(leftOverPoints, isBlocked, round.winnerId);
+		const isBlocked = (round.isBlocked ?? false);
+
+		if (!isBlocked && round.winnerId === undefined) {
+			return {
+				message: t('errorMessages.noWinner'),
+				success: false
+			};
+		}
+
+		const pointsForWinner = isBlocked
+			? determineRoundWinnerAndPoints(leftOverPoints, true)
+			: determineRoundWinnerAndPoints(leftOverPoints, false, round.winnerId!);
+
 		const scores = round.playerStats.reduce((result, player) => {
 			result[player.id] = player.score;
 			if (player.id === pointsForWinner.winnerId) result[player.id] += pointsForWinner.points;

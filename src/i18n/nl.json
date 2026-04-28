@@ -11,9 +11,11 @@
 	},
 	"errorMessages": {
 		"hasCurrentRound": "Ongeldige actie, er is al een huidige ronde.",
+		"invalidLimit": "De limiet is ongeldig",
 		"noActiveGame": "Ongeldige actie, er is geen actief spel.",
 		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde.",
-		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler."
+		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler.",
+		"noWinner": "Ongeldige actie, er is geen winnaar."
 	},
 	"playerNames": {
 		"headingPlayers": "Spelers",
