@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import BaseScreen from '@/components/BaseScreen.vue';
+import AppScreen from '@/screens/AppScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import NumberDisplay from '@/components/NumberDisplay.vue';
 import NumberInput from '@/components/NumberInput.vue';
@@ -46,7 +46,7 @@ function onNavigateForward() {
 </script>
 
 <template>
-	<BaseScreen :title="$t('gameLimit.title')">
+	<AppScreen :title="$t('gameLimit.title')">
 		<MessageBox>
 			<div v-html="$t('gameLimit.infoMessage')" />
 		</MessageBox>
@@ -74,5 +74,5 @@ function onNavigateForward() {
 				{{ $t('common.back') }}
 			</button>
 		</template>
-	</BaseScreen>
+	</AppScreen>
 </template>
