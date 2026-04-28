@@ -6,10 +6,12 @@ import { useGameScores } from '@/composables/useGameScores';
 import { usePlayerManager } from '@/composables/usePlayerManager';
 
 import { useRoundsStore } from '@/stores/rounds';
+import { useRoundManager } from '@/composables/useRoundManager';
 
 /* ========================================================================== */
 
 type LeaderboardEntry = {
+	id: Id;
 	name: string;
 	score: number;
 	tiles: number;
@@ -18,16 +20,20 @@ type LeaderboardEntry = {
 /* ========================================================================== */
 
 defineProps<{
+	highlightCurrentPlayer?: boolean;
+
 	/**
 	 * Determines whether to show the tiles column in the leaderboard.
 	 */
-	showTiles: boolean;
+	showTiles?: boolean;
 }>();
 
 /* ========================================================================== */
 
 const { totalScore } = useGameScores();
 const { players } = usePlayerManager();
+const { currentPlayer } = useRoundManager();
+
 const { currentRound } = storeToRefs(useRoundsStore());
 
 /* -------------------------------------------------------------------------- */
@@ -37,6 +43,7 @@ const leaderboardData = computed<LeaderboardEntry[]>(() => {
 		const stats = currentRound.value?.playerStats.find(stat => stat.id === player.id);
 
 		return {
+			id: player.id,
 			name: player.name,
 			score: totalScore.value[player.id],
 			tiles: stats?.tiles ?? 0
@@ -46,7 +53,10 @@ const leaderboardData = computed<LeaderboardEntry[]>(() => {
 </script>
 
 <template>
-	<table class="leaderboard">
+	<table
+		class="leaderboard"
+		:class="{ 'highlight-current-player': highlightCurrentPlayer }"
+	>
 		<thead>
 			<tr>
 				<th class="header-cell">
@@ -69,8 +79,9 @@ const leaderboardData = computed<LeaderboardEntry[]>(() => {
 		<tbody>
 			<tr
 				v-for="(entry, index) of leaderboardData"
-				:key="entry.name"
+				:key="entry.id"
 				class="player-row"
+				:class="{ 'is-current-player': entry.id === currentPlayer?.id }"
 			>
 				<td>{{ index + 1 }}</td>
 				<td class="name-cell">
@@ -98,6 +109,13 @@ const leaderboardData = computed<LeaderboardEntry[]>(() => {
 .leaderboard {
 	td, th {
 		padding: 2px 10px;
+	}
+
+	&.highlight-current-player {
+		.is-current-player td {
+			font-size: 1.05em;
+			font-weight: bold;
+		}
 	}
 }
 

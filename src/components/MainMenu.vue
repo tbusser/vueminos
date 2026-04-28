@@ -68,7 +68,7 @@ function onClose(): void {
 				class="container"
 			>
 				<Leaderboard
-
+					:highlight-current-player="true"
 					:show-tiles="true"
 				/>
 			</div>
