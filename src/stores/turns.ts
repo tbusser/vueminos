@@ -44,7 +44,7 @@ export const useTurnsStore = defineStore('turns', () => {
 	 * @param id The ID of the turn to update.
 	 * @param update The partial update to apply to the turn.
 	 */
-	function updateTurn(id: Id, update: Partial<Omit<Turn, 'gameId' | 'id' | 'roundId'>>): void {
+	function updateTurn(id: Id, update: Partial<Omit<Turn, 'id' | 'roundId'>>): void {
 		const index = turns.value.findIndex(turn => turn.id === id);
 
 		if (index === -1) {
@@ -66,4 +66,8 @@ export const useTurnsStore = defineStore('turns', () => {
 		deleteTurnsForRound,
 		updateTurn
 	};
+}, {
+	persist: {
+		storage: localStorage
+	}
 });
