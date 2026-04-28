@@ -71,9 +71,6 @@ function onKeyDown(event: KeyboardEvent): void {
 				role="dialog"
 				aria-modal="true"
 			>
-				<!-- <button type="button" class="close-button" @click="onClose">
-				X
-			</button> -->
 				<div class="content-container">
 					<slot name="header" />
 					<div class="scroll-container">
@@ -90,17 +87,17 @@ function onKeyDown(event: KeyboardEvent): void {
 <style lang="scss" scoped>
 .slide-in-enter-active,
 .slide-in-leave-active {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
 }
 .slide-in-enter-from,
 .slide-in-leave-to {
-  transform: translateY(50%);
-  opacity: 0;
+	transform: translateY(50%);
+	opacity: 0;
 }
 .slide-in-enter-to,
 .slide-in-leave-from {
-  transform: translateY(0%);
-  opacity: 1;
+	transform: translateY(0%);
+	opacity: 1;
 }
 
 .backdrop {
