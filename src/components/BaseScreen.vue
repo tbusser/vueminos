@@ -5,6 +5,9 @@ import FooterBar from '@/components/FooterBar.vue';
 /* ========================================================================== */
 
 const props = defineProps<{
+	/**
+	 * The title of the screen.
+	 */
 	title: string;
 }>();
 </script>
@@ -19,11 +22,11 @@ const props = defineProps<{
 				<slot name="subtitle" />
 			</template>
 
-			<template #beforeTitle>
+			<template #before-title>
 				<slot name="before-title" />
 			</template>
 
-			<template #afterTitle>
+			<template #after-title>
 				<slot name="after-title" />
 			</template>
 		</HeaderBar>

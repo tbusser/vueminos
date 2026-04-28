@@ -94,6 +94,7 @@ const { isEmpty: subtitleIsMissing } = useSlot(slots.subtitle);
 }
 
 .title-wrapper {
+	flex-grow: 1;
 	min-width: 1px;
 }
 </style>
