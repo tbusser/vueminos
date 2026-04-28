@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseScreen from '@/components/BaseScreen.vue';
+import AppScreen from '@/screens/AppScreen.vue';
 import Leaderboard from '@/components/Leaderboard.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import { useGameScores } from '@/composables/useGameScores';
@@ -24,7 +24,7 @@ function onContinue() {
 </script>
 
 <template>
-	<BaseScreen title="Game over">
+	<AppScreen title="Game over">
 		<MessageBox>
 			The game is over. The winner is {{ winner?.name }} with the highest score.
 		</MessageBox>
@@ -38,5 +38,5 @@ function onContinue() {
 				New Game
 			</button>
 		</template>
-	</BaseScreen>
+	</AppScreen>
 </template>

@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 import { usePlayersStore } from '@/stores/players';
 import { useRoundsStore } from '@/stores/rounds';
 
-import BaseScreen from '@/components/BaseScreen.vue';
+import AppScreen from '@/screens/AppScreen.vue';
 import CollectPointsPlayerItem from '@/components/CollectPointsPlayerItem.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PointsBottomSheet from '@/components/PointsBottomSheet.vue';
@@ -109,7 +109,7 @@ function onSubmit(): void {
 </script>
 
 <template>
-	<BaseScreen title="Collect Points">
+	<AppScreen title="Collect Points">
 		<MessageBox>
 			{{ infoMessage }}
 		</MessageBox>
@@ -147,5 +147,5 @@ function onSubmit(): void {
 				{{ $t('common.next') }}
 			</button>
 		</template>
-	</BaseScreen>
+	</AppScreen>
 </template>

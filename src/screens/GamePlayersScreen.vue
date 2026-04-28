@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 import { useGlobalI18n } from '@/i18n';
 
-import BaseScreen from '@/components/BaseScreen.vue';
+import AppScreen from '@/screens/AppScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PlayerSelect from '@/components/PlayerSelect.vue';
 import TextInput from '@/components/TextInput.vue';
@@ -76,7 +76,7 @@ function onDeletePlayer(id: Id) {
 </script>
 
 <template>
-	<BaseScreen :title="$t('playerNames.title')">
+	<AppScreen :title="$t('playerNames.title')">
 		<MessageBox>
 			{{ $t('playerNames.infoMessage') }}
 		</MessageBox>
@@ -138,7 +138,7 @@ function onDeletePlayer(id: Id) {
 				{{ $t('common.next') }}
 			</button>
 		</template>
-	</BaseScreen>
+	</AppScreen>
 </template>
 
 <style lang="scss" scoped>

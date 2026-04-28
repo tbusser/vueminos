@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 
 import { usePlayersStore } from '@/stores/players';
 
-import BaseScreen from '@/components/BaseScreen.vue';
+import AppScreen from '@/screens/AppScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
@@ -56,7 +56,7 @@ function onNavigateForward(): void {
 </script>
 
 <template>
-	<BaseScreen :title="$t('playerSelect.title', [roundOrdinal])">
+	<AppScreen :title="$t('playerSelect.title', [roundOrdinal])">
 		<MessageBox>
 			<div v-html="$t('playerSelect.infoMessage', [startingStoneCount])" />
 		</MessageBox>
@@ -99,5 +99,5 @@ function onNavigateForward(): void {
 				{{ $t('common.back') }}
 			</button>
 		</template>
-	</BaseScreen>
+	</AppScreen>
 </template>
