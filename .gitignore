@@ -17,3 +17,7 @@ ssl
 # contains settings that might be useful to share.
 .vscode/*
 !.vscode/settings.json
+
+# The pnpm content-addressable store used for caching packages locally. This
+# is machine-specific and should not be committed to the repository.
+.pnpm-store/*
