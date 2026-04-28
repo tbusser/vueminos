@@ -16,7 +16,7 @@
     "story:dev": "histoire dev",
     "story:build": "histoire build",
     "story:preview": "histoire preview",
-    "publish": "node scripts/publish.mjs"
+    "release": "node scripts/publish.mjs"
   },
   "dependencies": {
     "pinia": "^3.0.4",
