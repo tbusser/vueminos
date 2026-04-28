@@ -8,8 +8,12 @@ import { useGameLogic } from '@/composables/useGameLogic';
 
 /* ========================================================================== */
 
+const gameLogic = useGameLogic();
+
+/* -------------------------------------------------------------------------- */
+
 function onNewGame() {
-	useGameLogic().clearGameData();
+	gameLogic.clearGameData();
 	router.replace({ name: routeName.home });
 }
 </script>
