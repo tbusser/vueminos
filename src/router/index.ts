@@ -43,11 +43,6 @@ const router = createRouter({
 				requireActiveGame: true,
 				requireActivePlayers: true
 			}
-		},
-		{
-			path: '/settings',
-			name: routeName.settings,
-			component: () => import('../views/SettingsView.vue')
 		}
 	]
 });
