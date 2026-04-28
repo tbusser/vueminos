@@ -29,9 +29,9 @@ function onNavigateBack(): void {
 function onNavigateForward(limit: number): void {
 	// When the game couldn't be started, we don't navigate forward. The limit
 	// is probably invalid.
-	startNewGame(limit);
-
-	router.push({ name: routeName.round });
+	if (startNewGame(limit).success) {
+		router.push({ name: routeName.round });
+	}
 }
 </script>
 

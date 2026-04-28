@@ -1,8 +1,13 @@
+import { useGlobalI18n } from '@/i18n';
+
 import { useGameStore } from '@/stores/game';
+import { useRoundsStore } from '@/stores/rounds';
+import { useTurnsStore } from '@/stores/turns';
 
 /* ========================================================================== */
 
 export function useGameLogic() {
+	const { t } = useGlobalI18n();
 	const gameStore = useGameStore();
 
 	/* ---------------------------------------------------------------------- */
@@ -23,24 +28,36 @@ export function useGameLogic() {
 	}
 
 	/**
+	 * Removes all data pertaining to the current game from the stores.
+	 */
+	function clearGameData(): void {
+		useTurnsStore().$reset();
+		useRoundsStore().$reset();
+		gameStore.$reset();
+
+	}
+
+	/**
 	 * Starts a new game with the specified points limit.
 	 *
 	 * @param limit The number of points which, when reached by a player, means
 	 *        the game will come to an end after the current round.
-	 *
-	 * @returns The unique identifier of the newly created game, or undefined
-	 *          if the limit is invalid.
 	 */
-	function startNewGame(limit: number): void {
-		if (!isValidLimit(limit)) return;
+	function startNewGame(limit: number): Feedback {
+		if (!isValidLimit(limit)) {
+			return { success: false, message: t('errorMessages.invalidLimit') };
+		}
 
 		gameStore.createNewGame(limit);
+
+		return { success: true };
 	}
 
 	/* ---------------------------------------------------------------------- */
 
 	return {
 		isValidLimit,
+		clearGameData,
 		startNewGame
 	};
 }

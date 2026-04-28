@@ -8,7 +8,15 @@
  |
  |*/
 
-import { Comment, computed, Fragment, isVNode, type Slot, type VNodeArrayChildren } from 'vue';
+import {
+	Comment,
+	computed,
+	Fragment,
+	isVNode,
+	Text,
+	type Slot,
+	type VNodeArrayChildren
+} from 'vue';
 
 /* ========================================================================== */
 
