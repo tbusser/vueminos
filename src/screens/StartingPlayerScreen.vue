@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { usePlayersStore } from '@/stores/players';
@@ -29,7 +29,7 @@ const { rounds } = storeToRefs(roundsStore);
 
 const { startingStoneCount } = useRules();
 
-const roundOrdinal = rounds.value.length;
+const roundOrdinal = computed<number>(() => rounds.value.length);
 
 const selectedId = ref<Id | undefined>(undefined);
 const showValidationMessage = ref<boolean>(false);
