@@ -23,6 +23,9 @@ const router = useRouter();
 
 function onResetConfirmed(): void {
 	clearGameData();
+	// AppScreen is the shared layout shell for every route, so no individual
+	// view can own the post-reset navigation. Placing it here is the narrowest
+	// scope that still covers all screens without duplicating it in each view.
 	router.replace({ name: routeName.home });
 }
 </script>
