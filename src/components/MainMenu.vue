@@ -8,34 +8,35 @@ import Leaderboard from '@/components/Leaderboard.vue';
 import SettingsPanel from '@/components/SettingsPanel.vue';
 
 import { useGameStore } from '@/stores/game';
+import { useBuildInfo } from '@/composables/useBuildInfo';
 
 /* ========================================================================== */
 
 const { hasActiveGame } = storeToRefs(useGameStore());
+const { appVersion, formattedBuildTimestamp } = useBuildInfo();
 
 /* -------------------------------------------------------------------------- */
 
 const isOpen = ref(false);
-const showLeaderboard = ref(false);
 
 /* -------------------------------------------------------------------------- */
 
 function onOpen(): void {
-	showLeaderboard.value = false;
 	isOpen.value = true;
 }
 
 function onClose(): void {
 	isOpen.value = false;
 }
-
 </script>
 
 <template>
 	<button
 		class="trigger"
 		type="button"
+		:aria-expanded="isOpen"
 		aria-label="Open menu"
+		aria-haspopup="dialog"
 		@click="onOpen"
 	>
 		<span class="trigger-bar" />
@@ -76,6 +77,12 @@ function onClose(): void {
 				<SettingsPanel />
 			</div>
 		</div>
+
+		<template #footer>
+			<small class="version-info">
+				v{{ appVersion }} / build {{ formattedBuildTimestamp }}
+			</small>
+		</template>
 	</BottomSheet>
 </template>
 
@@ -126,8 +133,14 @@ function onClose(): void {
 .scroll-container {
 	display: flex;
 	flex-direction: row;
-	gap: 20px;
-	overflow-y: scroll;
+	gap: get-spacing();
+	overflow-x: auto;
 	scroll-snap-type: x mandatory;
+}
+
+.version-info {
+	border-top: 1px solid var(--color-border);
+	padding-block: get-spacing(x-small);
+	text-align: center;
 }
 </style>

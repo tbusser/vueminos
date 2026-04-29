@@ -1,6 +1,11 @@
+import { readFileSync } from 'node:fs';
 import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
+
+/* ========================================================================== */
+
+const { version } = JSON.parse(readFileSync('./package.json', 'utf-8')) as { version: string };
 
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
@@ -10,6 +15,11 @@ import mkcert from 'vite-plugin-mkcert';
 
 // https://vite.dev/config/
 export default defineConfig({
+	define: {
+		__APP_VERSION__: JSON.stringify(version),
+		__BUILD_TIMESTAMP__: Date.now()
+	},
+
 	assetsInclude: ['**/*.ttf'],
 
 	base: '/vueminos/',
