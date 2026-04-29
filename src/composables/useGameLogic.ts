@@ -34,7 +34,6 @@ export function useGameLogic() {
 		useTurnsStore().$reset();
 		useRoundsStore().$reset();
 		gameStore.$reset();
-
 	}
 
 	/**
