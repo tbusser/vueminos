@@ -78,6 +78,7 @@ function onKeyDown(event: KeyboardEvent): void {
 							<slot />
 						</div>
 					</div>
+					<slot name="footer" />
 				</div>
 			</div>
 		</transition>
@@ -131,6 +132,7 @@ function onKeyDown(event: KeyboardEvent): void {
 }
 
 .scroll-container {
+	flex-grow: 1;
 	overflow-y: auto;
 }
 
