@@ -35,7 +35,20 @@ if (answer.toLowerCase() !== 'y') {
 
 const run = cmd => execSync(cmd, { stdio: 'inherit' });
 
+// Bump version and capture the new tag name
 run(`pnpm version ${bump}`);
+const newTag = `v${nextVersion}`;
+
+// Generate CHANGELOG.md for the new release
+run(`pnpm git-cliff --tag ${newTag} --output CHANGELOG.md`);
+
+// Amend the version commit to include the changelog
+run('git add CHANGELOG.md');
+run('git commit --amend --no-edit --no-verify');
+
+// Re-tag on the amended commit
+run(`git tag -f ${newTag}`);
+
 run('git push --follow-tags');
 
 console.log('\nTag pushed — GitHub Actions will build and deploy.');
