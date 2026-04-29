@@ -1,6 +1,6 @@
 import './assets/main.scss';
 
-import { createApp, watch } from 'vue';
+import { createApp, watch, type Ref } from 'vue';
 import { createPinia, storeToRefs } from 'pinia';
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate';
 
@@ -32,7 +32,7 @@ watch(locale, selectedLocale => {
 	const validLocale: Locale = (selectedLocale === 'en' || selectedLocale === 'nl')
 		? selectedLocale
 		: 'en';
-	i18n.global.locale = validLocale;
+	(i18n.global.locale as unknown as Ref<Locale>).value = validLocale;
 }, {
 	immediate: true
 });
