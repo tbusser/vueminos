@@ -8,7 +8,7 @@ import { useRoundsLogic } from '@/composables/useRoundsLogic';
 import { usePlayersStore } from '@/stores/players';
 import { useRoundsStore, type Scores } from '@/stores/rounds';
 import { useTurnsStore } from '@/stores/turns';
-import { useRules } from './useRules';
+import { useRules } from '@/composables/useRules';
 
 /* ========================================================================== */
 
