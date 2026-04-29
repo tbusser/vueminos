@@ -1,6 +1,6 @@
 {
   "name": "triominos-scoretracker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "repository": "https://github.com/tbusser/vueminos",
   "private": true,
   "type": "module",
