@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 import { useGameStore } from '@/stores/game';
 import { usePlayersStore } from '@/stores/players';
@@ -9,7 +9,7 @@ import { routeName } from '@/router/routerName';
 /* ========================================================================== */
 
 const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
+	history: createWebHashHistory(import.meta.env.BASE_URL),
 
 	routes: [
 		{
