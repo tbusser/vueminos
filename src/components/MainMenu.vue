@@ -1,25 +1,41 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import BottomSheet from '@/components/BottomSheet.vue';
-import Leaderboard from '@/components/Leaderboard.vue';
+import { useGameStore } from '@/stores/game';
 
+import BottomSheet from '@/components/BottomSheet.vue';
+import GameReset from '@/components/GameReset.vue';
+import Leaderboard from '@/components/Leaderboard.vue';
 import SettingsPanel from '@/components/SettingsPanel.vue';
 
-import { useGameStore } from '@/stores/game';
 import { useBuildInfo } from '@/composables/useBuildInfo';
+import { useBottomSheet } from '@/composables/useBottomSheet';
+
+/* ========================================================================== */
+
+const emit = defineEmits<{ resetConfirmed: [] }>();
 
 /* ========================================================================== */
 
 const { hasActiveGame } = storeToRefs(useGameStore());
 const { appVersion, formattedBuildTimestamp } = useBuildInfo();
+const { isBottomSheetOpen } = useBottomSheet();
 
 /* -------------------------------------------------------------------------- */
 
 const isOpen = ref(false);
 
 /* -------------------------------------------------------------------------- */
+
+function onResetConfirmed(): void {
+	// Make sure the bottom sheet is closed before emitting the reset event.
+	// Failure to do so will result in a UI glitch where the body is still
+	// shrunk without the bottom sheet being visible.
+	isBottomSheetOpen.value = false;
+
+	nextTick(() => emit('resetConfirmed'));
+}
 
 function onOpen(): void {
 	isOpen.value = true;
@@ -73,6 +89,13 @@ function onClose(): void {
 					:show-tiles="true"
 				/>
 			</div>
+			<div
+				v-if="hasActiveGame"
+				class="container"
+			>
+				<GameReset @confirmed="onResetConfirmed" />
+			</div>
+
 			<div class="container">
 				<SettingsPanel />
 			</div>

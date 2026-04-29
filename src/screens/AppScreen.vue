@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
 import BaseScreen from '@/components/BaseScreen.vue';
 import MainMenu from '@/components/MainMenu.vue';
+import { useGameLogic } from '@/composables/useGameLogic';
+
+import { routeName } from '@/router/routerName';
 
 /* ========================================================================== */
 
@@ -10,6 +15,16 @@ defineProps<{
 	 */
 	title: string;
 }>();
+
+/* ========================================================================== */
+
+const { clearGameData } = useGameLogic();
+const router = useRouter();
+
+function onResetConfirmed(): void {
+	clearGameData();
+	router.replace({ name: routeName.home });
+}
 </script>
 
 <template>
@@ -19,7 +34,7 @@ defineProps<{
 		</template>
 
 		<template #after-title>
-			<MainMenu />
+			<MainMenu @reset-confirmed="onResetConfirmed" />
 		</template>
 
 		<template #subtitle>
