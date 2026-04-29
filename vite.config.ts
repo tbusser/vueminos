@@ -3,13 +3,19 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
 
-/* ========================================================================== */
-
-const { version } = JSON.parse(readFileSync('./package.json', 'utf-8')) as { version: string };
-
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import mkcert from 'vite-plugin-mkcert';
+
+/* ========================================================================== */
+
+type PackageJson = {
+	version: string;
+};
+
+/* ========================================================================== */
+
+const { version } = JSON.parse(readFileSync('./package.json', 'utf-8')) as PackageJson;
 
 /* ========================================================================== */
 
@@ -37,6 +43,18 @@ export default defineConfig({
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
 			'@components': fileURLToPath(new URL('./src/components', import.meta.url)),
 			'@composables': fileURLToPath(new URL('./src/composables', import.meta.url))
+		}
+	},
+
+	build: {
+		rolldownOptions: {
+			output: {
+				manualChunks(id) {
+					// Move all packages from node_modules into a single
+					// vendor chunk.
+					if (id.includes('/node_modules/')) return 'vendor';
+				}
+			}
 		}
 	},
 
