@@ -19,9 +19,9 @@ try {
 
 let nextVersion;
 if (!override) {
-	nextVersion = execSync('pnpm git-cliff --bumped-version', { encoding: 'utf-8' }).trim();
+	nextVersion = execSync('pnpm git-cliff --unreleased --bumped-version', { encoding: 'utf-8' }).trim();
 } else if (VALID_BUMPS.includes(override)) {
-	nextVersion = execSync(`pnpm git-cliff --bump ${override} --bumped-version`, { encoding: 'utf-8' }).trim();
+	nextVersion = execSync(`pnpm git-cliff --unreleased--bump ${override} --bumped-version`, { encoding: 'utf-8' }).trim();
 } else {
 	nextVersion = override;
 }
@@ -37,19 +37,20 @@ if (answer.toLowerCase() !== 'y') {
 
 const run = cmd => execSync(cmd, { stdio: 'inherit' });
 
-// Bump version and capture the new tag name
-run(`pnpm version ${nextVersion}`);
-const newTag = `v${nextVersion}`;
+const newTag = `${nextVersion}`;
 
-// Generate CHANGELOG.md for the new release
-run(`pnpm git-cliff --tag ${newTag} --output CHANGELOG.md`);
+// Bump package.json only — no commit, no tag yet
+run(`pnpm version --no-git-tag-version ${nextVersion}`);
 
-// Amend the version commit to include the changelog
-run('git add CHANGELOG.md');
-run('git commit --amend --no-edit --no-verify');
+// Prepend the new release section to CHANGELOG.md
+run(`pnpm git-cliff --tag ${newTag} --unreleased --prepend CHANGELOG.md`);
 
-// Re-tag on the amended commit
-run(`git tag -f ${newTag}`);
+// Single clean commit with both changed files
+run('git add package.json CHANGELOG.md');
+run(`git commit -m "chore(release): ${newTag}"`);
+
+// Tag the clean commit
+run(`git tag ${newTag}`);
 
 run('git push --follow-tags');
 
