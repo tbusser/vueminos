@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
 
 const VALID_BUMPS = ['patch', 'minor', 'major'];
-const bump = process.argv[2] ?? 'patch';
+const override = process.argv[2]; // optional: patch|minor|major|x.y.z
 
-if (!VALID_BUMPS.includes(bump)) {
-	console.error(`Usage: pnpm run publish [${VALID_BUMPS.join('|')}]`);
+if (override && !VALID_BUMPS.includes(override) && !/^\d+\.\d+\.\d+$/.test(override)) {
+	console.error('Usage: pnpm release [patch|minor|major|x.y.z]');
 	process.exit(1);
 }
 
@@ -18,14 +17,17 @@ try {
 	process.exit(1);
 }
 
-const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf-8'));
-const [major, minor, patch] = version.split('.').map(Number);
-const nextVersion = bump === 'major' ? `${major + 1}.0.0`
-	: bump === 'minor' ? `${major}.${minor + 1}.0`
-	: `${major}.${minor}.${patch + 1}`;
+let nextVersion;
+if (!override) {
+	nextVersion = execSync('pnpm git-cliff --bumped-version', { encoding: 'utf-8' }).trim();
+} else if (VALID_BUMPS.includes(override)) {
+	nextVersion = execSync(`pnpm git-cliff --bump ${override} --bumped-version`, { encoding: 'utf-8' }).trim();
+} else {
+	nextVersion = override;
+}
 
 const rl = createInterface({ input: process.stdin, output: process.stdout });
-const answer = await rl.question(`Release v${nextVersion} (${bump})? [y/N] `);
+const answer = await rl.question(`Release ${nextVersion}? [y/N] `);
 rl.close();
 
 if (answer.toLowerCase() !== 'y') {
@@ -36,7 +38,7 @@ if (answer.toLowerCase() !== 'y') {
 const run = cmd => execSync(cmd, { stdio: 'inherit' });
 
 // Bump version and capture the new tag name
-run(`pnpm version ${bump}`);
+run(`pnpm version ${nextVersion}`);
 const newTag = `v${nextVersion}`;
 
 // Generate CHANGELOG.md for the new release
