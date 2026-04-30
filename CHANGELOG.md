@@ -1,17 +1,18 @@
-# Changelog
+## [1.0.6] - 2026-04-30
 
-## v1.0.5 (2026-04-29)
+### ⚙️ Miscellaneous Tasks
 
-### Bug Fixes
+- Update changelog template
+- Use git-cliff to manage version bump
+## [1.0.5] - 2026-04-29
+
+### 🐛 Bug Fixes
 
 - Add requireFinishedGame to RouteMeta
 - Adjust import path
 
-### chore
+### ⚙️ Miscellaneous Tasks
 
 - Add commit message linting
 - Add auto changelog generation
-
-## v0.1.0 (2026-04-28)
-
-
+## [0.1.0] - 2026-04-28
