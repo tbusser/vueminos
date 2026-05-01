@@ -1,3 +1,9 @@
+## [1.0.10] - 2026-05-01
+
+### 🐛 Bug Fixes
+
+- *(publish)* Create annotated tag so --follow-tags pushes it
+
 ## [1.0.9] - 2026-05-01
 
 ### 🐛 Bug Fixes
