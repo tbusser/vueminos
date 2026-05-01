@@ -49,8 +49,8 @@ run(`pnpm git-cliff --tag ${newTag} --unreleased --prepend CHANGELOG.md`);
 run('git add package.json CHANGELOG.md');
 run(`git commit -m "chore(release): ${newTag}"`);
 
-// Tag the clean commit
-run(`git tag ${newTag}`);
+// Tag the clean commit (annotated so --follow-tags picks it up)
+run(`git tag -a ${newTag} -m "Release ${newTag}"`);
 
 run('git push --follow-tags');
 
