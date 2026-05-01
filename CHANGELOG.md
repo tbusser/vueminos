@@ -1,3 +1,9 @@
+## [1.0.9] - 2026-05-01
+
+### 🐛 Bug Fixes
+
+- *(release)* Use --current flag and skip all release commits
+
 ## [1.0.8] - 2026-05-01
 
 ### ⚙️ Miscellaneous Tasks
