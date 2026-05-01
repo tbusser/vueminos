@@ -10,7 +10,6 @@ import Leaderboard from '@/components/Leaderboard.vue';
 import SettingsPanel from '@/components/SettingsPanel.vue';
 
 import { useBuildInfo } from '@/composables/useBuildInfo';
-import { useBottomSheet } from '@/composables/useBottomSheet';
 
 /* ========================================================================== */
 
@@ -20,7 +19,6 @@ const emit = defineEmits<{ resetConfirmed: [] }>();
 
 const { hasActiveGame } = storeToRefs(useGameStore());
 const { appVersion, formattedBuildTimestamp } = useBuildInfo();
-const { isBottomSheetOpen } = useBottomSheet();
 
 /* -------------------------------------------------------------------------- */
 
@@ -32,7 +30,7 @@ function onResetConfirmed(): void {
 	// Make sure the bottom sheet is closed before emitting the reset event.
 	// Failure to do so will result in a UI glitch where the body is still
 	// shrunk without the bottom sheet being visible.
-	isBottomSheetOpen.value = false;
+	isOpen.value = false;
 
 	nextTick(() => emit('resetConfirmed'));
 }
