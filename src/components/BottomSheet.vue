@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onUnmounted, watch } from 'vue';
+import { onUnmounted, toRef, watch } from 'vue';
 
 import { useBottomSheet } from '@/composables/useBottomSheet';
 
@@ -20,13 +20,14 @@ const props = defineProps<{
 /* -------------------------------------------------------------------------- */
 
 const { isBottomSheetOpen } = useBottomSheet();
+const isOpen = toRef(props, 'open');
 
 /* -------------------------------------------------------------------------- */
 
-watch(() => props.open, isOpen => {
-	isBottomSheetOpen.value = isOpen;
+watch(isOpen, value => {
+	isBottomSheetOpen.value = value;
 
-	if (isOpen) {
+	if (value) {
 		addEventListenersToDocument();
 	} else {
 		removeEventListenersFromDocument();
