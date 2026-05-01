@@ -1,3 +1,28 @@
+## [1.0.7] - 2026-05-01
+
+### 🐛 Bug Fixes
+
+- *(TurnScreen)* Reject array values from ToggleButtonGroup bonus handler (#14)
+
+### 💼 Other
+
+- *(vite)* Remove redundant @components and @composables path aliases
+
+### 🚜 Refactor
+
+- Release script and tagging
+- *(views)* Replace static router import with useRouter() composable (#12)
+- *(rounds)* Move round ordinal computation into the rounds store (#13)
+- *(MainMenu)* Drive bottom sheet open state via local ref (#15)
+
+### ⚙️ Miscellaneous Tasks
+
+- Update release template
+- Replace magic number for opening bonus
+- Enforce conventional commit style on PR titles
+- *(skills)* Add commit skill for conventional commit message generation
+- Add workflow to create github release on tag push
+
 ## [1.0.6] - 2026-04-30
 
 ### ⚙️ Miscellaneous Tasks
