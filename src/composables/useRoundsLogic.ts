@@ -23,7 +23,7 @@ export function useRoundsLogic() {
 
 	const { activePlayers } = storeToRefs(playersStore);
 	const { startingStoneCount } = useRules();
-	const { currentPlayerId, currentRound, hasCurrentRound } = storeToRefs(roundsStore);
+	const { currentPlayerId, currentRound, currentRoundOrdinal, hasCurrentRound } = storeToRefs(roundsStore);
 	const { t } = useGlobalI18n();
 
 	/* ---------------------------------------------------------------------- */
@@ -145,6 +145,7 @@ export function useRoundsLogic() {
 	/* ---------------------------------------------------------------------- */
 
 	return {
+		currentRoundOrdinal,
 		finishCurrentRound,
 		saveTurn,
 		startNewRound

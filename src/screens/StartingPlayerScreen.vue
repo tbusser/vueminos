@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { usePlayersStore } from '@/stores/players';
 
-import AppScreen from '@/screens/AppScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
 
 import { useRules } from '@/composables/useRules';
-import { useRoundsStore } from '@/stores/rounds';
+import { useRoundsLogic } from '@/composables/useRoundsLogic';
+
+import AppScreen from '@/screens/AppScreen.vue';
 
 /* ========================================================================== */
 
@@ -21,15 +22,13 @@ const emit = defineEmits<{
 
 /* -------------------------------------------------------------------------- */
 
+const { currentRoundOrdinal } = useRoundsLogic();
+
 const playerStore = usePlayersStore();
-const roundsStore = useRoundsStore();
 
 const { activePlayers } = storeToRefs(playerStore);
-const { rounds } = storeToRefs(roundsStore);
 
 const { startingStoneCount } = useRules();
-
-const roundOrdinal = computed<number>(() => rounds.value.length);
 
 const selectedId = ref<Id | undefined>(undefined);
 const showValidationMessage = ref<boolean>(false);
@@ -56,7 +55,7 @@ function onNavigateForward(): void {
 </script>
 
 <template>
-	<AppScreen :title="$t('playerSelect.title', [roundOrdinal])">
+	<AppScreen :title="$t('playerSelect.title', [currentRoundOrdinal ?? 0])">
 		<MessageBox>
 			<div v-html="$t('playerSelect.infoMessage', [startingStoneCount])" />
 		</MessageBox>

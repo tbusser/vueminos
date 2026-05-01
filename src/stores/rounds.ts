@@ -37,6 +37,10 @@ export const useRoundsStore = defineStore('round', () => {
 		return rounds.value.find(round => round.isCurrentRound);
 	});
 
+	const currentRoundOrdinal = computed<number | undefined>(() =>
+		(currentRound.value === undefined) ? undefined : getCurrentRoundIndex() + 1
+	);
+
 	/**
 	 * The ID of the current player in the current round, if it exists.
 	 */
@@ -314,6 +318,7 @@ export const useRoundsStore = defineStore('round', () => {
 		currentRoundScore,
 		currentPlayerId,
 		currentPlayerStats,
+		currentRoundOrdinal,
 		getCurrentRoundTileCountForPlayer,
 		hasCurrentRound,
 		playerScores,
