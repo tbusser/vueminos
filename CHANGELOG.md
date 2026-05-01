@@ -1,3 +1,9 @@
+## [1.0.8] - 2026-05-01
+
+### ⚙️ Miscellaneous Tasks
+
+- *(cliff)* Link PR numbers in changelog to GitHub
+
 ## [1.0.7] - 2026-05-01
 
 ### 🐛 Bug Fixes
