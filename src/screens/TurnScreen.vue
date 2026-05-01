@@ -90,7 +90,9 @@ function createScoredTurnInput(): ScoredTurnInput {
 /* -------------------------------------------------------------------------- */
 
 function onToggleBonusScoring(value: string | string[] | undefined) {
-	selectedBonusShape.value = value as BonusShape;
+	if (Array.isArray(value)) return;
+
+	selectedBonusShape.value = value as BonusShape | undefined;
 }
 
 function onNavigateForward() {
