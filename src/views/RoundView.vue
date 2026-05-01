@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
 import { useGlobalI18n } from '@/i18n';
 
-import { router } from '@/router';
 import { routeName } from '@/router/routerName';
 
 import CollectPointsScreen from '@/screens/CollectPointsScreen.vue';
@@ -19,6 +19,8 @@ import { useRoundManager } from '@/composables/useRoundManager';
 import { useRoundsStore } from '@/stores/rounds';
 
 /* ========================================================================== */
+
+const router = useRouter();
 
 const { t } = useGlobalI18n();
 const roundsStore = useRoundsStore();
