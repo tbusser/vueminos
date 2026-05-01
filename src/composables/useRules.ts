@@ -31,6 +31,8 @@ const scoreModifiers = {
 	bridge: 40,
 	doubleSided: 40,
 	hexagon: 50,
+	openingTriple: 10,
+	openingZero: 40,
 	skippedTurn: -10,
 	tileDrawn: -5,
 	wonGame: 25
@@ -121,7 +123,9 @@ export function useRules() {
 	function calculateStartingStoneBonus(tileValue?: number): number {
 		if (tileValue === undefined) return 0;
 
-		return tileValue === 0 ? 40 : 10;
+		return tileValue === 0
+			? scoreModifiers.openingZero
+			: scoreModifiers.openingTriple;
 	}
 
 	/**
