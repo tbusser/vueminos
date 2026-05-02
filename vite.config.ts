@@ -32,8 +32,8 @@ export default defineConfig({
 
 	plugins: [
 		vue(),
-		vueDevTools(),
-		mkcert({
+		!process.env.VITEST && vueDevTools(),
+		!process.env.VITEST && mkcert({
 			savePath: './ssl'
 		})
 	],
