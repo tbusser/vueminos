@@ -1,7 +1,6 @@
 import { fileURLToPath } from 'node:url';
 import { mergeConfig } from 'vite';
 import { defineConfig, configDefaults } from 'vitest/config';
-import { playwright } from '@vitest/browser-playwright';
 
 import viteConfig from './vite.config';
 
@@ -9,14 +8,9 @@ import viteConfig from './vite.config';
 
 const vitestConfig = {
 	test: {
-		browser: {
-			enabled: true,
-			instances: [
-				{ browser: 'chromium' }
-			],
-			provider: playwright()
-		},
+		environment: 'jsdom',
 		exclude: [...configDefaults.exclude, 'e2e/**'],
+		globals: true,
 		root: fileURLToPath(new URL('./', import.meta.url))
 	}
 };
