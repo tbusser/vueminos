@@ -120,12 +120,16 @@ export function useRules() {
 	 * @returns The number of bonus stones the player receives for the played
 	 *          tile. If the tile value is undefined, it returns 0.
 	 */
-	function calculateStartingStoneBonus(tileValue?: number): number {
-		if (tileValue === undefined) return 0;
+	function calculateStartingStoneBonus(tileValue: number): number {
+		if (!canTileBeTripleStone(tileValue)) return 0;
 
 		return tileValue === 0
 			? scoreModifiers.openingZero
 			: scoreModifiers.openingTriple;
+	}
+
+	function canTileBeTripleStone(value: number): boolean {
+		return value % 3 === 0;
 	}
 
 	/**
@@ -183,6 +187,7 @@ export function useRules() {
 	return {
 		calculateStartingStoneBonus,
 		calculateTurnScore,
+		canTileBeTripleStone,
 		determineRoundWinnerAndPoints,
 		maximumNumberOfPlayers,
 		minimumNumberOfPlayers,

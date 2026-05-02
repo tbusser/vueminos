@@ -31,20 +31,20 @@ const props = withDefaults(defineProps<{
 
 /* -------------------------------------------------------------------------- */
 
-const { calculateStartingStoneBonus, calculateTurnScore } = useRules();
+const { calculateStartingStoneBonus, calculateTurnScore, canTileBeTripleStone } = useRules();
 
 const isTripleStone = ref<boolean>(false);
 const selectedBonusShape = ref<BonusShape | undefined>(undefined);
 const tilesDrawn = ref<number>(0);
 const tileValue = ref<number | undefined>(undefined);
 
-const openingTurnBonus = computed<number>(() => calculateStartingStoneBonus(tileValue.value));
+const openingTurnBonus = computed<number>(() =>
+	(tileValue.value === undefined) ? 0 : calculateStartingStoneBonus(tileValue.value)
+);
 
-const isTripleStoneEnabled = computed<boolean>(() => {
-	if (tileValue.value === undefined) return false;
-
-	return (tileValue.value % 3 === 0);
-});
+const isTripleStoneEnabled = computed<boolean>(() =>
+	(tileValue.value === undefined) ? false : canTileBeTripleStone(tileValue.value)
+);
 
 /* -------------------------------------------------------------------------- */
 
