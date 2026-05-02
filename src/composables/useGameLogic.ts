@@ -28,9 +28,11 @@ export function useGameLogic() {
 	}
 
 	/**
-	 * Removes all data pertaining to the current game from the stores.
+	 * Resets the game progress by clearing the turns, rounds, and game data.
+	 * The players store is intentionally preserved so users can start a new
+	 * game with the same group without re-entering names.
 	 */
-	function clearGameData(): void {
+	function resetGameProgress(): void {
 		useTurnsStore().$reset();
 		useRoundsStore().$reset();
 		gameStore.$reset();
@@ -56,7 +58,7 @@ export function useGameLogic() {
 
 	return {
 		isValidLimit,
-		clearGameData,
+		resetGameProgress,
 		startNewGame
 	};
 }

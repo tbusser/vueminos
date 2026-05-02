@@ -15,7 +15,7 @@ const gameLogic = useGameLogic();
 /* -------------------------------------------------------------------------- */
 
 function onNewGame() {
-	gameLogic.clearGameData();
+	gameLogic.resetGameProgress();
 	router.replace({ name: routeName.home });
 }
 </script>
