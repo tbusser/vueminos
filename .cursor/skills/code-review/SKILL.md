@@ -22,6 +22,19 @@ Look especially for:
 - Solution needs to be idiomatic.
 - Code should live in the right place. Ensure logic is in the right place or
   perhaps belongs in a composable or store.
+- Responsibility creep: is the change making a store, composable, or component
+  take on too many concerns? Flag when a module is growing into a god object.
+- Duplicated patterns: is the change repeating a pattern (guard clauses, type
+  shapes, data transformations) that already exists elsewhere or should be
+  extracted?
+- Performance implications: does the change introduce unnecessary reactive
+  recomputation, expensive object spreads in hot paths, or O(n) lookups where
+  O(1) structures exist?
+- Naming and boundary clarity: are module names, function names, and the split
+  of responsibilities between files clear and discoverable to a newcomer?
+- Undocumented non-obvious decisions: does the change make a deliberate choice
+  (e.g. omitting a reset, choosing a specific iteration order) that would
+  confuse a future reader without a comment?
 
 ## Workflow
 
@@ -47,10 +60,16 @@ Report a finding only when you can answer:
 - What practical fix or verification would reduce the risk?
 - Is it not idiomatic?
 - Should logic live somewhere else?
+- Does the change introduce or worsen a structural problem that will compound as
+  the codebase grows?
+- Is a pattern being duplicated that could be shared?
+- Are there performance implications in how reactivity or persistence is used?
 
 Do not report:
 - Pure preference without behavioral or maintenance impact.
-- Existing unrelated issues outside the reviewed change.
+- Existing issues that are completely unrelated to the changed files or their
+  immediate collaborators. If a change touches a module that already has
+  structural problems, note them briefly.
 - Broad rewrites unless the current change makes them necessary.
 
 ## Severity
@@ -59,7 +78,9 @@ Use these labels:
 - `Critical`: Data loss, broken core score keeping, security exposure, or app unusable.
 - `High`: Likely user-facing regression, incorrect scores, broken persistence, or blocked main flow.
 - `Medium`: Edge-case bug, brittle logic, missing validation, or missing meaningful test.
-- `Low`: Maintainability issue with clear future cost.
+- `Low`: Maintainability issue with clear future cost (e.g. responsibility
+  creep, duplicated guard patterns, missing documentation for non-obvious
+  behavior).
 
 ## Output Format
 
