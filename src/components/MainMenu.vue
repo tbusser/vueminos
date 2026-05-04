@@ -6,7 +6,7 @@ import { useGameStore } from '@/stores/game';
 
 import BottomSheet from '@/components/BottomSheet.vue';
 import GameReset from '@/components/GameReset.vue';
-import Leaderboard from '@/components/Leaderboard.vue';
+import ScoreLeaderboard from '@/components/ScoreLeaderboard.vue';
 import SettingsPanel from '@/components/SettingsPanel.vue';
 
 import { useBuildInfo } from '@/composables/useBuildInfo';
@@ -82,7 +82,7 @@ function onClose(): void {
 				v-if="hasActiveGame"
 				class="container"
 			>
-				<Leaderboard
+				<ScoreLeaderboard
 					:highlight-current-player="true"
 					:show-tiles="true"
 				/>
