@@ -238,25 +238,6 @@ export const useRoundsStore = defineStore('round', () => {
 	}
 
 	/**
-	 * Updates the current round with the specified field and value.
-	 *
-	 * @param field The field to update in the current round.
-	 * @param value The new value for the specified field.
-	 *
-	 * @throws {NoCurrentRoundExistsError} If there is no current round
-	 *         present in the store, an error is thrown to prevent updating a
-	 *         non-existent round.
-	 */
-	function updateCurrentRoundField<K extends keyof UpdatableFields>(field: K, value: CurrentRound[K]): void {
-		const index = getCurrentRoundIndex();
-
-		rounds.value[index] = {
-			...rounds.value[index],
-			[field]: value
-		};
-	}
-
-	/**
 	 * Updates player stats in the current round for the specified player.
 	 *
 	 * @param playerId The ID of the player whose stats are being updated.
@@ -328,7 +309,6 @@ export const useRoundsStore = defineStore('round', () => {
 		addRound,
 		completeCurrentRound,
 		updateCurrentRound,
-		updateCurrentRoundField,
 		updateCurrentRoundPlayerStats
 	};
 }, {
