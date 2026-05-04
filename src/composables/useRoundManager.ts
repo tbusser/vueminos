@@ -81,31 +81,18 @@ export function useRoundManager() {
 		});
 	}
 
-	function checkForBlockedRound(): boolean {
+	function checkIfRoundIsBlocked(): boolean {
 		const lastTurns = turnsForCurrentRound.value.slice(-playersStore.activePlayers.length);
+
 		if (lastTurns.length < playersStore.activePlayers.length) return false;
 
-		const isBlocked = lastTurns.every(turn => turn.tilesPlayed === 0);
-		if (!isBlocked) return false;
-
-		roundsStore.updateCurrentRound({
-			isBlocked: true,
-			phase: 'round-end'
-		});
-
-		return true;
+		// When all the last turns have no tiles played, the round is blocked.
+		return lastTurns.every(turn => turn.tilesPlayed === 0);
 	}
 
 	function checkIfCurrentPlayerHasNoTiles(): boolean {
 		if (currentPlayerStats.value === undefined) return false;
 		if (currentPlayerStats.value.tiles !== 0) return false;
-
-		// The current player has no tiles left, so the round ends. The current
-		// player is the winner of the round.
-		roundsStore.updateCurrentRound({
-			phase: 'round-end',
-			winnerId: currentPlayerId.value
-		});
 
 		return true;
 	}
@@ -160,10 +147,21 @@ export function useRoundManager() {
 		const saveResult = roundsLogic.saveTurn(turn);
 		if (!saveResult.success) return saveResult;
 
-		if (checkForBlockedRound()) return { success: true };
-		if (checkIfCurrentPlayerHasNoTiles()) return { success: true };
-
-		advanceToNextPlayer();
+		if (checkIfRoundIsBlocked()) {
+			roundsStore.updateCurrentRound({
+				isBlocked: true,
+				phase: 'round-end'
+			});
+		} else if (checkIfCurrentPlayerHasNoTiles()) {
+			// The current player has no tiles left, so the round ends. The
+			// current player is the winner of the round.
+			roundsStore.updateCurrentRound({
+				phase: 'round-end',
+				winnerId: currentPlayerId.value
+			});
+		} else {
+			advanceToNextPlayer();
+		}
 
 		return { success: true };
 	}
