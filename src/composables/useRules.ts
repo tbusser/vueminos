@@ -1,10 +1,3 @@
-import { computed } from 'vue';
-import { storeToRefs } from 'pinia';
-
-import { usePlayersStore } from '@/stores/players';
-
-/* ========================================================================== */
-
 /**
  * The points to be awarded to the winner of a round.
  */
@@ -41,14 +34,6 @@ const scoreModifiers = {
 /* ========================================================================== */
 
 export function useRules() {
-	const playerStore = usePlayersStore();
-
-	/* ---------------------------------------------------------------------- */
-
-	const { activePlayers } = storeToRefs(playerStore);
-
-	/* ---------------------------------------------------------------------- */
-
 	function determineBlockedRoundWinnerAndPoints(leftoverPoints: Record<Id, number>): RoundEndPoints {
 		const playerIds = Object.keys(leftoverPoints) as Id[];
 		// The player with the least points is the winner of a blocked round.
@@ -111,6 +96,26 @@ export function useRules() {
 	}
 
 	/**
+	 * Calculates the number of starting stones per player based on the number
+	 * of active players. When there are no active players, it defaults to 0.
+	 */
+	function determineStonesPerPlayer(numberOfPlayers: number): number {
+		if (numberOfPlayers === 2) return 9;
+
+		if (
+			numberOfPlayers === 3 ||
+			numberOfPlayers === 4
+		) return 7;
+
+		if (
+			numberOfPlayers === 5 ||
+			numberOfPlayers === 6
+		) return 6;
+
+		return 0;
+	}
+
+	/**
 	 * Calculates the bonus score a player receives for the played tile in the
 	 * opening turn of a round.
 	 *
@@ -131,26 +136,6 @@ export function useRules() {
 	function canTileBeTripleStone(value: number): boolean {
 		return value % 3 === 0;
 	}
-
-	/**
-	 * Calculates the number of starting stones based on the number of
-	 * active players. When there are no active players, it defaults to 0.
-	 */
-	const startingStoneCount = computed<number>(() => {
-		if (activePlayers.value.length === 2) return 9;
-
-		if (
-			activePlayers.value.length === 3 ||
-			activePlayers.value.length === 4
-		) return 7;
-
-		if (
-			activePlayers.value.length === 5 ||
-			activePlayers.value.length === 6
-		) return 6;
-
-		return 0;
-	});
 
 	function calculateTurnScore(turn: TurnInput): number {
 		const hasPlayedTile = turn.tilesPlayed === 1;
@@ -189,8 +174,8 @@ export function useRules() {
 		calculateTurnScore,
 		canTileBeTripleStone,
 		determineRoundWinnerAndPoints,
+		determineStonesPerPlayer,
 		maximumNumberOfPlayers,
-		minimumNumberOfPlayers,
-		startingStoneCount
+		minimumNumberOfPlayers
 	};
 }

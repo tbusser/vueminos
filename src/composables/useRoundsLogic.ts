@@ -22,7 +22,7 @@ export function useRoundsLogic() {
 	/* ---------------------------------------------------------------------- */
 
 	const { activePlayers } = storeToRefs(playersStore);
-	const { startingStoneCount } = useRules();
+	const { determineStonesPerPlayer } = useRules();
 	const { currentPlayerId, currentRound, currentRoundOrdinal, hasCurrentRound } = storeToRefs(roundsStore);
 	const { t } = useGlobalI18n();
 
@@ -35,12 +35,13 @@ export function useRoundsLogic() {
 	 */
 	function initializePlayerStats(): PlayerStats[] {
 		const stats: PlayerStats[] = [];
+		const stoneCount = determineStonesPerPlayer(activePlayers.value.length);
 
 		for (const player of activePlayers.value) {
 			stats.push({
 				id: player.id,
 				score: 0,
-				tiles: startingStoneCount.value
+				tiles: stoneCount
 			});
 		};
 
