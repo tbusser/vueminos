@@ -27,10 +27,13 @@ export const usePlayersStore = defineStore('players', () => {
 	 *
 	 * @param id The ID of the player to retrieve.
 	 *
-	 * @returns The player with the specified ID, or undefined if not found.
+	 * @returns A copy of the player with the specified ID, or undefined if
+	 *          not found.
 	 */
 	function getPlayerById(id: Id): Player | undefined {
-		return players.value.find((player) => player.id === id);
+		const player = players.value.find((player) => player.id === id);
+
+		return player === undefined ? undefined : { ...player };
 	}
 
 	/**
