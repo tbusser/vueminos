@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { usePlayersStore } from '@/stores/players';
@@ -28,7 +28,11 @@ const playerStore = usePlayersStore();
 
 const { activePlayers } = storeToRefs(playerStore);
 
-const { startingStoneCount } = useRules();
+const { determineStonesPerPlayer } = useRules();
+
+const stonesPerPlayer = computed<number>(
+	() => determineStonesPerPlayer(activePlayers.value.length)
+);
 
 const selectedId = ref<Id | undefined>(undefined);
 const showValidationMessage = ref<boolean>(false);
@@ -57,7 +61,7 @@ function onNavigateForward(): void {
 <template>
 	<AppScreen :title="$t('playerSelect.title', [currentRoundOrdinal ?? 0])">
 		<MessageBox>
-			<div v-html="$t('playerSelect.infoMessage', [startingStoneCount])" />
+			<div v-html="$t('playerSelect.infoMessage', [stonesPerPlayer])" />
 		</MessageBox>
 
 		<ToggleButtonGroup
