@@ -43,6 +43,10 @@ export const useTurnsStore = defineStore('turns', () => {
 	 *
 	 * @param id The ID of the turn to update.
 	 * @param update The partial update to apply to the turn.
+	 *
+	 * @throws {TurnIdNotFoundError} If the turn with the specified ID is not
+	 *         found in the turns store, an error is thrown to prevent updating
+	 *         a non-existent turn.
 	 */
 	function updateTurn(id: Id, update: Partial<Omit<Turn, 'id' | 'roundId'>>): void {
 		const index = turns.value.findIndex(turn => turn.id === id);
