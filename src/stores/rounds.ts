@@ -76,6 +76,7 @@ export const useRoundsStore = defineStore('round', () => {
 		if (currentRound.value === undefined) {
 			throw new NoCurrentRoundExistsError('Unable to get tile count, no current round present for the game.');
 		}
+
 		const playerStats = currentRound.value.playerStats.find(player => player.id === playerId);
 		if (playerStats === undefined) {
 			throw new PlayerIdNotFoundError(`Player with ID ${playerId} not found in player stats of current round with ID "${currentRound.value.id}".`);
@@ -194,6 +195,12 @@ export const useRoundsStore = defineStore('round', () => {
 	 * @throws {NoCurrentRoundExistsError} If there is no current round present
 	 *         in the store, an error is thrown to prevent completing a
 	 *         non-existent round.
+	 * @throws {PlayerIdNotFoundError} If there is no player ID set for the
+	 *         winner of the round, an error is thrown to prevent completing a
+	 *         round without a winner.
+	 * @throws {PlayerIdNotFoundError} If the player with the specified ID is
+	 *         not found in the player stats of the current round, an error is
+	 *         thrown to prevent completing a round for a non-existent player.
 	 */
 	function completeCurrentRound(scores: Scores): void {
 		const round = currentRound.value;
@@ -227,9 +234,20 @@ export const useRoundsStore = defineStore('round', () => {
 	 * @throws {NoCurrentRoundExistsError} If there is no current round
 	 *         present in the store, an error is thrown to prevent updating a
 	 *         non-existent round.
+	 * @throws {PlayerIdNotFoundError} If the player with the specified ID is
+	 *         not found in the player stats of the current round, an error is
+	 *         thrown to prevent updating the current round with a non-existent
+	 *         player.
 	 */
 	function updateCurrentRound(update: Partial<UpdatableFields>): void {
 		const index = getCurrentRoundIndex();
+
+		if (
+			update.currentPlayerId !== undefined &&
+			!isPlayerIdInCurrentRoundStats(update.currentPlayerId)
+		) {
+			throw new PlayerIdNotFoundError(`Player with ID ${update.currentPlayerId} not found in player stats of current round with ID "${rounds.value[index].id}".`);
+		}
 
 		rounds.value[index] = {
 			...rounds.value[index],
@@ -295,11 +313,11 @@ export const useRoundsStore = defineStore('round', () => {
 
 		// Getters
 		completedRounds,
-		currentRound,
-		currentRoundScore,
 		currentPlayerId,
 		currentPlayerStats,
+		currentRound,
 		currentRoundOrdinal,
+		currentRoundScore,
 		getCurrentRoundTileCountForPlayer,
 		hasCurrentRound,
 		playerScores,
