@@ -492,6 +492,24 @@ describe('Rounds Store', () => {
 			expect(roundsStore.playerScores).toEqual({ [playerId]: 55 });
 		});
 
+		it('should return accumulated scores per player from completed rounds', () => {
+			const roundsStore = useRoundsStore();
+			const player1Id = generateId();
+			const player2Id = generateId();
+
+			roundsStore.addRound(createCurrentRound([player1Id, player2Id]));
+			roundsStore.updateCurrentRound({ winnerId: player1Id });
+			roundsStore.completeCurrentRound({ [player1Id]: 42, [player2Id]: 30 });
+			roundsStore.addRound(createCurrentRound([player1Id, player2Id]));
+			roundsStore.updateCurrentRound({ winnerId: player2Id });
+			roundsStore.completeCurrentRound({ [player1Id]: 13, [player2Id]: 20 });
+
+			expect(roundsStore.playerScores).toEqual({
+				[player1Id]: 55,
+				[player2Id]: 50
+			});
+		});
+
 		it('should return the combined scores from completed and current rounds', () => {
 			const roundsStore = useRoundsStore();
 			const playerId = generateId();
@@ -504,6 +522,24 @@ describe('Rounds Store', () => {
 			roundsStore.updateCurrentRoundPlayerStats(playerId, 0, 10);
 
 			expect(roundsStore.playerScores).toEqual({ [playerId]: 52 });
+		});
+
+		it('should return combined scores per player from completed and current rounds', () => {
+			const roundsStore = useRoundsStore();
+			const player1Id = generateId();
+			const player2Id = generateId();
+
+			roundsStore.addRound(createCurrentRound([player1Id, player2Id]));
+			roundsStore.updateCurrentRound({ winnerId: player1Id });
+			roundsStore.completeCurrentRound({ [player1Id]: 42, [player2Id]: 30 });
+			roundsStore.addRound(createCurrentRound([player1Id, player2Id]));
+			roundsStore.updateCurrentRoundPlayerStats(player1Id, 0, 10);
+			roundsStore.updateCurrentRoundPlayerStats(player2Id, 0, 15);
+
+			expect(roundsStore.playerScores).toEqual({
+				[player1Id]: 52,
+				[player2Id]: 45
+			});
 		});
 	});
 
