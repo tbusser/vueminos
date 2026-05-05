@@ -10,6 +10,7 @@ import ScoreLeaderboard from '@/components/ScoreLeaderboard.vue';
 import SettingsPanel from '@/components/SettingsPanel.vue';
 
 import { useBuildInfo } from '@/composables/useBuildInfo';
+import { useRoundManager } from '@/composables/useRoundManager';
 
 /* ========================================================================== */
 
@@ -18,6 +19,7 @@ const emit = defineEmits<{ resetConfirmed: [] }>();
 /* ========================================================================== */
 
 const { hasActiveGame } = storeToRefs(useGameStore());
+const { currentPlayer, tilesPerPlayer } = useRoundManager();
 const { appVersion, formattedBuildTimestamp } = useBuildInfo();
 
 /* -------------------------------------------------------------------------- */
@@ -83,8 +85,8 @@ function onClose(): void {
 				class="container"
 			>
 				<ScoreLeaderboard
-					:highlight-current-player="true"
-					:show-tiles="true"
+					:current-player-id="currentPlayer?.id"
+					:tiles-per-player="tilesPerPlayer"
 				/>
 			</div>
 			<div

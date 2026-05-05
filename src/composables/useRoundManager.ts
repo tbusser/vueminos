@@ -42,6 +42,15 @@ export function useRoundManager() {
 		return currentRound.value?.phase ?? 'player-select';
 	});
 
+	const tilesPerPlayer = computed<TilesPerPlayer | undefined>(() => {
+		if (currentRound.value === undefined) return undefined;
+
+		return currentRound.value.playerStats.reduce((acc, player) => {
+			acc[player.id] = player.tiles;
+			return acc;
+		}, {} as TilesPerPlayer);
+	});
+
 	/* ---------------------------------------------------------------------- */
 
 	/**
@@ -199,6 +208,7 @@ export function useRoundManager() {
 		isFirstTurnOfRound,
 		finishRound,
 		setStartingPlayer,
-		saveTurn
+		saveTurn,
+		tilesPerPlayer
 	};
 }

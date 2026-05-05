@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { storeToRefs } from 'pinia';
 
 import { useGameScores } from '@/composables/useGameScores';
 import { usePlayerManager } from '@/composables/usePlayerManager';
-
-import { useRoundsStore } from '@/stores/rounds';
-import { useRoundManager } from '@/composables/useRoundManager';
 
 /* ========================================================================== */
 
@@ -19,44 +15,45 @@ type LeaderboardEntry = {
 
 /* ========================================================================== */
 
-defineProps<{
-	highlightCurrentPlayer?: boolean;
+const props = defineProps<{
+	/**
+	 * Optional prop to specify the current player. When provided the player
+	 * will be highlighted in the leaderboard.
+	 */
+	currentPlayerId?: Id;
 
 	/**
-	 * Determines whether to show the tiles column in the leaderboard.
+	 * When provided, the leaderboard will show per player how many tiles they
+	 * have left in their hand.
 	 */
-	showTiles?: boolean;
+	tilesPerPlayer?: TilesPerPlayer;
 }>();
 
 /* ========================================================================== */
 
 const { totalScore } = useGameScores();
 const { players } = usePlayerManager();
-const { currentPlayer } = useRoundManager();
 
-const { currentRound } = storeToRefs(useRoundsStore());
+const showTiles = computed<boolean>(() => props.tilesPerPlayer !== undefined);
 
 /* -------------------------------------------------------------------------- */
 
 const leaderboardData = computed<LeaderboardEntry[]>(() => {
 	return players.value.map(player => {
-		const stats = currentRound.value?.playerStats.find(stat => stat.id === player.id);
+		const tiles = showTiles.value ? (props.tilesPerPlayer?.[player.id] ?? 0) : 0;
 
 		return {
 			id: player.id,
 			name: player.name,
 			score: totalScore.value[player.id],
-			tiles: stats?.tiles ?? 0
+			tiles
 		};
 	}).sort((a, b) => b.score - a.score);
 });
 </script>
 
 <template>
-	<table
-		class="leaderboard"
-		:class="{ 'highlight-current-player': highlightCurrentPlayer }"
-	>
+	<table class="leaderboard">
 		<thead>
 			<tr>
 				<th class="header-cell">
@@ -81,7 +78,7 @@ const leaderboardData = computed<LeaderboardEntry[]>(() => {
 				v-for="(entry, index) of leaderboardData"
 				:key="entry.id"
 				class="player-row"
-				:class="{ 'is-current-player': entry.id === currentPlayer?.id }"
+				:class="{ 'is-current-player': entry.id === currentPlayerId }"
 			>
 				<td>{{ index + 1 }}</td>
 				<td class="name-cell">
@@ -110,13 +107,11 @@ const leaderboardData = computed<LeaderboardEntry[]>(() => {
 	td, th {
 		padding: 2px 10px;
 	}
+}
 
-	&.highlight-current-player {
-		.is-current-player td {
-			font-size: 1.05em;
-			font-weight: bold;
-		}
-	}
+.is-current-player td {
+	font-size: 1.05em;
+	font-weight: bold;
 }
 
 .name-cell {

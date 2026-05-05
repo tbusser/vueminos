@@ -29,7 +29,7 @@ function onContinue() {
 			The game is over. The winner is {{ winner?.name }} with the highest score.
 		</MessageBox>
 
-		<ScoreLeaderboard :show-tiles="false" />
+		<ScoreLeaderboard />
 
 		<template #primary-action>
 			<button
