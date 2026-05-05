@@ -1,5 +1,7 @@
 @use "../02-tools/functions/index"	as *;
 
+@use "sass:color";
+
 /* ========================================================================== */
 
 button {
@@ -16,6 +18,10 @@ button {
 	justify-content: center;
 	padding: get-spacing(x-small) get-spacing();
 	touch-action: manipulation;
+	// Prevent text selection when the button is clicked, needed to have the
+	// active styling applied to the button on iOS when interacting with the
+	// button using touch.
+	user-select: none;
 
 	&:not(:disabled) {
 		&:active,
@@ -26,7 +32,7 @@ button {
 		}
 
 		&:active {
-			background-color: #fff;
+			background-color: color.adjust(#DFCA8844, $lightness: -60%);
 		}
 
 		@media(hover: hover) {
