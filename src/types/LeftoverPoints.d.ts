@@ -2,7 +2,6 @@ export {};
 
 /* ========================================================================== */
 
-
 declare global {
 	/**
 	 * Represents the points left over at the end of a round for each player.
