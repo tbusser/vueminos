@@ -1,4 +1,4 @@
-## [1.0.11] - 2026-05-05
+## [1.0.11](https://github.com/tbusser/vueminos/compare/v1.0.10..v1.0.11) - 2026-05-05
 
 ### 🐛 Bug Fixes
 
@@ -36,29 +36,29 @@
 - *(pr-checks)* Read Node version from pnpm-workspace.yaml
 - *(pr-checks)* Fix indentation of node-version step
 
-## [1.0.10] - 2026-05-01
+## [1.0.10](https://github.com/tbusser/vueminos/compare/v1.0.9..v1.0.10) - 2026-05-01
 
 ### 🐛 Bug Fixes
 
 - *(publish)* Create annotated tag so --follow-tags pushes it
 
-## [1.0.9] - 2026-05-01
+## [1.0.9](https://github.com/tbusser/vueminos/compare/v1.0.8..v1.0.9) - 2026-05-01
 
 ### 🐛 Bug Fixes
 
 - *(release)* Use --current flag and skip all release commits
 
-## [1.0.8] - 2026-05-01
+## [1.0.8](https://github.com/tbusser/vueminos/compare/v1.0.7..v1.0.8) - 2026-05-01
 
 ### ⚙️ Miscellaneous Tasks
 
 - *(cliff)* Link PR numbers in changelog to GitHub
 
-## [1.0.7] - 2026-05-01
+## [1.0.7](https://github.com/tbusser/vueminos/compare/v1.0.6..v1.0.7) - 2026-05-01
 
 ### 🐛 Bug Fixes
 
-- *(TurnScreen)* Reject array values from ToggleButtonGroup bonus handler (#14)
+- *(TurnScreen)* Reject array values from ToggleButtonGroup bonus handler ([#14](https://github.com/tbusser/vueminos/pull/14))
 
 ### 💼 Other
 
@@ -67,9 +67,9 @@
 ### 🚜 Refactor
 
 - Release script and tagging
-- *(views)* Replace static router import with useRouter() composable (#12)
-- *(rounds)* Move round ordinal computation into the rounds store (#13)
-- *(MainMenu)* Drive bottom sheet open state via local ref (#15)
+- *(views)* Replace static router import with useRouter() composable ([#12](https://github.com/tbusser/vueminos/pull/12))
+- *(rounds)* Move round ordinal computation into the rounds store ([#13](https://github.com/tbusser/vueminos/pull/13))
+- *(MainMenu)* Drive bottom sheet open state via local ref ([#15](https://github.com/tbusser/vueminos/pull/15))
 
 ### ⚙️ Miscellaneous Tasks
 
@@ -79,13 +79,14 @@
 - *(skills)* Add commit skill for conventional commit message generation
 - Add workflow to create github release on tag push
 
-## [1.0.6] - 2026-04-30
+## [1.0.6](https://github.com/tbusser/vueminos/compare/v1.0.5..v1.0.6) - 2026-04-30
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update changelog template
 - Use git-cliff to manage version bump
-## [1.0.5] - 2026-04-29
+
+## [1.0.5](https://github.com/tbusser/vueminos/compare/v1.0.4..v1.0.5) - 2026-04-29
 
 ### 🐛 Bug Fixes
 
@@ -96,4 +97,6 @@
 
 - Add commit message linting
 - Add auto changelog generation
+
 ## [0.1.0] - 2026-04-28
+
