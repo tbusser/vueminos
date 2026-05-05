@@ -85,40 +85,6 @@ export const useRoundsStore = defineStore('round', () => {
 		return playerStats.tiles;
 	}
 
-	const currentRoundScore = computed<Record<Id, number>>(() => {
-		if (currentRound.value === undefined) return {};
-
-		return currentRound.value.playerStats.reduce((acc, playerStat) => {
-			acc[playerStat.id] = playerStat.score;
-			return acc;
-		}, {} as Record<Id, number>);
-	});
-
-	const finishedRoundsScore = computed<Record<Id, number>>(() => {
-		return completedRounds.value.reduce((acc, round) => {
-			(Object.keys(round.scores) as Id[]).forEach((playerId) => {
-				acc[playerId] = (acc[playerId] ?? 0) + round.scores[playerId];
-			});
-
-			return acc;
-		}, {} as Record<Id, number>);
-	});
-
-	const playerScores = computed<Record<Id, number>>(() => {
-		const keys = new Set<Id>([
-			...Object.keys(currentRoundScore.value) as Id[],
-			...Object.keys(finishedRoundsScore.value) as Id[]
-		]);
-
-		const result: Record<Id, number> = {};
-		keys.forEach((key) => {
-			result[key] =
-				(currentRoundScore.value[key] ?? 0) + (finishedRoundsScore.value[key] ?? 0);
-		});
-
-		return result;
-	});
-
 	/* ---------------------------------------------------------------------- */
 
 	/**
@@ -317,10 +283,8 @@ export const useRoundsStore = defineStore('round', () => {
 		currentPlayerStats,
 		currentRound,
 		currentRoundOrdinal,
-		currentRoundScore,
 		getCurrentRoundTileCountForPlayer,
 		hasCurrentRound,
-		playerScores,
 
 		// Actions
 		$reset,
