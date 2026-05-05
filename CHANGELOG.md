@@ -1,3 +1,41 @@
+## [1.0.11] - 2026-05-05
+
+### 🐛 Bug Fixes
+
+- *(rounds)* Validate currentPlayerId and document thrown errors
+- *(button)* Prevent text selection to restore :active on iOS
+
+### 💼 Other
+
+- Bump dev dependencies
+- *(eslint)* Fix vitest plugin glob to match .test.ts file convention
+
+### 🚜 Refactor
+
+- *(useRules)* Move triple-stone eligibility rule into useRules
+- *(useGameLogic)* Rename clearGameData to resetGameProgress ([#33](https://github.com/tbusser/vueminos/pull/33))
+- *(useRoundManager)* Move round-end mutations out of helper predicates
+- *(rounds)* Remove redundant updateCurrentRoundField action ([#34](https://github.com/tbusser/vueminos/pull/34))
+- *(ScoreLeaderboard)* Rename Leaderboard to satisfy multi-word rule
+- *(useRules)* Remove Pinia dependency by replacing reactive computed with pure function ([#36](https://github.com/tbusser/vueminos/pull/36))
+- *(ScoreLeaderboard)* Decouple from useRoundManager and useRoundsStore ([#37](https://github.com/tbusser/vueminos/pull/37))
+
+### 📚 Documentation
+
+- *(id)* Move JSDoc comment to above the function signature
+- *(code-review)* Add architectural awareness to review skill
+
+### 🧪 Testing
+
+- *(vitest)* Migrate to jsdom environment and add first unit tests ([#32](https://github.com/tbusser/vueminos/pull/32))
+- Add unit tests for the Pinia stores ([#35](https://github.com/tbusser/vueminos/pull/35))
+
+### ⚙️ Miscellaneous Tasks
+
+- Add lint and unit test checks to PR workflow
+- *(pr-checks)* Read Node version from pnpm-workspace.yaml
+- *(pr-checks)* Fix indentation of node-version step
+
 ## [1.0.10] - 2026-05-01
 
 ### 🐛 Bug Fixes
