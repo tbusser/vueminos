@@ -8,7 +8,7 @@ import { usePlayersStore } from '@/stores/players';
 
 /* ========================================================================== */
 
-function createGame(limit: number = 100): void {
+function createGame(limit: number): void {
 	useGameStore().createNewGame(limit);
 }
 
@@ -143,27 +143,106 @@ describe('useGameScores', () => {
 	/* ---------------------------------------------------------------------- */
 
 	describe('totalScore', () => {
-		it('should combine scores from completed and current rounds', () => {
+		it('should return an empty object if there are no rounds', () => {
+			const { totalScore } = useGameScores();
+
+			expect(totalScore.value).toEqual({});
+		});
+
+		it('should return the accumulated scores from completed rounds only', () => {
 			const { totalScore } = useGameScores();
 			const playerId = generateId();
 
-			createGame(200);
 			createRounds([
 				{
 					id: generateId(),
 					isCurrentRound: false,
-					scores: { [playerId]: 60 },
+					scores: { [playerId]: 42 },
+					winnerId: playerId
+				},
+				{
+					id: generateId(),
+					isCurrentRound: false,
+					scores: { [playerId]: 13 },
+					winnerId: playerId
+				}
+			]);
+
+			expect(totalScore.value).toEqual({ [playerId]: 55 });
+		});
+
+		it('should return accumulated scores per player from completed rounds', () => {
+			const { totalScore } = useGameScores();
+			const player1Id = generateId();
+			const player2Id = generateId();
+
+			createRounds([
+				{
+					id: generateId(),
+					isCurrentRound: false,
+					scores: { [player1Id]: 42, [player2Id]: 30 },
+					winnerId: player1Id
+				},
+				{
+					id: generateId(),
+					isCurrentRound: false,
+					scores: { [player1Id]: 13, [player2Id]: 20 },
+					winnerId: player2Id
+				}
+			]);
+
+			expect(totalScore.value).toEqual({
+				[player1Id]: 55,
+				[player2Id]: 50
+			});
+		});
+
+		it('should return the combined scores from completed and current rounds', () => {
+			const { totalScore } = useGameScores();
+			const playerId = generateId();
+
+			createRounds([
+				{
+					id: generateId(),
+					isCurrentRound: false,
+					scores: { [playerId]: 42 },
 					winnerId: playerId
 				},
 				{
 					id: generateId(),
 					isCurrentRound: true,
 					phase: 'turns',
-					playerStats: [{ id: playerId, score: 25, tiles: 2 }]
+					playerStats: [{ id: playerId, score: 10, tiles: 3 }]
 				}
 			]);
 
-			expect(totalScore.value[playerId]).toBe(85);
+			expect(totalScore.value).toEqual({ [playerId]: 52 });
+		});
+
+		it('should return combined scores per player from completed and current rounds', () => {
+			const { totalScore } = useGameScores();
+			const player1Id = generateId();
+			const player2Id = generateId();
+
+			createRounds([
+				{
+					id: generateId(),
+					isCurrentRound: false,
+					scores: { [player1Id]: 42, [player2Id]: 30 },
+					winnerId: player1Id
+				},
+				{
+					id: generateId(),
+					isCurrentRound: true,
+					phase: 'turns',
+					playerStats: [{ id: player1Id, score: 10, tiles: 3 }, { id: player2Id, score: 15, tiles: 3 }]
+				}
+			]);
+
+			expect(totalScore.value).toEqual({
+				[player1Id]: 52,
+				[player2Id]: 45
+			});
 		});
 	});
 
@@ -172,11 +251,8 @@ describe('useGameScores', () => {
 	describe('winner', () => {
 		it('should return undefined when the points limit has not been reached', () => {
 			const { winner } = useGameScores();
-			const playersStore = usePlayersStore();
-			const player: Player = { active: true, id: generateId(), name: 'Alice' };
 
 			createGame(100);
-			playersStore.addPlayer(player);
 
 			expect(winner.value).toBeUndefined();
 		});
