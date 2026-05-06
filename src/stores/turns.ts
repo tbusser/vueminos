@@ -7,7 +7,8 @@ import { TurnIdNotFoundError } from '@/errors';
 
 export const useTurnsStore = defineStore('turns', () => {
 	/**
-	 * A list of turns.
+	 * The turns for the current round. Turns from previous rounds are removed
+	 * when a round completes via `deleteTurns`.
 	 */
 	const turns = ref<Turn[]>([]);
 
