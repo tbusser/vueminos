@@ -9,11 +9,10 @@ import { useTurnsStore } from './turns';
 
 /* ========================================================================== */
 
-function createTurn(roundId = generateId()): Turn {
+function createTurn(): Turn {
 	return {
 		id: generateId(),
 		playerId: generateId(),
-		roundId,
 		score: 0,
 		tilesDrawn: 3,
 		tilesPlayed: 0,
@@ -42,35 +41,19 @@ describe('Turns Store', () => {
 
 	/* ---------------------------------------------------------------------- */
 
-	describe('deleteTurnsForRound', () => {
-		it('should delete turns for a specific round', () => {
+	describe('deleteTurns', () => {
+		it('should delete all turns', () => {
 			const turnStore = useTurnsStore();
 
-			const roundA = generateId();
-			const turnA = createTurn(roundA);
-
-			const roundB = generateId();
-			const turnB = createTurn(roundB);
+			const turnA = createTurn();
+			const turnB = createTurn();
 
 			turnStore.addTurn(turnA);
 			turnStore.addTurn(turnB);
 
-			turnStore.deleteTurnsForRound(roundA);
+			turnStore.deleteTurns();
 
-			expect(turnStore.turns).toHaveLength(1);
-			expect(turnStore.turns[0]).toEqual(turnB);
-		});
-
-		it('should do nothing if the round ID is not found', () => {
-			const turnStore = useTurnsStore();
-			const turn = createTurn();
-
-			turnStore.addTurn(turn);
-
-			turnStore.deleteTurnsForRound(generateId());
-
-			expect(turnStore.turns).toHaveLength(1);
-			expect(turnStore.turns[0]).toEqual(turn);
+			expect(turnStore.turns).toHaveLength(0);;
 		});
 	});
 

@@ -54,19 +54,9 @@ export function useRoundManager() {
 	/* ---------------------------------------------------------------------- */
 
 	/**
-	 * The turns for the current round.
-	 */
-	const turnsForCurrentRound = computed<Turn[]>(() => {
-		const round = currentRound.value;
-		if (round === undefined) return [];
-
-		return turns.value.filter(turn => turn.roundId === round.id);
-	});
-
-	/**
 	 * Indicates whether the current turn is the first turn of the round.
 	 */
-	const isFirstTurnOfRound = computed<boolean>(() => turnsForCurrentRound.value.length === 0);
+	const isFirstTurnOfRound = computed<boolean>(() => turns.value.length === 0);
 
 	/* ---------------------------------------------------------------------- */
 
@@ -91,7 +81,7 @@ export function useRoundManager() {
 	}
 
 	function checkIfRoundIsBlocked(): boolean {
-		const lastTurns = turnsForCurrentRound.value.slice(-playersStore.activePlayers.length);
+		const lastTurns = turns.value.slice(-playersStore.activePlayers.length);
 
 		if (lastTurns.length < playersStore.activePlayers.length) return false;
 
@@ -147,7 +137,7 @@ export function useRoundManager() {
 
 		// Clear the turns for the round which was the current round up to a
 		// moment ago. Once it is finished, its turns are no longer editable.
-		turnsStore.deleteTurnsForRound(round.id);
+		turnsStore.deleteTurns();
 
 		return { success: true };
 	}

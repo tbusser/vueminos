@@ -95,8 +95,7 @@ export function useRoundsLogic() {
 		const turn: Turn = {
 			...turnInput,
 			id: generateId(),
-			playerId: currentPlayerId.value,
-			roundId: currentRound.value.id
+			playerId: currentPlayerId.value
 		};
 
 		// Store the turn in the turns store.

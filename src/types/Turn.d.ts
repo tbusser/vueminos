@@ -18,13 +18,6 @@ type TurnBase = {
 	playerId: Id;
 
 	/**
-	 * The ID of the round this turn belongs to.
-	 *
-	 * @example '123e4567-e89b-12d3-a456-426614174000'
-	 */
-	roundId: Id;
-
-	/**
 	 * The total score for this turn after all bonuses and penalties have
 	 * been applied.
 	 *
