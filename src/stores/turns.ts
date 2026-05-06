@@ -30,12 +30,10 @@ export const useTurnsStore = defineStore('turns', () => {
 	}
 
 	/**
-	 * Deletes all turns associated with a specific round ID.
-	 *
-	 * @param roundId The ID of the round for which to delete turns.
+	 * Deletes all turns from the turns store.
 	 */
-	function deleteTurnsForRound(roundId: Id): void {
-		turns.value = turns.value.filter(turn => turn.roundId !== roundId);
+	function deleteTurns(): void {
+		turns.value = [];
 	}
 
 	/**
@@ -67,7 +65,7 @@ export const useTurnsStore = defineStore('turns', () => {
 		// Actions
 		$reset,
 		addTurn,
-		deleteTurnsForRound,
+		deleteTurns,
 		updateTurn
 	};
 }, {
