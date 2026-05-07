@@ -1,22 +1,13 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
-import { storeToRefs } from 'pinia';
-
-import { usePlayersStore } from '@/stores/players';
-import { useRoundsStore } from '@/stores/rounds';
+import { computed, ref } from 'vue';
 
 import AppScreen from '@/screens/AppScreen.vue';
 import CollectPointsPlayerItem from '@/components/CollectPointsPlayerItem.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PointsBottomSheet from '@/components/PointsBottomSheet.vue';
+import { useCollectPoints } from '@/composables/useCollectPoints';
 
 /* ========================================================================== */
-
-type CollectingLeftoverPoints = {
-	[id: Id]: number | undefined;
-};
-
-/* -------------------------------------------------------------------------- */
 
 const emit = defineEmits<{
 	(event: 'navigate-forward', leftoverPoints: LeftoverPoints): void;
@@ -24,39 +15,21 @@ const emit = defineEmits<{
 
 /* -------------------------------------------------------------------------- */
 
-const playersStore = usePlayersStore();
-
-const { activePlayers } = storeToRefs(playersStore);
-const { currentRound } = storeToRefs(useRoundsStore());
+const {
+	activePlayers,
+	collectedPoints,
+	hasPlayerWonTheRound,
+	isComplete,
+	setCollectedPoints,
+	winningPlayerName
+} = useCollectPoints();
 
 const isSheetOpen = ref<boolean>(false);
 const selectedPlayer = ref<Player | undefined>(undefined);
 
 const points = ref<number | undefined>(undefined);
 
-const leftOverPointsPerPlayer = reactive<CollectingLeftoverPoints>(activePlayers.value.reduce((acc, player) => {
-	// The player who has won the round does not need to collect points.
-	if (player.id === currentRound.value?.winnerId) return acc;
-
-	return {
-		...acc,
-		[player.id]: undefined
-	};
-}, {}));
-
-const canContinue = computed<boolean>(() => {
-	const points = Object.values(leftOverPointsPerPlayer);
-
-	return points.every((point) => point !== undefined);
-});
-
-const winningPlayerName = computed<string | undefined>(() => {
-	if (currentRound.value?.winnerId === undefined) return undefined;
-
-	const player = playersStore.getPlayerById(currentRound.value.winnerId);
-
-	return player?.name;
-});
+/* -------------------------------------------------------------------------- */
 
 const infoMessage = computed<string>(() => {
 	if (winningPlayerName.value === undefined) {
@@ -77,15 +50,11 @@ function closeSheet(): void {
 	points.value = undefined;
 }
 
-function hasPlayerWonTheRound(player: Player): boolean {
-	return currentRound.value?.winnerId === player.id;
-}
-
 /* -------------------------------------------------------------------------- */
 
-function onCollectPoints(playerId: Id): void {
-	selectedPlayer.value = playersStore.getPlayerById(playerId);
-	points.value = leftOverPointsPerPlayer[playerId];
+function onCollectPoints(player: Player): void {
+	selectedPlayer.value = player;
+	points.value = collectedPoints.value[player.id];
 	isSheetOpen.value = true;
 }
 
@@ -98,13 +67,13 @@ function onSavePoints(): void {
 	if (selectedPlayer.value === undefined) return;
 
 	// Set the left over points for the selected player.
-	leftOverPointsPerPlayer[selectedPlayer.value.id] = points.value;
+	setCollectedPoints(selectedPlayer.value.id, points.value);
 
 	closeSheet();
 }
 
 function onSubmit(): void {
-	emit('navigate-forward', leftOverPointsPerPlayer as LeftoverPoints);
+	emit('navigate-forward', collectedPoints.value as LeftoverPoints);
 }
 </script>
 
@@ -121,9 +90,9 @@ function onSubmit(): void {
 			>
 				<li>
 					<CollectPointsPlayerItem
-						:is-winner="hasPlayerWonTheRound(player)"
+						:is-winner="hasPlayerWonTheRound(player.id)"
 						:player="player"
-						:points="leftOverPointsPerPlayer[player.id]"
+						:points="collectedPoints[player.id]"
 						@collect="onCollectPoints"
 					/>
 				</li>
@@ -141,7 +110,7 @@ function onSubmit(): void {
 		<template #primary-action>
 			<button
 				type="button"
-				:disabled="!canContinue"
+				:disabled="!isComplete"
 				@click="onSubmit"
 			>
 				{{ $t('common.next') }}
