@@ -104,7 +104,7 @@ function onSavePoints(): void {
 }
 
 function onSubmit(): void {
-	emit('navigate-forward', leftOverPointsPerPlayer as Record<Id, number>);
+	emit('navigate-forward', leftOverPointsPerPlayer as LeftoverPoints);
 }
 </script>
 
