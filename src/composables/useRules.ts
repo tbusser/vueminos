@@ -34,7 +34,7 @@ const scoreModifiers = {
 /* ========================================================================== */
 
 export function useRules() {
-	function determineBlockedRoundWinnerAndPoints(leftoverPoints: Record<Id, number>): RoundEndPoints {
+	function determineBlockedRoundWinnerAndPoints(leftoverPoints: LeftoverPoints): RoundEndPoints {
 		const playerIds = Object.keys(leftoverPoints) as Id[];
 		// The player with the least points is the winner of a blocked round.
 		const winnerId = playerIds.reduce<Id>((winner, id) =>
@@ -56,7 +56,7 @@ export function useRules() {
 		};
 	}
 
-	function determineWonRoundWinnerAndPoints(leftoverPoints: Record<Id, number>, winnerId: Id): RoundEndPoints {
+	function determineWonRoundWinnerAndPoints(leftoverPoints: LeftoverPoints, winnerId: Id): RoundEndPoints {
 		const totalLeftoverPoints: number = Object.values(leftoverPoints).reduce((sum, points) => sum + points, 0);
 		const points: number = scoreModifiers.wonGame + totalLeftoverPoints;
 
@@ -82,13 +82,13 @@ export function useRules() {
 	 *          ID of the player who won the round.
 	 */
 	function determineRoundWinnerAndPoints(
-		leftoverPoints: Record<Id, number>, isBlocked: true
+		leftoverPoints: LeftoverPoints, isBlocked: true
 	): RoundEndPoints;
 	function determineRoundWinnerAndPoints(
-		leftoverPoints: Record<Id, number>, isBlocked: false, winnerId: Id
+		leftoverPoints: LeftoverPoints, isBlocked: false, winnerId: Id
 	): RoundEndPoints;
 	function determineRoundWinnerAndPoints(
-		leftoverPoints: Record<Id, number>, isBlocked: boolean, winnerId?: Id
+		leftoverPoints: LeftoverPoints, isBlocked: boolean, winnerId?: Id
 	): RoundEndPoints {
 		return isBlocked === true
 			? determineBlockedRoundWinnerAndPoints(leftoverPoints)
