@@ -5,7 +5,7 @@ import { computed } from 'vue';
 /* ========================================================================== */
 
 const emit = defineEmits<{
-	(event: 'collect', playerId: Id): void
+	(event: 'collect', player: Player): void
 }>();
 
 const props = defineProps<{
@@ -48,10 +48,10 @@ const message = computed<string>(() => {
 
 /**
  * Handles the click event on the player item button. It will emit a 'collect'
- * event with the player's ID when the button is clicked.
+ * event with the player when the button is clicked.
  */
 function onClick(): void {
-	emit('collect', props.player.id);
+	emit('collect', props.player);
 }
 </script>
 
