@@ -31,6 +31,7 @@ const { safeNavigateBack } = useNavigation();
 const { startNewRound } = useRoundsLogic();
 const { currentPlayerStats, hasCurrentRound } = storeToRefs(roundsStore);
 const { currentPhase, currentPlayer, finishRound, isFirstTurnOfRound, saveTurn, setStartingPlayer } = useRoundManager();
+const { totalScore } = useGameScores();
 
 const turnKey = ref<symbol>(Symbol(''));
 
@@ -39,7 +40,9 @@ const turnKey = ref<symbol>(Symbol(''));
 const subtitle = computed<string>(() => {
 	if (currentPlayerStats.value === undefined) return '';
 
-	return `${t('common.points', currentPlayerStats.value.score)} | ${t('common.tile', currentPlayerStats.value.tiles)}`;
+	const playerScore = totalScore.value[currentPlayerStats.value.id];
+
+	return `${t('common.points', playerScore)} | ${t('common.tile', currentPlayerStats.value.tiles)}`;
 });
 
 /* -------------------------------------------------------------------------- */
