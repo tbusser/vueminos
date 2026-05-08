@@ -4,11 +4,16 @@
 
 /* ========================================================================== */
 
+$button_background-color: #DFCA8844;
+$button_background-color_active: color.adjust($button_background-color, $lightness: -60%);
+
 button {
-	-webkit-tap-highlight-color: transparent;
+	// Needed for iOS to have the active styling applied to the button when
+	// interacting with the button using touch.
+	-webkit-tap-highlight-color: #{$button_background-color_active};
 
 	align-items: center;
-	background-color: #DFCA8844;
+	background-color: $button_background-color;
 	border: none;
 	color: inherit;
 	cursor: pointer;
@@ -18,9 +23,6 @@ button {
 	justify-content: center;
 	padding: get-spacing(x-small) get-spacing();
 	touch-action: manipulation;
-	// Prevent text selection when the button is clicked, needed to have the
-	// active styling applied to the button on iOS when interacting with the
-	// button using touch.
 	user-select: none;
 
 	&:not(:disabled) {
@@ -32,7 +34,7 @@ button {
 		}
 
 		&:active {
-			background-color: color.adjust(#DFCA8844, $lightness: -60%);
+			background-color: $button_background-color_active;
 		}
 
 		@media(hover: hover) {
