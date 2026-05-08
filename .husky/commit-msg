@@ -1,4 +1,4 @@
 branch=$(git rev-parse --abbrev-ref HEAD)
-if [ "$branch" = "main" ]; then
+if [ "$branch" = "master" ]; then
   commitlint --edit $1
 fi
