@@ -1,3 +1,31 @@
+## [1.0.12](https://github.com/tbusser/vueminos/compare/v1.0.11..v1.0.12) - 2026-05-08
+
+### 🐛 Bug Fixes
+
+- *(button)* Restore iOS touch active state via tap-highlight-color ([#44](https://github.com/tbusser/vueminos/pull/44))
+- *(round-view)* Show aggregated score in turn header ([#45](https://github.com/tbusser/vueminos/pull/45))
+
+### 🚜 Refactor
+
+- *(scoring)* Move score aggregation out of the rounds store ([#38](https://github.com/tbusser/vueminos/pull/38))
+- *(turns)* Remove roundId from Turn and simplify store ([#39](https://github.com/tbusser/vueminos/pull/39))
+- *(leftover-points)* Replace inline Record<Id, number> with LeftoverPoints type ([#40](https://github.com/tbusser/vueminos/pull/40))
+- *(collect-points)* Extract round-end point collection into composable ([#41](https://github.com/tbusser/vueminos/pull/41))
+
+### 🎨 Styling
+
+- *(types)* Remove blank line in LeftoverPoints declaration
+
+### 🧪 Testing
+
+- *(rounds)* Add multi-player coverage to playerScores
+
+### ⚙️ Miscellaneous Tasks
+
+- *(cliff)* Add compare links to version headings in changelog
+- *(changelog)* Regenerate with compare links and no unreleased section
+- *(pr-checks)* Add type check step to PR workflow
+
 ## [1.0.11](https://github.com/tbusser/vueminos/compare/v1.0.10..v1.0.11) - 2026-05-05
 
 ### 🐛 Bug Fixes
