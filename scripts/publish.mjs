@@ -10,6 +10,12 @@ if (override && !VALID_BUMPS.includes(override) && !/^\d+\.\d+\.\d+$/.test(overr
 	process.exit(1);
 }
 
+const currentBranch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+if (currentBranch !== 'master') {
+	console.error(`Error: releases must be made from master (current branch: ${currentBranch}).`);
+	process.exit(1);
+}
+
 try {
 	execSync('git diff --quiet && git diff --cached --quiet');
 } catch {
