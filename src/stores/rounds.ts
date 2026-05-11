@@ -189,7 +189,8 @@ export const useRoundsStore = defineStore('round', () => {
 			winnerId: playerId
 		};
 
-		rounds.value = rounds.value.map(item => item.id === round?.id ? completedRound : item);
+		const index = getCurrentRoundIndex();
+		rounds.value[index] = completedRound;
 	}
 
 	/**
@@ -206,19 +207,21 @@ export const useRoundsStore = defineStore('round', () => {
 	 *         player.
 	 */
 	function updateCurrentRound(update: Partial<UpdatableFields>): void {
-		const index = getCurrentRoundIndex();
+		const round = currentRound.value;
+		if (round === undefined) {
+			throw new NoCurrentRoundExistsError(
+				'Unable to update the current round, no current round present for the game'
+			);
+		}
 
 		if (
 			update.currentPlayerId !== undefined &&
 			!isPlayerIdInCurrentRoundStats(update.currentPlayerId)
 		) {
-			throw new PlayerIdNotFoundError(`Player with ID ${update.currentPlayerId} not found in player stats of current round with ID "${rounds.value[index].id}".`);
+			throw new PlayerIdNotFoundError(`Player with ID ${update.currentPlayerId} not found in player stats of current round with ID "${round.id}".`);
 		}
 
-		rounds.value[index] = {
-			...rounds.value[index],
-			...update
-		};
+		Object.assign(round, update);
 	}
 
 	/**
@@ -254,21 +257,11 @@ export const useRoundsStore = defineStore('round', () => {
 			throw new PlayerIdNotFoundError(`Player with ID ${playerId} not found in player stats of current round with ID "${round.id}".`);
 		}
 
-		const updatedPlayerStats: PlayerStats[] = round.playerStats.map(stats => {
-			if (stats.id !== playerId) return stats;
-
-			return {
-				...stats,
-				score: stats.score + scoreDelta,
-				tiles: stats.tiles + tilesDelta
-			};
-		});
-
-		const roundIndex = getCurrentRoundIndex();
-		rounds.value[roundIndex] = {
-			...rounds.value[roundIndex] as CurrentRound,
-			playerStats: updatedPlayerStats
-		};
+		// playerStats can't be undefined because we checked that the player ID
+		// is in the player stats with the isPlayerIdInCurrentRoundStats check.
+		const playerStats = round.playerStats.find(stats => stats.id === playerId)!;
+		playerStats.score += scoreDelta;
+		playerStats.tiles += tilesDelta;
 	}
 
 	/* ---------------------------------------------------------------------- */
