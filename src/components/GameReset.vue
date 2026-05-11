@@ -30,14 +30,14 @@ function onUnderstoodToggled(value: boolean): void {
 			:is-selected="understood"
 			@toggle="onUnderstoodToggled"
 		>
-			I want to start a new game. When I do, all progress will be lost.
+			{{ $t('gameReset.warning') }}
 		</toggle-button>
 
 		<button
 			:disabled="!understood"
 			@click="onConfirmed"
 		>
-			Reset Game
+			{{ $t('gameReset.resetLabel') }}
 		</button>
 	</div>
 </template>

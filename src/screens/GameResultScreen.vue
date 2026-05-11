@@ -24,9 +24,9 @@ function onContinue() {
 </script>
 
 <template>
-	<AppScreen title="Game over">
+	<AppScreen :title="$t('gameResult.title')">
 		<MessageBox>
-			The game is over. The winner is {{ winner?.name }} with the highest score.
+			{{ $t('gameResult.description', { winner: winner?.name }) }}
 		</MessageBox>
 
 		<ScoreLeaderboard />
@@ -35,7 +35,7 @@ function onContinue() {
 			<button
 				@click="onContinue"
 			>
-				New Game
+				{{ $t('gameResult.newGameLabel') }}
 			</button>
 		</template>
 	</AppScreen>

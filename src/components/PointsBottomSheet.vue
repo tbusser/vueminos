@@ -45,7 +45,7 @@ function onClose(): void {
 					type="button"
 					@click="onCancel"
 				>
-					Cancel
+					{{ $t('common.cancel') }}
 				</button>
 				<h2 class="title">
 					{{ playerName }}
@@ -55,7 +55,7 @@ function onClose(): void {
 					type="button"
 					@click="onClose"
 				>
-					Save
+					{{ $t('common.save') }}
 				</button>
 			</header>
 		</template>

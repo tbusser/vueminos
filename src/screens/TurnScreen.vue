@@ -120,12 +120,14 @@ function onToggleIsTripleStone(value: boolean) {
 				:is-selected="isTripleStone"
 				@toggle="onToggleIsTripleStone"
 			>
-				{{ $t('turnView.isTripleStone', [openingTurnBonus]) }}
+				{{ $t('turn.tripleStone', { bonus: openingTurnBonus }) }}
 			</ToggleButton>
 		</template>
 		<template v-else>
 			<div class="tiles-drawn-wrapper">
-				<label for="tiles-drawn">Tiles drawn</label>
+				<label for="tiles-drawn">
+					{{ $t('turn.tilesDrawnLabel') }}
+				</label>
 				<number-spinner
 					v-model="tilesDrawn"
 					:max="3"
@@ -133,7 +135,9 @@ function onToggleIsTripleStone(value: boolean) {
 			</div>
 
 			<div>
-				<label>Bonus scoring</label>
+				<label>
+					{{ $t('turn.bonusScoringLabel') }}
+				</label>
 
 				<ToggleButtonGroup
 					orientation="horizontal"
@@ -142,23 +146,23 @@ function onToggleIsTripleStone(value: boolean) {
 					<ShapeToggleButton :id="'bridge' satisfies BonusShape">
 						<img
 							src="@/assets/images/bridge.png"
-							alt="Bridge"
+							:alt="$t('turn.bonusBridgeLabel')"
 						>
-						bridge
+						{{ $t('turn.bonusBridgeLabel') }}
 					</ShapeToggleButton>
 					<ShapeToggleButton :id="'double' satisfies BonusShape">
 						<img
 							src="@/assets/images/double-sided.png"
-							alt="Double"
+							:alt="$t('turn.bonusDoubleLabel')"
 						>
-						double
+						{{ $t('turn.bonusDoubleLabel') }}
 					</ShapeToggleButton>
 					<ShapeToggleButton :id="'hexagon' satisfies BonusShape">
 						<img
 							src="@/assets/images/hexagon.png"
-							alt="Hexagon"
+							:alt="$t('turn.bonusHexagonLabel')"
 						>
-						hexagon
+						{{ $t('turn.bonusHexagonLabel') }}
 					</ShapeToggleButton>
 				</ToggleButtonGroup>
 			</div>

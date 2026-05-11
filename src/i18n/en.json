@@ -1,63 +1,88 @@
 {
 	"common": {
 		"back": "Back",
+		"cancel": "Cancel",
+		"close": "Close",
 		"decrease": "Decrease value",
 		"increase": "Increase value",
 		"next": "Next",
-		"player": "player",
 		"points": "{n} points | {n} point | {n} points",
 		"remove": "Remove",
+		"save": "Save",
 		"tile": "{n} tiles | {n} tile | {n} tiles"
 	},
-	"errorMessages": {
-		"hasCurrentRound": "Invalid action, there is already a current round",
-		"invalidLimit": "The limit is invalid",
-		"noActiveGame": "Invalid action, there is no active game",
-		"noCurrentRound": "Invalid action, there is no current round",
-		"noCurrentPlayer": "Invalid action, there is no current player",
-		"noWinner": "Invalid action, there is no winner"
+	"collectPoints": {
+		"pointsCollectedStatus": "@:common.points left",
+		"pointsPendingStatus": "Points not collected",
+		"roundBlocked": "The round is blocked. The player with the fewest points left in their hand will be the round winner.",
+		"roundWon": "{winner} has won the round. The total value of points left in each player's hand will be added to their score.",
+		"title": "Collect Points",
+		"winnerLabel": "Winner of the round"
 	},
-	"playerNames": {
-		"headingPlayers": "Players",
-		"infoMessage": "Please enter the names of the players. The game requires at least 2 players to play.",
-		"labelAdd": "Add",
-		"labelName": "New player name",
-		"namePlaceholder": "Enter player name",
-		"title": "Player Names"
-	},
-	"playerSelect": {
-		"infoMessage": "Each player gets <strong>{0} stones</strong>. Select the player who will start the round.",
-		"title": "Round {0} start"
-	},
-	"messages": {
-		"confirmRemovePlayer": "Are you sure you wish to remove player {0}?"
-	},
-	"validationMessages": {
-		"startingPlayerRequired": "You must select a player who will start the round.",
-		"tooFewPlayers": "The game requires at least {0} players to play.",
-		"tooManyPlayers": "The game requires a maximum of {0} players to play."
-	},
-	"gameLimit": {
-		"infoMessage": "Set the number of points needed to trigger the final round. The default is 400 points.",
-		"title": "Points Limit"
-	},
-	"roundView": {
-		"playerStats": "{0} @:common.points \u007C {1} @:common.tiles"
-	},
-	"settingsView": {
-		"labelColorScheme": "Color scheme",
-		"labelLanguage": "Language",
+	"colorSchemeSelect": {
 		"themeAuto": "Auto",
 		"themeDark": "Dark",
 		"themeLight": "Light",
-		"title": "Settings"
+		"title": "Color scheme"
 	},
-	"turnView": {
-		"isTripleStone": "The played stone is a triple, all sides have the same value (+{0} bonus points)."
+	"gameLimit": {
+		"description": "Set the number of points needed to trigger the final round. The default is 400 points.",
+		"title": "Points Limit"
 	},
-	"collectPoints": {
-		"pointsCollected": "{0} points left",
-		"pointsNotCollected": "Points not collected",
-		"winner": "Winner of the round"
+	"gamePlayers": {
+		"addLabel": "Add",
+		"description": "Please enter the names of the players. The game requires at least 2 players to play.",
+		"errorTooFewPlayers": "The game requires at least 2 players to play.",
+		"errorTooManyPlayers": "The game requires a maximum of 6 players to play.",
+		"nameLabel": "New player name",
+		"namePlaceholder": "Enter player name",
+		"playersLabel": "Players",
+		"title": "Player Names"
+	},
+	"gameReset": {
+		"resetLabel": "Reset Game",
+		"warning": "I want to start a new game. When I do, all progress will be lost."
+	},
+	"gameResult": {
+		"description": "The game is over. The winner is {winner} with the highest score.",
+		"newGameLabel": "New Game",
+		"title": "Game over"
+	},
+	"languageSelect": {
+		"languageAuto": "Auto",
+		"languageDutch": "Nederlands",
+		"languageEnglish": "English",
+		"title": "Language"
+	},
+	"mainMenu": {
+		"buildInfo": "v{version} / build {timestamp}",
+		"openLabel": "Open menu",
+		"title": "Menu"
+	},
+	"numberPad": {
+		"clearLabel": "Clear input",
+		"clearSymbol": "clr",
+		"deleteLabel": "Delete last input"
+	},
+	"playerSelect": {
+		"deleteConfirmation": "Are you sure you wish to remove player {name}?"
+	},
+	"scoreLeaderboard": {
+		"nameLabel": "Name",
+		"scoreLabel": "Score",
+		"tilesLabel": "Tiles"
+	},
+	"startingPlayer": {
+		"description": "Each player gets {stones}. Select the player who will start the round.",
+		"errorNoStartingPlayer": "You must select a player who will start the round.",
+		"title": "Round {ordinal} start"
+	},
+	"turn": {
+		"bonusBridgeLabel": "Bridge",
+		"bonusDoubleLabel": "Double",
+		"bonusHexagonLabel": "Hexagon",
+		"bonusScoringLabel": "Bonus scoring",
+		"tilesDrawnLabel": "Tiles drawn",
+		"tripleStone": "The played stone is a triple, all sides have the same value (+{bonus} bonus points)."
 	}
 }

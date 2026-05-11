@@ -1,64 +1,88 @@
 {
 	"common": {
 		"back": "Terug",
-		"decrease": "Verminder",
-		"increase": "Verhoog",
+		"cancel": "Annuleren",
+		"close": "Sluiten",
+		"decrease": "Verlaag waarde",
+		"increase": "Verhoog waarde",
 		"next": "Volgende",
-		"player": "speler",
-		"points": "punten | punt | punten",
-		"remove": "Verwijder",
-		"tile": "stenen | steen | stenen"
-	},
-	"errorMessages": {
-		"hasCurrentRound": "Ongeldige actie, er is al een huidige ronde.",
-		"invalidLimit": "De limiet is ongeldig",
-		"noActiveGame": "Ongeldige actie, er is geen actief spel.",
-		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde.",
-		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler.",
-		"noWinner": "Ongeldige actie, er is geen winnaar."
-	},
-	"playerNames": {
-		"headingPlayers": "Spelers",
-		"infoMessage": "Geef de namen op van de spelers. Er zijn minstens twee spelers nodig om te spelen.",
-		"labelAdd": "Toevoegen",
-		"labelName": "Nieuwe spelersnaam",
-		"namePlaceholder": "Geef naam speler op",
-		"title": "Spelersnamen"
-	},
-	"playerSelect": {
-		"infoMessage": "Elke speler krijgt <strong>{0} stenen</strong>. Kies de speler die de ronde zal beginnen.",
-		"title": "Start ronde {0}"
-	},
-	"messages": {
-		"confirmRemovePlayer": "Weet je zeker dat je speler {0} wilt verwijderen?"
-	},
-	"validationMessages": {
-		"startingPlayerRequired": "Je moet een speler selecteren die de ronde zal beginnen.",
-		"tooFewPlayers": "Het spel vereist minstens {0} spelers om te spelen.",
-		"tooManyPlayers": "Het spel vereist maximaal {0} spelers om te spelen."
-	},
-	"gameLimit": {
-		"infoMessage": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaard&shy;waarde is 400 punten.",
-		"title": "Puntendoel"
-	},
-	"roundView": {
-		"playerStats": "{0} @:common.points | {1} @:common.tiles"
-	},
-	"settingsView": {
-		"labelColorScheme": "Kleurthema",
-		"labelLanguage": "Taal",
-		"themeAuto": "Automatisch",
-		"themeDark": "Donker",
-		"themeLight": "Licht",
-		"title": "Instellingen"
-	},
-	"turnView": {
-		"isTripleStone": "De gespeelde steen is een triple, alle zijden hebben dezelfde waarde (+{0} bonus punten)."
+		"points": "{n} punten | {n} punt | {n} punten",
+		"remove": "Verwijderen",
+		"save": "Opslaan",
+		"tile": "{n} stenen | {n} steen | {n} stenen"
 	},
 	"collectPoints": {
-		"pointsCollected": "{0} punten over",
-		"pointsNotCollected": "Nog geen punten geteld",
-		"winner": "Winnaar van de ronde"
+		"pointsCollectedStatus": "@:common.points over",
+		"pointsPendingStatus": "Punten niet ingevoerd",
+		"roundBlocked": "De ronde is geblokkeerd. De speler met de minste punten in hand zal de ronde winnen.",
+		"roundWon": "{winner} heeft de ronde gewonnen. De totale waarde van de punten die overblijven in elke speler's hand wordt toegevoegd aan hun score.",
+		"title": "Punten verzamelen",
+		"winnerLabel": "Winnaar van de ronde"
+	},
+	"colorSchemeSelect": {
+		"themeAuto": "Auto",
+		"themeDark": "Donker",
+		"themeLight": "Licht",
+		"title": "Kleurenschema"
+	},
+	"gameLimit": {
+		"description": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaardwaarde is 400 punten.",
+		"title": "Puntenlimiet"
+	},
+	"gamePlayers": {
+		"addLabel": "Toevoegen",
+		"description": "Voer de namen van de spelers in. Het spel vereist minimaal 2 spelers.",
+		"errorTooFewPlayers": "Het spel vereist minimaal 2 spelers.",
+		"errorTooManyPlayers": "Het spel vereist maximaal 6 spelers.",
+		"nameLabel": "Naam nieuwe speler",
+		"namePlaceholder": "Voer spelersnaam in",
+		"playersLabel": "Spelers",
+		"title": "Spelersnamen"
+	},
+	"gameReset": {
+		"resetLabel": "Spel resetten",
+		"warning": "Ik wil een nieuw spel starten. Als ik dat doe, gaat alle voortgang verloren."
+	},
+	"gameResult": {
+		"description": "Het spel is afgelopen. De winnaar is {winner} met de hoogste score.",
+		"newGameLabel": "Nieuw spel",
+		"title": "Spel afgelopen"
+	},
+	"languageSelect": {
+		"languageAuto": "Auto",
+		"languageDutch": "Nederlands",
+		"languageEnglish": "English",
+		"title": "Taal"
+	},
+	"mainMenu": {
+		"buildInfo": "v{version} / build {timestamp}",
+		"openLabel": "Menu openen",
+		"title": "Menu"
+	},
+	"numberPad": {
+		"clearLabel": "Invoer wissen",
+		"clearSymbol": "wis",
+		"deleteLabel": "Laatste invoer verwijderen"
+	},
+	"playerSelect": {
+		"deleteConfirmation": "Weet je zeker dat je speler {name} wilt verwijderen?"
+	},
+	"scoreLeaderboard": {
+		"nameLabel": "Naam",
+		"scoreLabel": "Score",
+		"tilesLabel": "Stenen"
+	},
+	"startingPlayer": {
+		"description": "Elke speler krijgt {stones}. Kies de speler die de ronde zal beginnen.",
+		"errorNoStartingPlayer": "Je moet een speler selecteren die de ronde zal beginnen.",
+		"title": "Start ronde {ordinal}"
+	},
+	"turn": {
+		"bonusBridgeLabel": "Brug",
+		"bonusDoubleLabel": "Dubbel",
+		"bonusHexagonLabel": "Hexagoon",
+		"bonusScoringLabel": "Bonuspunten",
+		"tilesDrawnLabel": "Getrokken stenen",
+		"tripleStone": "De gespeelde steen is een drievoud, alle zijden hebben dezelfde waarde (+{bonus} bonuspunten)."
 	}
-
 }

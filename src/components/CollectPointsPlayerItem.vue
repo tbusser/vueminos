@@ -37,11 +37,11 @@ const { t } = useGlobalI18n();
 const hasPoints = computed<boolean>(() => props.points !== undefined);
 
 const message = computed<string>(() => {
-	if (props.isWinner) return t('collectPoints.winner');
+	if (props.isWinner) return t('collectPoints.winnerLabel');
 
 	return hasPoints.value
-		? t('collectPoints.pointsCollected', [props.points])
-		: t('collectPoints.pointsNotCollected');
+		? t('collectPoints.pointsCollectedStatus', props.points ?? 0)
+		: t('collectPoints.pointsPendingStatus');
 });
 
 /* -------------------------------------------------------------------------- */

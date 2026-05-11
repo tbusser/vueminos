@@ -1,27 +1,30 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import SelectField, { type SelectOption } from '@/components/SelectField.vue';
+import { useGlobalI18n } from '@/i18n';
 
 /* ========================================================================== */
 
 const model = defineModel<string | undefined>();
 
+const { t } = useGlobalI18n();
+
 const options = computed<SelectOption[]>(() => [
 	{
 		id: 'auto',
-		label: 'Auto',
+		label: t('languageSelect.languageAuto'),
 		selected: model.value === undefined,
 		value: undefined
 	},
 	{
 		id: 'en',
-		label: 'English',
+		label: t('languageSelect.languageEnglish'),
 		selected: model.value === 'en',
 		value: 'en'
 	},
 	{
 		id: 'nl',
-		label: 'Dutch',
+		label: t('languageSelect.languageDutch'),
 		selected: model.value === 'nl',
 		value: 'nl'
 	}
@@ -34,6 +37,6 @@ const options = computed<SelectOption[]>(() => [
 		v-model="model"
 		:options
 	>
-		{{ $t('settingsView.labelLanguage') }}
+		{{ $t('languageSelect.title') }}
 	</SelectField>
 </template>
