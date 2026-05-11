@@ -89,7 +89,7 @@ function onNavigateForward(): void {
 			v-if="showValidationMessage"
 			type="warning"
 		>
-			<div v-html="$t('startingPlayer.errorNoStartingPlayer')" />
+			{{ $t('startingPlayer.errorNoStartingPlayer') }}
 		</MessageBox>
 
 		<template #primary-action>
