@@ -1,10 +1,14 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-import { useGameScores } from './useGameScores';
-import { useGameStore } from '@/stores/game';
-import { useRoundsStore } from '@/stores/rounds';
-import { generateId } from '@/utilities/id';
+import { nextTick } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
+import { beforeEach, describe, expect, it } from 'vitest';
+
+import { generateId } from '@/utilities/id';
+
+import { useGameStore } from '@/stores/game';
 import { usePlayersStore } from '@/stores/players';
+import { useRoundsStore } from '@/stores/rounds';
+
+import { useGameScores } from './useGameScores';
 
 /* ========================================================================== */
 
@@ -25,15 +29,14 @@ beforeEach(() => setActivePinia(createPinia()));
 describe('useGameScores', () => {
 	describe('hasReachedPointsLimit', () => {
 		it('should return false when there are no player scores', () => {
-			const { hasReachedPointsLimit } = useGameScores();
-
 			createGame(100);
+
+			const { hasReachedPointsLimit } = useGameScores();
 
 			expect(hasReachedPointsLimit.value).toBe(false);
 		});
 
 		it('should return false when the points limit has not been reached', () => {
-			const { hasReachedPointsLimit } = useGameScores();
 			const playerId1 = generateId();
 			const playerId2 = generateId();
 
@@ -45,11 +48,12 @@ describe('useGameScores', () => {
 				winnerId: playerId1
 			}]);
 
+			const { hasReachedPointsLimit } = useGameScores();
+
 			expect(hasReachedPointsLimit.value).toBe(false);
 		});
 
 		it('should return true when a score has exactly reached the points limit', () => {
-			const { hasReachedPointsLimit } = useGameScores();
 			const playerId = generateId();
 
 			createGame(100);
@@ -60,11 +64,12 @@ describe('useGameScores', () => {
 				winnerId: playerId
 			}]);
 
+			const { hasReachedPointsLimit } = useGameScores();
+
 			expect(hasReachedPointsLimit.value).toBe(true);
 		});
 
 		it('should return true when a score exceeds the points limit', () => {
-			const { hasReachedPointsLimit } = useGameScores();
 			const playerId = generateId();
 
 			createGame(100);
@@ -75,11 +80,12 @@ describe('useGameScores', () => {
 				winnerId: playerId
 			}]);
 
+			const { hasReachedPointsLimit } = useGameScores();
+
 			expect(hasReachedPointsLimit.value).toBe(true);
 		});
 
 		it('should consider scores accumulated across multiple completed rounds', () => {
-			const { hasReachedPointsLimit } = useGameScores();
 			const playerId = generateId();
 
 			createGame(100);
@@ -98,11 +104,12 @@ describe('useGameScores', () => {
 				}
 			]);
 
+			const { hasReachedPointsLimit } = useGameScores();
+
 			expect(hasReachedPointsLimit.value).toBe(true);
 		});
 
 		it('should include the current round scores in the calculation', () => {
-			const { hasReachedPointsLimit } = useGameScores();
 			const playerId = generateId();
 
 			createGame(100);
@@ -113,11 +120,12 @@ describe('useGameScores', () => {
 				playerStats: [{ id: playerId, score: 105, tiles: 3 }]
 			}]);
 
+			const { hasReachedPointsLimit } = useGameScores();
+
 			expect(hasReachedPointsLimit.value).toBe(true);
 		});
 
 		it('should return true when combined completed and current round scores reach the limit', () => {
-			const { hasReachedPointsLimit } = useGameScores();
 			const playerId = generateId();
 
 			createGame(100);
@@ -136,6 +144,8 @@ describe('useGameScores', () => {
 				}
 			]);
 
+			const { hasReachedPointsLimit } = useGameScores();
+
 			expect(hasReachedPointsLimit.value).toBe(true);
 		});
 	});
@@ -150,7 +160,6 @@ describe('useGameScores', () => {
 		});
 
 		it('should return the accumulated scores from completed rounds only', () => {
-			const { totalScore } = useGameScores();
 			const playerId = generateId();
 
 			createRounds([
@@ -168,11 +177,12 @@ describe('useGameScores', () => {
 				}
 			]);
 
+			const { totalScore } = useGameScores();
+
 			expect(totalScore.value).toEqual({ [playerId]: 55 });
 		});
 
 		it('should return accumulated scores per player from completed rounds', () => {
-			const { totalScore } = useGameScores();
 			const player1Id = generateId();
 			const player2Id = generateId();
 
@@ -191,6 +201,8 @@ describe('useGameScores', () => {
 				}
 			]);
 
+			const { totalScore } = useGameScores();
+
 			expect(totalScore.value).toEqual({
 				[player1Id]: 55,
 				[player2Id]: 50
@@ -198,7 +210,6 @@ describe('useGameScores', () => {
 		});
 
 		it('should return the combined scores from completed and current rounds', () => {
-			const { totalScore } = useGameScores();
 			const playerId = generateId();
 
 			createRounds([
@@ -216,11 +227,12 @@ describe('useGameScores', () => {
 				}
 			]);
 
+			const { totalScore } = useGameScores();
+
 			expect(totalScore.value).toEqual({ [playerId]: 52 });
 		});
 
 		it('should return combined scores per player from completed and current rounds', () => {
-			const { totalScore } = useGameScores();
 			const player1Id = generateId();
 			const player2Id = generateId();
 
@@ -239,10 +251,44 @@ describe('useGameScores', () => {
 				}
 			]);
 
+			const { totalScore } = useGameScores();
+
 			expect(totalScore.value).toEqual({
 				[player1Id]: 52,
 				[player2Id]: 45
 			});
+		});
+
+		it('should include a round completed after composable creation', async () => {
+			const playerId = generateId();
+			createRounds([{
+				id: generateId(),
+				isCurrentRound: false,
+				scores: { [playerId]: 40 },
+				winnerId: playerId
+			}]);
+
+			const { totalScore } = useGameScores();
+
+			// Simulate a round being completed during active gameplay
+			createRounds([
+				{
+					id: generateId(),
+					isCurrentRound: false,
+					scores: { [playerId]: 40 },
+					winnerId: playerId
+				},
+				{
+					id: generateId(),
+					isCurrentRound: false,
+					scores: { [playerId]: 20 },
+					winnerId: playerId
+				}
+			]);
+
+			await nextTick();
+
+			expect(totalScore.value).toEqual({ [playerId]: 60 });
 		});
 	});
 
@@ -258,7 +304,6 @@ describe('useGameScores', () => {
 		});
 
 		it('should return undefined when the winning player ID is not found in the players store', () => {
-			const { winner } = useGameScores();
 			const playerId = generateId();
 
 			createGame(100);
@@ -270,11 +315,12 @@ describe('useGameScores', () => {
 				winnerId: playerId
 			}]);
 
+			const { winner } = useGameScores();
+
 			expect(winner.value).toBeUndefined();
 		});
 
 		it('should return the player with the highest score when the limit is reached', () => {
-			const { winner } = useGameScores();
 			const playersStore = usePlayersStore();
 			const player1: Player = { active: true, id: generateId(), name: 'Alice' };
 			const player2: Player = { active: true, id: generateId(), name: 'Bob' };
@@ -288,6 +334,8 @@ describe('useGameScores', () => {
 				scores: { [player1.id]: 120, [player2.id]: 80 },
 				winnerId: player1.id
 			}]);
+
+			const { winner } = useGameScores();
 
 			expect(winner.value).toMatchObject({ id: player1.id, name: 'Alice' });
 		});
