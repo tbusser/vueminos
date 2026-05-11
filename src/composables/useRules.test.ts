@@ -5,6 +5,7 @@ import { generateId } from '@/utilities/id';
 import { useRules } from './useRules';
 
 /* ========================================================================== */
+
 describe('useRules', () => {
 	describe('calculateStartingStoneBonus', () => {
 		it('should return 40 when the tile value is 0 (opening zero bonus)', () => {
