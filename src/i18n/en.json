@@ -27,6 +27,7 @@
 	},
 	"gameLimit": {
 		"description": "Set the number of points needed to trigger the final round. The default is 400 points.",
+		"errorInvalidLimit": "The points limit must be a positive number and not zero.",
 		"title": "Points Limit"
 	},
 	"gamePlayers": {

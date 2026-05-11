@@ -27,6 +27,7 @@
 	},
 	"gameLimit": {
 		"description": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaardwaarde is 400 punten.",
+		"errorInvalidLimit": "De puntenlimiet moet een positief getal zijn en niet nul.",
 		"title": "Puntenlimiet"
 	},
 	"gamePlayers": {

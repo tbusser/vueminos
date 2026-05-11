@@ -21,7 +21,7 @@ export function useGameLogic() {
 	 */
 	function isValidLimit(limit: unknown): limit is number {
 		if (typeof limit !== 'number') return false;
-		if (isNaN(limit)) return false;
+		if (!Number.isFinite(limit)) return false;
 		if (limit <= 0) return false;
 
 		return true;
@@ -46,7 +46,7 @@ export function useGameLogic() {
 	 */
 	function startNewGame(limit: number): Feedback {
 		if (!isValidLimit(limit)) {
-			return { success: false, message: t('errorMessages.invalidLimit') };
+			return { success: false, message: t('gameLimit.errorInvalidLimit') };
 		}
 
 		gameStore.createNewGame(limit);
