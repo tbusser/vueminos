@@ -16,19 +16,19 @@ const { t } = useGlobalI18n();
 const options: ComputedRef<SelectOption[]> = computed(() => ([
 	{
 		id: 'auto',
-		label: t('settingsView.themeAuto'),
+		label: t('colorSchemeSelect.themeAuto'),
 		selected: model.value === undefined,
 		value: undefined
 	},
 	{
 		id: 'dark',
-		label: t('settingsView.themeDark'),
+		label: t('colorSchemeSelect.themeDark'),
 		selected: model.value === 'dark',
 		value: 'dark'
 	},
 	{
 		id: 'light',
-		label: t('settingsView.themeLight'),
+		label: t('colorSchemeSelect.themeLight'),
 		selected: model.value === 'light',
 		value: 'light'
 	}
@@ -41,6 +41,6 @@ const options: ComputedRef<SelectOption[]> = computed(() => ([
 		v-model="model"
 		:options="options"
 	>
-		{{ $t('settingsView.labelColorScheme') }}
+		{{ $t('colorSchemeSelect.title') }}
 	</SelectField>
 </template>

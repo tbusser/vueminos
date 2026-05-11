@@ -60,16 +60,16 @@ const leaderboardData = computed<LeaderboardEntry[]>(() => {
 					#
 				</th>
 				<th class="header-cell">
-					Name
+					{{ $t('scoreLeaderboard.nameLabel') }}
 				</th>
 				<th
 					v-if="showTiles"
 					class="header-cell"
 				>
-					Tiles
+					{{ $t('scoreLeaderboard.tilesLabel') }}
 				</th>
 				<th class="header-cell">
-					Score
+					{{ $t('scoreLeaderboard.scoreLabel') }}
 				</th>
 			</tr>
 		</thead>

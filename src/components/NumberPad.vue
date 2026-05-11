@@ -95,9 +95,9 @@ function onKeyClicked(event: Event) {
 			<button
 				data-value="clear"
 				class="key is-function-key"
-				aria-label="clear input"
+				:aria-label="$t('numberPad.clearLabel')"
 			>
-				clr
+				{{ $t('numberPad.clearSymbol') }}
 			</button>
 		</template>
 
@@ -111,7 +111,7 @@ function onKeyClicked(event: Event) {
 		<button
 			data-value="backspace"
 			class="key is-function-key"
-			aria-label="delete last input"
+			:aria-label="$t('numberPad.deleteLabel')"
 		>
 			⌫
 		</button>

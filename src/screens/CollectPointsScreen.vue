@@ -6,6 +6,7 @@ import CollectPointsPlayerItem from '@/components/CollectPointsPlayerItem.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PointsBottomSheet from '@/components/PointsBottomSheet.vue';
 import { useCollectPoints } from '@/composables/useCollectPoints';
+import { useGlobalI18n } from '@/i18n';
 
 /* ========================================================================== */
 
@@ -14,6 +15,8 @@ const emit = defineEmits<{
 }>();
 
 /* -------------------------------------------------------------------------- */
+
+const { t } = useGlobalI18n();
 
 const {
 	activePlayers,
@@ -33,10 +36,10 @@ const points = ref<number | undefined>(undefined);
 
 const infoMessage = computed<string>(() => {
 	if (winningPlayerName.value === undefined) {
-		return 'The round is blocked. The player with the fewest points left in their hand will be the round winner.';
+		return t('collectPoints.roundBlocked');
 	}
 
-	return `${winningPlayerName.value} has won the round. The total value of points left in each player's hand will be added to their score.`;
+	return t('collectPoints.roundWon', { winner: winningPlayerName.value });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -78,7 +81,7 @@ function onSubmit(): void {
 </script>
 
 <template>
-	<AppScreen title="Collect Points">
+	<AppScreen :title="$t('collectPoints.title')">
 		<MessageBox>
 			{{ infoMessage }}
 		</MessageBox>

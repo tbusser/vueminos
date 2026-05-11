@@ -59,9 +59,16 @@ function onNavigateForward(): void {
 </script>
 
 <template>
-	<AppScreen :title="$t('playerSelect.title', [currentRoundOrdinal ?? 0])">
+	<AppScreen :title="$t('startingPlayer.title', { ordinal: currentRoundOrdinal ?? 0 })">
 		<MessageBox>
-			<div v-html="$t('playerSelect.infoMessage', [stonesPerPlayer])" />
+			<i18n-t
+				keypath="startingPlayer.description"
+				tag="div"
+			>
+				<template #stones>
+					<strong>{{ $t('common.tile', stonesPerPlayer) }}</strong>
+				</template>
+			</i18n-t>
 		</MessageBox>
 
 		<ToggleButtonGroup
@@ -82,7 +89,7 @@ function onNavigateForward(): void {
 			v-if="showValidationMessage"
 			type="warning"
 		>
-			<div v-html="$t('validationMessages.startingPlayerRequired')" />
+			<div v-html="$t('startingPlayer.errorNoStartingPlayer')" />
 		</MessageBox>
 
 		<template #primary-action>

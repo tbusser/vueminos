@@ -6,7 +6,6 @@ import AppScreen from '@/screens/AppScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PlayerSelect from '@/components/PlayerSelect.vue';
 import TextInput from '@/components/TextInput.vue';
-import { useRules } from '@/composables/useRules';
 import { usePlayerManager } from '@/composables/usePlayerManager';
 
 // https://github.com/drag-drop-touch-js/dragdroptouch?tab=readme-ov-file
@@ -25,8 +24,6 @@ const emit = defineEmits<{
 /* -------------------------------------------------------------------------- */
 
 const { t } = useGlobalI18n();
-
-const { maximumNumberOfPlayers, minimumNumberOfPlayers } = useRules();
 
 const {
 	addNewPlayer,
@@ -56,12 +53,12 @@ function onAddPlayer(event: Event) {
 
 function onContinue() {
 	if (!hasReachedMinimum.value) {
-		validationError.value = t('validationMessages.tooFewPlayers', [minimumNumberOfPlayers]);
+		validationError.value = t('gamePlayers.errorTooFewPlayers');
 		return;
 	}
 
 	if (hasExceededMaximum.value) {
-		validationError.value = t('validationMessages.tooManyPlayers', [maximumNumberOfPlayers]);
+		validationError.value = t('gamePlayers.errorTooManyPlayers');
 		return;
 	}
 
@@ -76,9 +73,9 @@ function onDeletePlayer(id: Id) {
 </script>
 
 <template>
-	<AppScreen :title="$t('playerNames.title')">
+	<AppScreen :title="$t('gamePlayers.title')">
 		<MessageBox>
-			{{ $t('playerNames.infoMessage') }}
+			{{ $t('gamePlayers.description') }}
 		</MessageBox>
 
 		<form
@@ -92,15 +89,15 @@ function onDeletePlayer(id: Id) {
 				v-model="name"
 				:disabled="hasReachedMaximum"
 				:hide-label="true"
-				:placeholder="$t('playerNames.namePlaceholder')"
+				:placeholder="$t('gamePlayers.namePlaceholder')"
 			>
-				{{ $t('playerNames.labelName') }}
+				{{ $t('gamePlayers.nameLabel') }}
 				<template #after-input>
 					<button
 						type="submit"
 						:disabled="hasReachedMaximum"
 					>
-						{{ $t('playerNames.labelAdd') }}
+						{{ $t('gamePlayers.addLabel') }}
 					</button>
 				</template>
 			</TextInput>
@@ -108,7 +105,7 @@ function onDeletePlayer(id: Id) {
 
 		<section>
 			<h2 v-if="hasPlayers">
-				{{ $t('playerNames.headingPlayers') }}
+				{{ $t('gamePlayers.playersLabel') }}
 			</h2>
 			<ol>
 				<li

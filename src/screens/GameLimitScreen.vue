@@ -48,7 +48,7 @@ function onNavigateForward() {
 <template>
 	<AppScreen :title="$t('gameLimit.title')">
 		<MessageBox>
-			<div v-html="$t('gameLimit.infoMessage')" />
+			<div v-html="$t('gameLimit.description')" />
 		</MessageBox>
 
 		<NumberDisplay :value="limit" />

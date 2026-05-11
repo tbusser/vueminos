@@ -51,7 +51,7 @@ function onClose(): void {
 		class="trigger"
 		type="button"
 		:aria-expanded="isOpen"
-		aria-label="Open menu"
+		:aria-label="$t('mainMenu.openLabel')"
 		aria-haspopup="dialog"
 		@click="onOpen"
 	>
@@ -67,14 +67,14 @@ function onClose(): void {
 		<template #header>
 			<header class="sheet-header">
 				<h2 class="sheet-title">
-					Menu
+					{{ $t('mainMenu.title') }}
 				</h2>
 				<button
 					class="close-button"
 					type="button"
 					@click="onClose"
 				>
-					Close
+					{{ $t('common.close') }}
 				</button>
 			</header>
 		</template>
@@ -103,7 +103,7 @@ function onClose(): void {
 
 		<template #footer>
 			<small class="version-info">
-				v{{ appVersion }} / build {{ formattedBuildTimestamp }}
+				{{ $t('mainMenu.buildInfo', { version: appVersion, timestamp: formattedBuildTimestamp }) }}
 			</small>
 		</template>
 	</BottomSheet>

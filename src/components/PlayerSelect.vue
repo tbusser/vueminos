@@ -18,7 +18,7 @@ const { t } = useGlobalI18n();
 /* -------------------------------------------------------------------------- */
 
 function onDelete() {
-	if (!confirm(t('messages.confirmRemovePlayer', [props.player.name]))) return;
+	if (!confirm(t('playerSelect.deleteConfirmation', { name: props.player.name }))) return;
 
 	emit('delete', props.player.id);
 }
