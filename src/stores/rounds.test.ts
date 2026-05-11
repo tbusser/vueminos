@@ -7,22 +7,13 @@ import {
 	PlayerIdNotFoundError
 } from '@/errors';
 
+import { createCurrentRound } from '@/test-factories';
+
 import { generateId } from '@/utilities/id';
 
 import { useRoundsStore } from './rounds';
 
 /* ========================================================================== */
-
-function createCurrentRound(playerIds: Id[] = []): CurrentRound {
-	return {
-		id: generateId(),
-		isCurrentRound: true,
-		phase: 'player-select',
-		playerStats: playerIds.map(id => ({ id, score: 0, tiles: 0 }))
-	} satisfies CurrentRound;
-}
-
-/* -------------------------------------------------------------------------- */
 
 beforeEach(() => setActivePinia(createPinia()));
 

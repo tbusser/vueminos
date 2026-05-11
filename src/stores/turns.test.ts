@@ -3,24 +3,13 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { TurnIdNotFoundError } from '@/errors';
 
+import { createTurn } from '@/test-factories';
+
 import { generateId } from '@/utilities/id';
 
 import { useTurnsStore } from './turns';
 
 /* ========================================================================== */
-
-function createTurn(): Turn {
-	return {
-		id: generateId(),
-		playerId: generateId(),
-		score: 0,
-		tilesDrawn: 3,
-		tilesPlayed: 0,
-		tileValue: undefined
-	} satisfies Turn;
-}
-
-/* -------------------------------------------------------------------------- */
 
 beforeEach(() => setActivePinia(createPinia()));
 
