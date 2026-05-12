@@ -13,6 +13,12 @@ import { useRules } from './useRules';
 
 /* ========================================================================== */
 
+type RequireCurrentRoundResult =
+	| { success: true; round: CurrentRound }
+	| { success: false; message: string };
+
+/* ========================================================================== */
+
 export function useRoundsLogic() {
 	const gameStore = useGameStore();
 	const playersStore = usePlayersStore();
@@ -25,6 +31,16 @@ export function useRoundsLogic() {
 	const { determineStonesPerPlayer } = useRules();
 	const { currentPlayerId, currentRound, currentRoundOrdinal, hasCurrentRound } = storeToRefs(roundsStore);
 	const { t } = useGlobalI18n();
+
+	/* ---------------------------------------------------------------------- */
+
+	function requireCurrentRound(): RequireCurrentRoundResult {
+		const round = currentRound.value;
+
+		return round === undefined
+			? { success: false, message: t('error.noCurrentRound') }
+			: { success: true, round };
+	}
 
 	/* ---------------------------------------------------------------------- */
 
@@ -61,12 +77,8 @@ export function useRoundsLogic() {
 	 *          no current round to finish.
 	 */
 	function finishCurrentRound(scores: Scores): Feedback {
-		if (!hasCurrentRound.value) {
-			return {
-				success: false,
-				message: t('error.noCurrentRound')
-			};
-		}
+		const result = requireCurrentRound();
+		if (!result.success) return result;
 
 		roundsStore.completeCurrentRound(scores);
 
@@ -79,12 +91,9 @@ export function useRoundsLogic() {
 	 *        of tiles drawn, whether a triple was played, and the score.
 	 */
 	function saveTurn(turnInput: ScoredTurnInput): Feedback {
-		if (currentRound.value === undefined) {
-			return {
-				message: t('error.noCurrentRound'),
-				success: false
-			};
-		};
+		const result = requireCurrentRound();
+		if (!result.success) return result;
+
 		if (currentPlayerId.value === undefined) {
 			return {
 				message: t('error.noCurrentPlayer'),

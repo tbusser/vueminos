@@ -123,7 +123,9 @@ export default [
 			'@stylistic/member-delimiter-style': ['error'],
 			'@stylistic/no-tabs': ['error', { allowIndentationTabs: true }],
 			'@stylistic/object-curly-spacing': ['error', 'always'],
-			'@stylistic/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
+			'@stylistic/operator-linebreak': ['error', 'after', {
+				overrides: { '?': 'before', ':': 'before', '|': 'before' }
+			}],
 			'@stylistic/quote-props': ['error', 'as-needed'],
 			'@stylistic/quotes': ['error', 'single'],
 			'@stylistic/semi': ['error', 'always'],
