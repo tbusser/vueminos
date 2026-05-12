@@ -12,7 +12,7 @@
 		"tile": "{n} stenen | {n} steen | {n} stenen"
 	},
 	"collectPoints": {
-		"pointsCollectedStatus": "@:common.points over",
+		"pointsCollectedStatus": "@:{'common.points'} over",
 		"pointsPendingStatus": "Punten niet ingevoerd",
 		"roundBlocked": "De ronde is geblokkeerd. De speler met de minste punten in hand zal de ronde winnen.",
 		"roundWon": "{winner} heeft de ronde gewonnen. De totale waarde van de punten die overblijven in elke speler's hand wordt toegevoegd aan hun score.",
@@ -24,6 +24,13 @@
 		"themeDark": "Donker",
 		"themeLight": "Licht",
 		"title": "Kleurenschema"
+	},
+	"error": {
+		"hasCurrentRound": "Ongeldige actie, er is al een huidige ronde",
+		"noActiveGame": "Ongeldige actie, er is geen actieve game",
+		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler",
+		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde",
+		"noWinner": "Ongeldige actie, er is geen winnaar voor de huidige ronde"
 	},
 	"gameLimit": {
 		"description": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaardwaarde is 400 punten.",

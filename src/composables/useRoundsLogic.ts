@@ -64,7 +64,7 @@ export function useRoundsLogic() {
 		if (!hasCurrentRound.value) {
 			return {
 				success: false,
-				message: t('errorMessages.noCurrentRound')
+				message: t('error.noCurrentRound')
 			};
 		}
 
@@ -81,13 +81,13 @@ export function useRoundsLogic() {
 	function saveTurn(turnInput: ScoredTurnInput): Feedback {
 		if (currentRound.value === undefined) {
 			return {
-				message: t('errorMessages.noCurrentRound'),
+				message: t('error.noCurrentRound'),
 				success: false
 			};
 		};
 		if (currentPlayerId.value === undefined) {
 			return {
-				message: t('errorMessages.noCurrentPlayer'),
+				message: t('error.noCurrentPlayer'),
 				success: false
 			};
 		};
@@ -120,14 +120,14 @@ export function useRoundsLogic() {
 	function startNewRound(): Feedback {
 		if (!gameStore.hasActiveGame) {
 			return {
-				message: t('errorMessages.noActiveGame'),
+				message: t('error.noActiveGame'),
 				success: false
 			};
 		};
 
 		if (hasCurrentRound.value) {
 			return {
-				message: t('errorMessages.hasCurrentRound'),
+				message: t('error.hasCurrentRound'),
 				success: false
 			};
 		}
