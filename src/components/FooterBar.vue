@@ -4,7 +4,7 @@ import { computed } from 'vue';
 
 const slots = defineSlots<{
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	primary(): any,
+	primary(): any;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	secondary(): any;
 }>();

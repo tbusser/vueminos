@@ -38,7 +38,7 @@ export function useCollectPoints() {
 	);
 
 	const isComplete = computed<boolean>(() => {
-		return Object.values(collectedPoints.value).every((points) => points !== undefined);
+		return Object.values(collectedPoints.value).every(points => points !== undefined);
 	});
 
 	const winningPlayerName = computed<string | undefined>(() => {

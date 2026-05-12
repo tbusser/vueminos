@@ -67,7 +67,7 @@ function setMultipleValue(value: string) {
 
 	const arrayModel = Array.isArray(model.value) ? model.value : [model.value];
 	model.value = (arrayModel.includes(value))
-		? arrayModel.filter((item) => item !== value)
+		? arrayModel.filter(item => item !== value)
 		: [...arrayModel, value];
 }
 

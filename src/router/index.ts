@@ -47,7 +47,7 @@ const router = createRouter({
 	]
 });
 
-router.beforeEach((to) => {
+router.beforeEach(to => {
 	const gameStore = useGameStore();
 	const playersStore = usePlayersStore();
 	const roundsStore = useRoundsStore();

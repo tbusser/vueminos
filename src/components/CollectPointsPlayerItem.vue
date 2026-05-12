@@ -5,7 +5,7 @@ import { computed } from 'vue';
 /* ========================================================================== */
 
 const emit = defineEmits<{
-	(event: 'collect', player: Player): void
+	(event: 'collect', player: Player): void;
 }>();
 
 const props = defineProps<{
@@ -66,7 +66,6 @@ function onClick(): void {
 		{{ message }}
 	</button>
 </template>
-
 
 <style lang="scss" scoped>
 .button {

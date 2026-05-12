@@ -38,8 +38,8 @@ export function useRules() {
 		const playerIds = Object.keys(leftoverPoints) as Id[];
 		// The player with the least points is the winner of a blocked round.
 		const winnerId = playerIds.reduce<Id>((winner, id) =>
-			leftoverPoints[id] < leftoverPoints[winner] ? id : winner
-		, playerIds[0]);
+			leftoverPoints[id] < leftoverPoints[winner] ? id : winner,
+		playerIds[0]);
 
 		// Calculate the points to be awarded to the winner. The winner's points
 		// are subtracted from the total points of all players, while the points

@@ -42,7 +42,7 @@ describe('Turns Store', () => {
 
 			turnStore.deleteTurns();
 
-			expect(turnStore.turns).toHaveLength(0);;
+			expect(turnStore.turns).toHaveLength(0);
 		});
 	});
 
