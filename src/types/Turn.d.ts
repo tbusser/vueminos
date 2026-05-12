@@ -102,10 +102,10 @@ declare global {
 	type Turn = SkippedTurn | PlayedTurn;
 
 	type ScoredTurnInput =
-		Omit<SkippedTurn, 'id' | 'playerId' | 'roundId'> |
-		Omit<PlayedTurn, 'id' | 'playerId' | 'roundId'>;
+		| Omit<SkippedTurn, 'id' | 'playerId' | 'roundId'>
+		| Omit<PlayedTurn, 'id' | 'playerId' | 'roundId'>;
 
 	type TurnInput =
-		Omit<SkippedTurn, 'id' | 'playerId' | 'roundId' | 'score'> |
-		Omit<PlayedTurn, 'id' | 'playerId' | 'roundId' | 'score'>;
+		| Omit<SkippedTurn, 'id' | 'playerId' | 'roundId' | 'score'>
+		| Omit<PlayedTurn, 'id' | 'playerId' | 'roundId' | 'score'>;
 }

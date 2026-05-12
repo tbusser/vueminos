@@ -12,6 +12,12 @@ import { useRules } from '@/composables/useRules';
 
 /* ========================================================================== */
 
+type RequireCurrentRoundResult =
+	| { success: true; round: CurrentRound }
+	| { success: false; message: string };
+
+/* ========================================================================== */
+
 export function useRoundManager() {
 	const playersStore = usePlayersStore();
 	const roundsLogic = useRoundsLogic();
@@ -60,15 +66,26 @@ export function useRoundManager() {
 
 	/* ---------------------------------------------------------------------- */
 
+	function requireCurrentRound(): RequireCurrentRoundResult {
+		const round = currentRound.value;
+
+		return round === undefined
+			? { success: false, message: t('error.noCurrentRound') }
+			: { success: true, round };
+	}
+
+	/* ---------------------------------------------------------------------- */
+
 	/**
 	 * Determines the next player in the round and updates the current player
 	 * ID for the current round.
 	 */
 	function advanceToNextPlayer(): void {
-		if (currentRound.value === undefined) return;
+		const result = requireCurrentRound();
+		if (!result.success) return;
 		if (currentPlayerId.value === undefined) return;
 
-		const playerIds = currentRound.value.playerStats.map(player => player.id);
+		const playerIds = result.round.playerStats.map(player => player.id);
 		const currentPlayerIndex = playerIds.indexOf(currentPlayerId.value);
 
 		if (currentPlayerIndex === -1) return;
@@ -99,14 +116,10 @@ export function useRoundManager() {
 	/* ---------------------------------------------------------------------- */
 
 	function finishRound(leftOverPoints: Scores): Feedback {
-		const round = currentRound.value;
-		if (round === undefined) {
-			return {
-				message: t('error.noCurrentRound'),
-				success: false
-			};
-		}
+		const result = requireCurrentRound();
+		if (!result.success) return result;
 
+		const round = result.round;
 		const isBlocked = (round.isBlocked ?? false);
 
 		if (!isBlocked && round.winnerId === undefined) {
@@ -175,12 +188,8 @@ export function useRoundManager() {
 	 * @returns A feedback object indicating success or failure.
 	 */
 	function setStartingPlayer(playerId: Id): Feedback {
-		if (!currentRound.value) {
-			return {
-				message: t('error.noCurrentRound'),
-				success: false
-			};
-		}
+		const result = requireCurrentRound();
+		if (!result.success) return result;
 
 		roundsStore.updateCurrentRound({
 			currentPlayerId: playerId,
