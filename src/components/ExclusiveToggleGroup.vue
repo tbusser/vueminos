@@ -12,9 +12,9 @@ const emits = defineEmits<{
 }>();
 
 const props = withDefaults(defineProps<{
-	options: ToggleOption[],
+	options: ToggleOption[];
 
-	modelValue: string | undefined,
+	modelValue: string | undefined;
 
 	tag?: string;
 }>(), {

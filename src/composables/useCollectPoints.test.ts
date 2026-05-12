@@ -14,7 +14,7 @@ function createRoundWithPlayers(ids: Id[]): void {
 	const playersStore = usePlayersStore();
 	const roundsStore = useRoundsStore();
 
-	ids.forEach((id) => {
+	ids.forEach(id => {
 		playersStore.addPlayer({ active: true, id, name: id });
 	});
 
@@ -59,7 +59,6 @@ describe('useCollectPoints', () => {
 				[playerBId]: undefined,
 				[playerCId]: undefined
 			});
-
 		});
 
 		it('should be an object with all the players except the winner', () => {

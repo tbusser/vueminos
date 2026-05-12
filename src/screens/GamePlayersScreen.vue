@@ -18,7 +18,7 @@ import { usePlayerManager } from '@/composables/usePlayerManager';
  * @event navigate-forward
  */
 const emit = defineEmits<{
-	( e: 'navigate-forward' ): void;
+	(e: 'navigate-forward'): void;
 }>();
 
 /* -------------------------------------------------------------------------- */

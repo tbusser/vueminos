@@ -11,7 +11,7 @@ import { useGameScores } from '@/composables/useGameScores';
  * @event new-game
  */
 const emit = defineEmits<{
-	( e: 'new-game' ): void;
+	(e: 'new-game'): void;
 }>();
 
 /* ========================================================================== */

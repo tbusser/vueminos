@@ -55,7 +55,7 @@ export function useGameScores() {
 		]);
 
 		const result: ScorePerPlayer = {};
-		keys.forEach((key) => {
+		keys.forEach(key => {
 			result[key] =
 				(currentRoundScore.value[key] ?? 0) + (finishedRoundsScore.value[key] ?? 0);
 		});
@@ -88,8 +88,8 @@ export function useGameScores() {
 		const [winner, ...players] = Object.entries(totalScore.value) as [Id, number][];
 
 		return players.reduce((winner, player) =>
-			player[1] > winner[1] ? player : winner
-		, winner)[0];
+			player[1] > winner[1] ? player : winner,
+		winner)[0];
 	});
 
 	const winner = computed<Player | undefined>(() => {

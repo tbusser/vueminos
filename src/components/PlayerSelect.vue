@@ -4,7 +4,7 @@ import { useGlobalI18n } from '@/i18n';
 /* ========================================================================== */
 
 const emit = defineEmits<{
-	( e: 'delete', id: Id ): void;
+	(e: 'delete', id: Id): void;
 }>();
 
 const props = defineProps<{

@@ -20,7 +20,7 @@ export const usePlayersStore = defineStore('players', () => {
 	/**
 	 * A computed property that returns the list of active players.
 	 */
-	const activePlayers = computed<Player[]>(() => players.value.filter((player) => player.active));
+	const activePlayers = computed<Player[]>(() => players.value.filter(player => player.active));
 
 	/**
 	 * Retrieves a player by their ID.
@@ -31,7 +31,7 @@ export const usePlayersStore = defineStore('players', () => {
 	 *          not found.
 	 */
 	function getPlayerById(id: Id): Player | undefined {
-		const player = players.value.find((player) => player.id === id);
+		const player = players.value.find(player => player.id === id);
 
 		return player === undefined ? undefined : { ...player };
 	}
@@ -56,7 +56,7 @@ export const usePlayersStore = defineStore('players', () => {
 	 *         not found, an error is thrown.
 	 */
 	function getPlayerIndexById(id: Id): number {
-		const index = players.value.findIndex((player) => player.id === id);
+		const index = players.value.findIndex(player => player.id === id);
 		if (index === -1) {
 			throw new PlayerIdNotFoundError(`Player with ID ${id} not found in players store.`);
 		}
@@ -89,7 +89,7 @@ export const usePlayersStore = defineStore('players', () => {
 	 * @param id The ID of the player to remove.
 	 */
 	function removePlayerById(id: Id): void {
-		players.value = players.value.filter((player) => player.id !== id);
+		players.value = players.value.filter(player => player.id !== id);
 	}
 
 	/**
@@ -102,8 +102,7 @@ export const usePlayersStore = defineStore('players', () => {
  	 * @throws {PlayerIdNotFoundError} If the player with the specified ID is
 	 *         not found in the players store.
 	 */
-	function updatePlayerById<K extends keyof UpdatableFields>
-	(id: Id, field: K, value: UpdatableFields[K]): void {
+	function updatePlayerById<K extends keyof UpdatableFields>(id: Id, field: K, value: UpdatableFields[K]): void {
 		const index = getPlayerIndexById(id);
 
 		players.value[index] = {

@@ -21,7 +21,7 @@ import {
 /* ========================================================================== */
 
 function vNodeIsEmpty(vNodes: VNodeArrayChildren): boolean {
-	return vNodes.every((vNode) => {
+	return vNodes.every(vNode => {
 		if (!isVNode(vNode)) return true;
 		if (vNode.type === Comment) return true;
 		if (vNode.type === Text && !(vNode.children as string)?.trim()) return true;

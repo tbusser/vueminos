@@ -19,7 +19,7 @@ const props = withDefaults(
 		/**
 		 * The default limit for a game. When not specified, it defaults to 400.
 		 */
-		defaultLimit?: number
+		defaultLimit?: number;
 	}>(),
 	{ defaultLimit: 400 }
 );

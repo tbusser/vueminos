@@ -4,7 +4,7 @@ export type MessageBoxType = 'info' | 'warning';
 /* ========================================================================== */
 
 withDefaults(defineProps<{
-	type?: MessageBoxType
+	type?: MessageBoxType;
 }>(), {
 	type: 'info'
 });
