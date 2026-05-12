@@ -12,7 +12,7 @@
 		"tile": "{n} tiles | {n} tile | {n} tiles"
 	},
 	"collectPoints": {
-		"pointsCollectedStatus": "@:common.points left",
+		"pointsCollectedStatus": "@:{'common.points'} left",
 		"pointsPendingStatus": "Points not collected",
 		"roundBlocked": "The round is blocked. The player with the fewest points left in their hand will be the round winner.",
 		"roundWon": "{winner} has won the round. The total value of points left in each player's hand will be added to their score.",

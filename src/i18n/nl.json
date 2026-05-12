@@ -12,7 +12,7 @@
 		"tile": "{n} stenen | {n} steen | {n} stenen"
 	},
 	"collectPoints": {
-		"pointsCollectedStatus": "@:common.points over",
+		"pointsCollectedStatus": "@:{'common.points'} over",
 		"pointsPendingStatus": "Punten niet ingevoerd",
 		"roundBlocked": "De ronde is geblokkeerd. De speler met de minste punten in hand zal de ronde winnen.",
 		"roundWon": "{winner} heeft de ronde gewonnen. De totale waarde van de punten die overblijven in elke speler's hand wordt toegevoegd aan hun score.",
