@@ -1,3 +1,6 @@
+import { globalIgnores } from 'eslint/config';
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
+import vueI18n from '@intlify/eslint-plugin-vue-i18n';
 import stylistic from '@stylistic/eslint-plugin';
 import pluginVitest from '@vitest/eslint-plugin';
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
@@ -8,7 +11,36 @@ import { globalIgnores } from 'eslint/config';
 /* ========================================================================== */
 
 export default [
+	{
+		name: 'app/files-to-lint',
+		files: ['**/*.{ts,mts,vue}']
+	},
+
 	globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+
+	{
+		name: 'app/vue-i18n',
+		files: ['src/**/*.{vue,ts,mts}', 'src/i18n/**/*.json'],
+		plugins: {
+			'@intlify/vue-i18n': vueI18n
+		},
+		rules: {
+			'@intlify/vue-i18n/no-html-messages': 'error',
+			'@intlify/vue-i18n/no-i18n-t-path-prop': 'error',
+			'@intlify/vue-i18n/no-missing-keys': 'error',
+			'@intlify/vue-i18n/no-v-html': 'error',
+			'@intlify/vue-i18n/valid-message-syntax': 'error',
+			'@intlify/vue-i18n/key-format-style': ['error', 'camelCase'],
+			'@intlify/vue-i18n/no-missing-keys-in-other-locales': 'error',
+			'@intlify/vue-i18n/no-unused-keys': 'error',
+			'@intlify/vue-i18n/prefer-linked-key-with-paren': 'error'
+		},
+		settings: {
+			'vue-i18n': {
+				localeDir: 'src/i18n/*.json'
+			}
+		}
+	},
 
 	...defineConfigWithVueTs(
 		// Enable the strongly recommended rules for Vue.
