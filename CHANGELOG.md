@@ -1,3 +1,41 @@
+## [1.0.13](https://github.com/tbusser/vueminos/compare/v1.0.12..v1.0.13) - 2026-05-12
+
+### 🐛 Bug Fixes
+
+- *(i18n)* Replace all hardcoded English strings with translation keys ([#46](https://github.com/tbusser/vueminos/pull/46))
+- *(useGameLogic)* Use Number.isFinite and add missing i18n key
+
+### 💼 Other
+
+- *(deps)* Bump runtime and dev dependencies to latest versions
+- *(eslint)* Fix flat config scoping, and split lint scripts ([#50](https://github.com/tbusser/vueminos/pull/50))
+- *(eslint)* Add vue-i18n linting with jsonc-eslint-parser ([#51](https://github.com/tbusser/vueminos/pull/51))
+
+### 🚜 Refactor
+
+- Rename BaseView story file to BaseScreen
+- *(screens)* Replace unnecessary v-html with text interpolation ([#47](https://github.com/tbusser/vueminos/pull/47))
+- *(rounds)* Replace spread-based mutations with in-place updates ([#49](https://github.com/tbusser/vueminos/pull/49))
+- *(test-factories)* Extract shared test factories from test files
+- *(composables)* Extract requireCurrentRound guard helper ([#52](https://github.com/tbusser/vueminos/pull/52))
+
+### ⚡ Performance
+
+- *(useGameScores)* Avoid recomputing finished-round scores on every trigger ([#48](https://github.com/tbusser/vueminos/pull/48))
+
+### 🎨 Styling
+
+- *(useRules.test)* Add missing blank line after imports
+
+### 🧪 Testing
+
+- *(usePlayerManager)* Add unit tests for usePlayerManager composable
+
+### ⚙️ Miscellaneous Tasks
+
+- *(publish)* Guard release script against non-master branches
+- *(husky)* Align hooks with master branch convention
+
 ## [1.0.12](https://github.com/tbusser/vueminos/compare/v1.0.11..v1.0.12) - 2026-05-08
 
 ### 🐛 Bug Fixes
