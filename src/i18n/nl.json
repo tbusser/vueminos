@@ -25,6 +25,13 @@
 		"themeLight": "Licht",
 		"title": "Kleurenschema"
 	},
+	"error": {
+		"hasCurrentRound": "Ongeldige actie, er is al een huidige ronde",
+		"noActiveGame": "Ongeldige actie, er is geen actieve game",
+		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler",
+		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde",
+		"noWinner": "Ongeldige actie, er is geen winnaar voor de huidige ronde"
+	},
 	"gameLimit": {
 		"description": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaardwaarde is 400 punten.",
 		"errorInvalidLimit": "De puntenlimiet moet een positief getal zijn en niet nul.",

@@ -102,7 +102,7 @@ export function useRoundManager() {
 		const round = currentRound.value;
 		if (round === undefined) {
 			return {
-				message: t('errorMessages.noCurrentRound'),
+				message: t('error.noCurrentRound'),
 				success: false
 			};
 		}
@@ -111,7 +111,7 @@ export function useRoundManager() {
 
 		if (!isBlocked && round.winnerId === undefined) {
 			return {
-				message: t('errorMessages.noWinner'),
+				message: t('error.noWinner'),
 				success: false
 			};
 		}
@@ -177,7 +177,7 @@ export function useRoundManager() {
 	function setStartingPlayer(playerId: Id): Feedback {
 		if (!currentRound.value) {
 			return {
-				message: t('errorMessages.noCurrentRound'),
+				message: t('error.noCurrentRound'),
 				success: false
 			};
 		}
