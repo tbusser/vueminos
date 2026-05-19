@@ -1,47 +1,13 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { usePlayersStore } from '@/stores/players';
-import { useTurnsStore } from '@/stores/turns';
-
-import { createCurrentRound } from '@/test-factories';
+import { createRoundWithPlayers } from '@/test-factories/createRoundWithPlayers';
 
 import { generateId } from '@/utilities/id';
 
 import { useTurnHistory } from './useTurnHistory';
 
 /* ========================================================================== */
-
-function createRoundWithPlayers(ids: Id[], turns: number): Id[] {
-	const playersStore = usePlayersStore();
-	ids.forEach(id => {
-		playersStore.addPlayer({ active: true, id, name: id });
-	});
-
-	createCurrentRound(ids);
-
-	const turnStore = useTurnsStore();
-	return new Array(turns).fill(0).map((_, index) => {
-		const id = generateId();
-
-		turnStore.addTurn({
-			bonusBridge: false,
-			bonusDouble: false,
-			bonusHexagon: false,
-			triple: false,
-			id,
-			playerId: ids[index % ids.length],
-			score: 0,
-			tilesDrawn: 0,
-			tilesPlayed: 1,
-			tileValue: 6
-		} satisfies Turn);
-
-		return id;
-	});
-}
-
-/* -------------------------------------------------------------------------- */
 
 beforeEach(() => setActivePinia(createPinia()));
 
