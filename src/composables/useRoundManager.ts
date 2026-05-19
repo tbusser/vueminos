@@ -64,6 +64,12 @@ export function useRoundManager() {
 	 */
 	const isFirstTurnOfRound = computed<boolean>(() => turns.value.length === 0);
 
+	function isTurnFirstTurnOfRound(turnId: Id): boolean {
+		if (turns.value.length === 0) return false;
+
+		return turns.value[0].id === turnId;
+	}
+
 	/* ---------------------------------------------------------------------- */
 
 	function requireCurrentRound(): RequireCurrentRoundResult {
@@ -208,10 +214,11 @@ export function useRoundManager() {
 	return {
 		currentPhase,
 		currentPlayer,
-		isFirstTurnOfRound,
 		finishRound,
-		setStartingPlayer,
+		isFirstTurnOfRound,
+		isTurnFirstTurnOfRound,
 		saveTurn,
+		setStartingPlayer,
 		tilesPerPlayer
 	};
 }
