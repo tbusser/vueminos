@@ -9,7 +9,8 @@
 		"points": "{n} punten | {n} punt | {n} punten",
 		"remove": "Verwijderen",
 		"save": "Opslaan",
-		"tile": "{n} stenen | {n} steen | {n} stenen"
+		"tile": "{n} stenen | {n} steen | {n} stenen",
+		"update": "Bijwerken"
 	},
 	"collectPoints": {
 		"pointsCollectedStatus": "@:{'common.points'} over",

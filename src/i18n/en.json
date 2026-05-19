@@ -9,7 +9,8 @@
 		"points": "{n} points | {n} point | {n} points",
 		"remove": "Remove",
 		"save": "Save",
-		"tile": "{n} tiles | {n} tile | {n} tiles"
+		"tile": "{n} tiles | {n} tile | {n} tiles",
+		"update": "Update"
 	},
 	"collectPoints": {
 		"pointsCollectedStatus": "@:{'common.points'} left",
