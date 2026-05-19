@@ -3,11 +3,14 @@ import { useTurnsStore } from '@/stores/turns';
 
 import { generateId } from '@/utilities/id';
 
+import { assertActivePinia } from './assertActivePinia';
 import { createCurrentRound } from './createCurrentRound';
 
 /* ========================================================================== */
 
 export function createRoundWithPlayers(ids: Id[], turns: number): Id[] {
+	assertActivePinia('createRoundWithPlayers');
+
 	const playersStore = usePlayersStore();
 	ids.forEach(id => {
 		playersStore.addPlayer({ active: true, id, name: id });
