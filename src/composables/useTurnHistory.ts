@@ -24,11 +24,11 @@ export function useTurnHistory() {
 		return turns.value.slice(-activePlayers.value.length);
 	});
 
-	const turn = computed<Turn | null>(() =>
+	const selectedTurn = computed<Turn | null>(() =>
 		(index.value === null) ? null : navigableTurns.value[index.value] ?? null
 	);
-	const player = computed<Player | null>(() =>
-		(turn.value === null) ? null : playersStore.getPlayerById(turn.value.playerId) ?? null
+	const selectedPlayer = computed<Player | null>(() =>
+		(selectedTurn.value === null) ? null : playersStore.getPlayerById(selectedTurn.value.playerId) ?? null
 	);
 
 	const canGoBack = computed<boolean>(() => {
@@ -86,7 +86,7 @@ export function useTurnHistory() {
 		canGoForward,
 		goBack,
 		goForward,
-		player,
-		turn
+		selectedPlayer,
+		selectedTurn
 	};
 }
