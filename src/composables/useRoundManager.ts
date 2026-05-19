@@ -32,7 +32,7 @@ export function useRoundManager() {
 		currentPlayerStats,
 		currentRound
 	} = storeToRefs(roundsStore);
-	const { determineRoundWinnerAndPoints } = useRules();
+	const { calculateTurnScore, determineRoundWinnerAndPoints } = useRules();
 	const { turns } = storeToRefs(turnsStore);
 
 	/* ---------------------------------------------------------------------- */
@@ -155,8 +155,12 @@ export function useRoundManager() {
 		return { success: true };
 	}
 
-	function saveTurn(turn: ScoredTurnInput): Feedback {
-		const saveResult = roundsLogic.saveTurn(turn);
+	function saveTurn(turn: TurnInput): Feedback {
+		const scoredTurn: ScoredTurnInput = {
+			...turn,
+			score: calculateTurnScore(turn)
+		};
+		const saveResult = roundsLogic.saveTurn(scoredTurn);
 		if (!saveResult.success) return saveResult;
 
 		if (checkIfRoundIsBlocked()) {
