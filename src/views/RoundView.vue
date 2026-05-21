@@ -48,7 +48,8 @@ const {
 	isTurnFirstTurnOfRound,
 	saveTurn,
 	setStartingPlayer,
-	tilesPerPlayer
+	tilesPerPlayer,
+	updateTurn
 } = useRoundManager();
 const turnKey = ref<symbol | Id>(Symbol('turn'));
 
@@ -152,8 +153,8 @@ function onTurnPlayed(turn: TurnInput): void {
 	if (historicalTurn.value === null) {
 		saveTurn(turn);
 		turnKey.value = Symbol('turn');
-	} else {
-		console.log('update turn', turn);
+	} else if (historicalTurnPlayer.value) {
+		updateTurn(historicalTurnPlayer.value.id, historicalTurn.value.id, turn);
 	}
 }
 </script>
