@@ -1,0 +1,18 @@
+---
+description: Coding style
+globs: src/**/*.vue,src/**/*.ts
+alwaysApply: false
+---
+
+# Code style guidelines
+- Event handler methods which just do one action that could also be done directly in the template are okay to keep.
+- Names that signal intent are more desirable than short names.
+- Comment line should not exceed 80 chars.
+- Comment lines should never have less than 2 words.
+- Exports and object properties should be ordered in alphabetical order.
+- Callback parameters must not shadow outer-scope bindings.
+- Test factory functions that interact with stores must call
+  `assertActivePinia` before accessing any store.
+- Prefer store-backed factory helpers (`addNew*ToStore`) for test setup
+  over calling store actions directly, except when the store action itself
+  is the subject under test.
