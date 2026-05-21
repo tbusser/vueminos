@@ -7,11 +7,12 @@ import {
 	PlayerIdNotFoundError
 } from '@/errors';
 
-import { createCurrentRound } from '@/test-factories';
+import { addNewCurrentRoundToStore, createCurrentRound } from '@/test-factories';
 
 import { generateId } from '@/utilities/id';
 
 import { useRoundsStore } from './rounds';
+import { useRules } from '@/composables/useRules';
 
 /* ========================================================================== */
 
@@ -22,9 +23,9 @@ beforeEach(() => setActivePinia(createPinia()));
 describe('Rounds Store', () => {
 	describe('addRound', () => {
 		it('should add a round to the rounds store', () => {
-			const roundsStore = useRoundsStore();
-			const round = createCurrentRound();
+			const round = createCurrentRound([generateId()]);
 
+			const roundsStore = useRoundsStore();
 			roundsStore.addRound(round);
 
 			expect(roundsStore.rounds).toHaveLength(1);
@@ -35,9 +36,11 @@ describe('Rounds Store', () => {
 		it('should throw an error if there is already a current round', () => {
 			const roundsStore = useRoundsStore();
 
-			roundsStore.addRound(createCurrentRound());
+			roundsStore.addRound(createCurrentRound([generateId()]));
 
-			expect(() => roundsStore.addRound(createCurrentRound())).toThrow(CurrentRoundAlreadyExistsError);
+			expect(() =>
+				roundsStore.addRound(createCurrentRound([generateId()]))
+			).toThrow(CurrentRoundAlreadyExistsError);
 		});
 	});
 
@@ -51,16 +54,15 @@ describe('Rounds Store', () => {
 		});
 
 		it('should throw an error if there is no winner ID set for the current round', () => {
+			addNewCurrentRoundToStore([generateId()]);
 			const roundsStore = useRoundsStore();
-			roundsStore.addRound(createCurrentRound());
 
 			expect(() => roundsStore.completeCurrentRound({})).toThrow(PlayerIdNotFoundError);
 		});
 
 		it('should throw error when winner is not found in the player stats of the current round', () => {
+			addNewCurrentRoundToStore([generateId()]);
 			const roundsStore = useRoundsStore();
-			// playerStats is empty, so any winnerId is invalid.
-			roundsStore.addRound(createCurrentRound());
 
 			roundsStore.updateCurrentRound({
 				winnerId: generateId()
@@ -70,11 +72,10 @@ describe('Rounds Store', () => {
 		});
 
 		it('should complete the current round with the provided scores', () => {
-			const roundsStore = useRoundsStore();
 			const playerId = generateId();
-			const round = createCurrentRound([playerId]);
-			roundsStore.addRound(round);
+			const round = addNewCurrentRoundToStore([playerId]);
 
+			const roundsStore = useRoundsStore();
 			roundsStore.updateCurrentRound({
 				winnerId: playerId
 			});
@@ -105,8 +106,7 @@ describe('Rounds Store', () => {
 
 		it('should throw an error if the player is not found in the current round', () => {
 			const roundsStore = useRoundsStore();
-			const round = createCurrentRound();
-			roundsStore.addRound(round);
+			addNewCurrentRoundToStore([generateId()]);
 
 			expect(
 				() => roundsStore.updateCurrentRound({ currentPlayerId: generateId() })
@@ -115,8 +115,7 @@ describe('Rounds Store', () => {
 
 		it('should update the current round with the provided update', () => {
 			const roundsStore = useRoundsStore();
-			const round = createCurrentRound();
-			roundsStore.addRound(round);
+			const round = addNewCurrentRoundToStore([generateId()]);
 
 			roundsStore.updateCurrentRound({
 				phase: 'round-end',
@@ -143,11 +142,8 @@ describe('Rounds Store', () => {
 		});
 
 		it('should throw an error if the player is not found in the current round', () => {
+			addNewCurrentRoundToStore([generateId()]);
 			const roundsStore = useRoundsStore();
-			// playerStats is empty, so any playerId is invalid
-			const round = createCurrentRound();
-
-			roundsStore.addRound(round);
 
 			expect(() =>
 				roundsStore.updateCurrentRoundPlayerStats(generateId(), 1, 1)
@@ -155,21 +151,20 @@ describe('Rounds Store', () => {
 		});
 
 		it('should do nothing when both tiles and score are 0', () => {
-			const roundsStore = useRoundsStore();
 			const playerId = generateId();
-			const round = createCurrentRound([playerId]);
+			const round = addNewCurrentRoundToStore([playerId]);
 
-			roundsStore.addRound(round);
+			const roundsStore = useRoundsStore();
 			roundsStore.updateCurrentRoundPlayerStats(playerId, 0, 0);
 
 			expect(roundsStore.currentRound).toEqual(round);
 		});
 
 		it('should update score when only scoreDelta is non-zero', () => {
-			const roundsStore = useRoundsStore();
 			const playerId = generateId();
+			addNewCurrentRoundToStore([playerId]);
 
-			roundsStore.addRound(createCurrentRound([playerId]));
+			const roundsStore = useRoundsStore();
 			roundsStore.updateCurrentRoundPlayerStats(playerId, 0, 10);
 
 			expect(roundsStore.currentRound?.playerStats[0]).toEqual({
@@ -180,10 +175,10 @@ describe('Rounds Store', () => {
 		});
 
 		it('should update tiles when only tilesDelta is non-zero', () => {
-			const roundsStore = useRoundsStore();
 			const playerId = generateId();
+			addNewCurrentRoundToStore([playerId]);
 
-			roundsStore.addRound(createCurrentRound([playerId]));
+			const roundsStore = useRoundsStore();
 			roundsStore.updateCurrentRoundPlayerStats(playerId, 2, 0);
 
 			expect(roundsStore.currentRound?.playerStats[0]).toEqual({
@@ -194,19 +189,20 @@ describe('Rounds Store', () => {
 		});
 
 		it('should update the current round player stats with the provided update', () => {
-			const roundsStore = useRoundsStore();
+			const initialTiles = useRules().determineStonesPerPlayer(2);
 			const playerA = generateId();
 			const playerB = generateId();
-			const round = createCurrentRound([playerA, playerB]);
+			const round = addNewCurrentRoundToStore([playerA, playerB]);
 
-			roundsStore.addRound(round);
-			roundsStore.updateCurrentRoundPlayerStats(playerA, 2, 10);
+			const roundsStore = useRoundsStore();
+			const pickedTilesCount = 2;
+			roundsStore.updateCurrentRoundPlayerStats(playerA, pickedTilesCount, 10);
 
 			expect(roundsStore.currentRound).toEqual({
 				...round,
 				playerStats: [
-					{ id: playerA, score: 10, tiles: 2 },
-					{ id: playerB, score: 0, tiles: 0 }
+					{ id: playerA, score: 10, tiles: initialTiles + pickedTilesCount },
+					{ id: playerB, score: 0, tiles: initialTiles }
 				]
 			});
 		});
@@ -235,7 +231,7 @@ describe('Rounds Store', () => {
 			roundsStore.updateCurrentRound({ winnerId: playerId });
 			roundsStore.completeCurrentRound({ [playerId]: 13 });
 
-			roundsStore.addRound(createCurrentRound());
+			roundsStore.addRound(createCurrentRound([playerId]));
 
 			expect(roundsStore.completedRounds).toHaveLength(2);
 			expect(roundsStore.completedRounds[0]).toEqual({
@@ -264,17 +260,23 @@ describe('Rounds Store', () => {
 
 		it('should return undefined if there is a current round but no player has been set', () => {
 			const roundsStore = useRoundsStore();
-			roundsStore.addRound(createCurrentRound());
+			// Manually create a current round, the factory method doesn't allow
+			// creating a current round with no player stats
+			roundsStore.addRound({
+				id: generateId(),
+				isCurrentRound: true,
+				phase: 'player-select',
+				playerStats: []
+			});
 
 			expect(roundsStore.currentPlayerId).toBeUndefined();
 		});
 
 		it('should return the current player ID if there is a current round', () => {
-			const roundsStore = useRoundsStore();
 			const playerId = generateId();
-			const round = createCurrentRound([playerId]);
+			addNewCurrentRoundToStore([playerId]);
 
-			roundsStore.addRound(round);
+			const roundsStore = useRoundsStore();
 			roundsStore.updateCurrentRound({ currentPlayerId: playerId });
 
 			expect(roundsStore.currentPlayerId).toEqual(playerId);
@@ -291,19 +293,18 @@ describe('Rounds Store', () => {
 		});
 
 		it('should return undefined if there is a current round but no player has been set', () => {
+			addNewCurrentRoundToStore([generateId()]);
+
 			const roundsStore = useRoundsStore();
-			const round = createCurrentRound([generateId()]);
-			roundsStore.addRound(round);
 
 			expect(roundsStore.currentPlayerStats).toBeUndefined();
 		});
 
 		it('should return the current player stats if there is a current round and a player has been set', () => {
-			const roundsStore = useRoundsStore();
 			const playerId = generateId();
-			const round = createCurrentRound([playerId]);
+			addNewCurrentRoundToStore([playerId]);
 
-			roundsStore.addRound(round);
+			const roundsStore = useRoundsStore();
 			roundsStore.updateCurrentRound({ currentPlayerId: playerId });
 			roundsStore.updateCurrentRoundPlayerStats(playerId, 10, 5);
 
@@ -323,9 +324,9 @@ describe('Rounds Store', () => {
 		});
 
 		it('should return the current round if there is a current round', () => {
+			const round = addNewCurrentRoundToStore([generateId()]);
+
 			const roundsStore = useRoundsStore();
-			const round = createCurrentRound();
-			roundsStore.addRound(round);
 
 			expect(roundsStore.currentRound).toEqual(round);
 		});
@@ -341,22 +342,22 @@ describe('Rounds Store', () => {
 		});
 
 		it('should return 1 for the first round', () => {
-			const roundsStore = useRoundsStore();
+			addNewCurrentRoundToStore([generateId()]);
 
-			roundsStore.addRound(createCurrentRound());
+			const roundsStore = useRoundsStore();
 
 			expect(roundsStore.currentRoundOrdinal).toEqual(1);
 		});
 
 		it('should return the ordinal for subsequent rounds', () => {
-			const roundsStore = useRoundsStore();
 			const playerId = generateId();
-			const round = createCurrentRound([playerId]);
+			addNewCurrentRoundToStore([playerId]);
 
-			roundsStore.addRound(round);
+			const roundsStore = useRoundsStore();
 			roundsStore.updateCurrentRound({ winnerId: playerId });
 			roundsStore.completeCurrentRound({ [playerId]: 42 });
-			roundsStore.addRound(createCurrentRound());
+
+			addNewCurrentRoundToStore([playerId]);
 
 			expect(roundsStore.currentRoundOrdinal).toEqual(2);
 		});
@@ -374,9 +375,8 @@ describe('Rounds Store', () => {
 		});
 
 		it('should throw an error if the player is not found in the current round', () => {
+			addNewCurrentRoundToStore([generateId()]);
 			const roundsStore = useRoundsStore();
-
-			roundsStore.addRound(createCurrentRound());
 
 			expect(() =>
 				roundsStore.getCurrentRoundTileCountForPlayer(generateId())
@@ -384,14 +384,16 @@ describe('Rounds Store', () => {
 		});
 
 		it('should return the number of tiles for the player in the current round', () => {
-			const roundsStore = useRoundsStore();
+			const initialTiles = useRules().determineStonesPerPlayer(2);
 			const playerId = generateId();
-			const round = createCurrentRound([playerId]);
+			// A valid game needs at least two players.
+			addNewCurrentRoundToStore([playerId, generateId()]);
 
-			roundsStore.addRound(round);
-			roundsStore.updateCurrentRoundPlayerStats(playerId, 2, 0);
+			const pickedTilesCount = 2;
+			const roundsStore = useRoundsStore();
+			roundsStore.updateCurrentRoundPlayerStats(playerId, pickedTilesCount, 0);
 
-			expect(roundsStore.getCurrentRoundTileCountForPlayer(playerId)).toEqual(2);
+			expect(roundsStore.getCurrentRoundTileCountForPlayer(playerId)).toEqual(initialTiles + pickedTilesCount);
 		});
 	});
 
@@ -405,9 +407,9 @@ describe('Rounds Store', () => {
 		});
 
 		it('should return true if there is a current round', () => {
-			const roundsStore = useRoundsStore();
+			addNewCurrentRoundToStore([generateId()]);
 
-			roundsStore.addRound(createCurrentRound());
+			const roundsStore = useRoundsStore();
 
 			expect(roundsStore.hasCurrentRound).toBe(true);
 		});
@@ -417,10 +419,9 @@ describe('Rounds Store', () => {
 
 	describe('$reset', () => {
 		it('should reset the rounds store', () => {
-			const roundsStore = useRoundsStore();
-			const playerId = generateId();
-			roundsStore.addRound(createCurrentRound([playerId]));
+			addNewCurrentRoundToStore([generateId()]);
 
+			const roundsStore = useRoundsStore();
 			roundsStore.$reset();
 
 			expect(roundsStore.rounds).toHaveLength(0);
