@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { TurnIdNotFoundError } from '@/errors';
 
-import { createTurn } from '@/test-factories';
+import { addNewTurnsToStore, createPlayedTurn, createSkippedTurn } from '@/test-factories';
 
 import { generateId } from '@/utilities/id';
 
@@ -19,7 +19,7 @@ describe('Turns Store', () => {
 	describe('addTurn', () => {
 		it('should add a turn to the store', () => {
 			const turnStore = useTurnsStore();
-			const turn = createTurn();
+			const turn = createSkippedTurn(generateId());
 
 			turnStore.addTurn(turn);
 
@@ -34,11 +34,8 @@ describe('Turns Store', () => {
 		it('should delete all turns', () => {
 			const turnStore = useTurnsStore();
 
-			const turnA = createTurn();
-			const turnB = createTurn();
-
-			turnStore.addTurn(turnA);
-			turnStore.addTurn(turnB);
+			turnStore.addTurn(createSkippedTurn(generateId()));
+			turnStore.addTurn(createSkippedTurn(generateId()));
 
 			turnStore.deleteTurns();
 
@@ -50,12 +47,8 @@ describe('Turns Store', () => {
 
 	describe('updateTurn', () => {
 		it('should update the turn with the specified ID with the new values', () => {
+			const [turnA, turnB] = addNewTurnsToStore([generateId(), generateId()], { tilesPlayed: 1 });
 			const turnStore = useTurnsStore();
-			const turnA = createTurn();
-			const turnB = createTurn();
-
-			turnStore.addTurn(turnA);
-			turnStore.addTurn(turnB);
 
 			turnStore.updateTurn(turnA.id, { score: 10 });
 
@@ -74,12 +67,8 @@ describe('Turns Store', () => {
 
 	describe('$reset', () => {
 		it('should reset the turns store', () => {
+			addNewTurnsToStore([generateId(), generateId()], { tilesPlayed: 1 });
 			const turnStore = useTurnsStore();
-			const turnA = createTurn();
-			const turnB = createTurn();
-
-			turnStore.addTurn(turnA);
-			turnStore.addTurn(turnB);
 
 			turnStore.$reset();
 

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 
-import { createCurrentRound, createTurn } from '@/test-factories';
+import { createCurrentRound, createPlayedTurn } from '@/test-factories';
 
 import { generateId } from '@/utilities/id';
 
@@ -13,9 +13,9 @@ import { useGameLogic } from './useGameLogic';
 
 /* ========================================================================== */
 
-vi.mock('@/i18n', () => ({
-	useGlobalI18n: () => ({ t: (key: string) => key })
-}));
+vi.mock('@/i18n');
+
+/* -------------------------------------------------------------------------- */
 
 beforeEach(() => setActivePinia(createPinia()));
 
@@ -55,8 +55,8 @@ describe('useGameLogic', () => {
 	describe('resetGameProgress', () => {
 		it('should reset game progress stores', () => {
 			useGameStore().createNewGame(100);
-			useTurnsStore().addTurn(createTurn());
-			useRoundsStore().addRound(createCurrentRound([generateId()]));
+			useTurnsStore().addTurn(createPlayedTurn(generateId()));
+			createCurrentRound([generateId()]);
 
 			const { resetGameProgress } = useGameLogic();
 			resetGameProgress();
