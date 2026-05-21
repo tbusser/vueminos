@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { TurnIdNotFoundError } from '@/errors';
 
-import { addNewTurnsToStore, createSkippedTurn } from '@/test-factories';
+import { addNewTurnsToStore, createPlayedTurn, createSkippedTurn } from '@/test-factories';
 
 import { generateId } from '@/utilities/id';
 
