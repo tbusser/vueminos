@@ -31,7 +31,8 @@
 		"noActiveGame": "Ongeldige actie, er is geen actieve game",
 		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler",
 		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde",
-		"noWinner": "Ongeldige actie, er is geen winnaar voor de huidige ronde"
+		"noWinner": "Ongeldige actie, er is geen winnaar voor de huidige ronde",
+		"turnNotFound": "Ongeldige actie, kon de geselecteerde ronde niet vinden"
 	},
 	"gameLimit": {
 		"description": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaardwaarde is 400 punten.",

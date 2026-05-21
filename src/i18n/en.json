@@ -31,7 +31,8 @@
 		"noActiveGame": "Invalid action, there is no active game",
 		"noCurrentPlayer": "Invalid action, there is no current player",
 		"noCurrentRound": "Invalid action, there is no current round",
-		"noWinner": "Invalid action, there is no winner for the current round"
+		"noWinner": "Invalid action, there is no winner for the current round",
+		"turnNotFound": "Invalid action, could not find selected turn to update"
 	},
 	"gameLimit": {
 		"description": "Set the number of points needed to trigger the final round. The default is 400 points.",
