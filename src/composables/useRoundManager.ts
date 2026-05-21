@@ -112,6 +112,15 @@ export function useRoundManager() {
 		return lastTurns.every(turn => turn.tilesPlayed === 0);
 	}
 
+	function checkIfPlayerHasNoTiles(playerId: Id): boolean {
+		const playerStats = roundsStore.currentRound?.playerStats.find(player => player.id === playerId);
+
+		if (playerStats === undefined) return false;
+		if (playerStats.tiles !== 0) return false;
+
+		return true;
+	}
+
 	function checkIfCurrentPlayerHasNoTiles(): boolean {
 		if (currentPlayerStats.value === undefined) return false;
 		if (currentPlayerStats.value.tiles !== 0) return false;
@@ -188,6 +197,32 @@ export function useRoundManager() {
 		return { success: true };
 	}
 
+	function updateTurn(playerId: Id, turnId: Id, turn: TurnInput): Feedback {
+		const scoredTurn: ScoredTurnInput = {
+			...turn,
+			score: calculateTurnScore(turn)
+		};
+
+		const updateResult = roundsLogic.updateTurn(playerId, turnId, scoredTurn);
+		if (!updateResult.success) return updateResult;
+
+		if (checkIfRoundIsBlocked()) {
+			roundsStore.updateCurrentRound({
+				isBlocked: true,
+				phase: 'round-end'
+			});
+		} else if (checkIfPlayerHasNoTiles(playerId)) {
+			// The current player has no tiles left, so the round ends. The
+			// current player is the winner of the round.
+			roundsStore.updateCurrentRound({
+				phase: 'round-end',
+				winnerId: playerId
+			});
+		}
+
+		return { success: true };
+	}
+
 	/**
 	 * Sets the starting player for the current round. Once the starting player
 	 * is set, the round phase is changed to 'turns', indicating that the round
@@ -219,6 +254,7 @@ export function useRoundManager() {
 		isTurnFirstTurnOfRound,
 		saveTurn,
 		setStartingPlayer,
-		tilesPerPlayer
+		tilesPerPlayer,
+		updateTurn
 	};
 }
