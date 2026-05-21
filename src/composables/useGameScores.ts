@@ -85,11 +85,11 @@ export function useGameScores() {
 	const winningPlayerId = computed<Id | undefined>(() => {
 		if (!hasReachedPointsLimit.value) return undefined;
 
-		const [winner, ...players] = Object.entries(totalScore.value) as [Id, number][];
+		const [initialWinner, ...players] = Object.entries(totalScore.value) as [Id, number][];
 
 		return players.reduce((winner, player) =>
 			player[1] > winner[1] ? player : winner,
-		winner)[0];
+		initialWinner)[0];
 	});
 
 	const winner = computed<Player | undefined>(() => {

@@ -133,11 +133,11 @@ export function useRoundManager() {
 			? determineRoundWinnerAndPoints(leftOverPoints, true)
 			: determineRoundWinnerAndPoints(leftOverPoints, false, round.winnerId!);
 
-		const scores = round.playerStats.reduce((result, player) => {
-			result[player.id] = player.score;
-			if (player.id === pointsForWinner.winnerId) result[player.id] += pointsForWinner.points;
+		const scores = round.playerStats.reduce((accumulator, player) => {
+			accumulator[player.id] = player.score;
+			if (player.id === pointsForWinner.winnerId) accumulator[player.id] += pointsForWinner.points;
 
-			return result;
+			return accumulator;
 		}, {} as Scores);
 
 		// Update the winner of the current round.

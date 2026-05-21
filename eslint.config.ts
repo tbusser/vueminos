@@ -139,5 +139,14 @@ export default [
 			'vue/html-indent': ['error', 'tab'],
 			'vue/v-on-event-hyphenation': ['error']
 		}
+	},
+
+	// General TypeScript source rules.
+	{
+		name: 'app/source',
+		files: ['src/**/*.{ts,mts,vue}'],
+		rules: {
+			'@typescript-eslint/no-shadow': 'error'
+		}
 	}
 ];

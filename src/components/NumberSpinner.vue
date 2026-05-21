@@ -32,13 +32,13 @@ watch(model, newValue => {
 
 /* -------------------------------------------------------------------------- */
 
-function clampValue(value: number | undefined): number {
-	if (value === undefined) return props.min;
+function clampValue(inputValue: number | undefined): number {
+	if (inputValue === undefined) return props.min;
 
-	if (value < props.min) return props.min;
-	if (value > props.max) return props.max;
+	if (inputValue < props.min) return props.min;
+	if (inputValue > props.max) return props.max;
 
-	return value;
+	return inputValue;
 }
 
 /* -------------------------------------------------------------------------- */
