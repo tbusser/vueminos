@@ -31,7 +31,7 @@ export const usePlayersStore = defineStore('players', () => {
 	 *          not found.
 	 */
 	function getPlayerById(id: Id): Player | undefined {
-		const player = players.value.find(player => player.id === id);
+		const player = players.value.find(existingPlayer => existingPlayer.id === id);
 
 		return player === undefined ? undefined : { ...player };
 	}
