@@ -45,6 +45,30 @@ describe('Turns Store', () => {
 
 	/* ---------------------------------------------------------------------- */
 
+	describe('replaceTurn', () => {
+		it('should replace the turn with the specified ID with the new values', () => {
+			const playerId = generateId();
+			const [turnA, turnB] = addNewTurnsToStore([playerId, generateId()], { tilesPlayed: 0 });
+			const turnAReplacement = createPlayedTurn(playerId);
+
+			const turnStore = useTurnsStore();
+			turnStore.replaceTurn(turnA.id, turnAReplacement);
+
+			expect(turnStore.turns[0]).toEqual(turnAReplacement);
+			expect(turnStore.turns[1]).toEqual(turnB);
+		});
+
+		it('should throw an error if the turn with the specified ID is not found', () => {
+			const turnStore = useTurnsStore();
+
+			expect(() =>
+				turnStore.replaceTurn(generateId(), createSkippedTurn(generateId()))
+			).toThrow(TurnIdNotFoundError);
+		});
+	});
+
+	/* ---------------------------------------------------------------------- */
+
 	describe('updateTurn', () => {
 		it('should update the turn with the specified ID with the new values', () => {
 			const [turnA, turnB] = addNewTurnsToStore([generateId(), generateId()], { tilesPlayed: 1 });
