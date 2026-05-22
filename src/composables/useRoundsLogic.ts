@@ -120,6 +120,34 @@ export function useRoundsLogic() {
 		return { success: true };
 	}
 
+	function updateTurn(playerId: Id, turnId: Id, turn: ScoredTurnInput): Feedback {
+		const result = requireCurrentRound();
+		if (!result.success) return result;
+
+		const originalTurn = turnsStore.turns.find(i => i.id === turnId);
+		if (originalTurn === undefined) {
+			return {
+				message: t('error.turnNotFound'),
+				success: false
+			};
+		}
+
+		turnsStore.replaceTurn(turnId, {
+			...turn,
+			id: originalTurn.id,
+			playerId: playerId
+		});
+
+		const tileDelta =
+			(turn.tilesDrawn - turn.tilesPlayed) -
+			(originalTurn.tilesDrawn - originalTurn.tilesPlayed);
+		const scoreDelta = turn.score - originalTurn.score;
+
+		roundsStore.updateCurrentRoundPlayerStats(playerId, tileDelta, scoreDelta);
+
+		return { success: true };
+	}
+
 	/**
 	 * Starts a new round in the current game, initializing player stats
 	 * and setting the current player.
@@ -157,6 +185,7 @@ export function useRoundsLogic() {
 		currentRoundOrdinal,
 		finishCurrentRound,
 		saveTurn,
-		startNewRound
+		startNewRound,
+		updateTurn
 	};
 }

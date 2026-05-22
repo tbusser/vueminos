@@ -18,25 +18,37 @@ type BonusShape = 'bridge' | 'double' | 'hexagon';
 /* ========================================================================== */
 
 const emit = defineEmits<{
-	(event: 'turn-played', turn: ScoredTurnInput): void;
+	(event: 'turn-played', turn: TurnInput): void;
 }>();
 
 const props = withDefaults(defineProps<{
 	isInitialTurn?: boolean;
+	primaryActionLabel: string;
 	subtitle: string;
 	title: string;
+	turn: Turn | null;
 }>(), {
-	isInitialTurn: false
+	isInitialTurn: false,
+	turn: null
 });
 
 /* -------------------------------------------------------------------------- */
 
-const { calculateStartingStoneBonus, calculateTurnScore, canTileBeTripleStone } = useRules();
+const { calculateStartingStoneBonus, canTileBeTripleStone } = useRules();
 
-const isTripleStone = ref<boolean>(false);
-const selectedBonusShape = ref<BonusShape | undefined>(undefined);
-const tilesDrawn = ref<number>(0);
-const tileValue = ref<number | undefined>(undefined);
+/* -------------------------------------------------------------------------- */
+
+// These refs are initialized once from props.turn at mount time. The parent is
+// responsible for re-keying this component whenever the turn changes, so no
+// watchers are needed here.
+const isTripleStone = ref<boolean>(
+	props.turn?.tilesPlayed === 1 ? props.turn.triple : false
+);
+const selectedBonusShape = ref<BonusShape | undefined>(getInitialBonusShape());
+const tilesDrawn = ref<number>(props.turn?.tilesDrawn ?? 0);
+const tileValue = ref<number | undefined>(props.turn?.tileValue);
+
+/* -------------------------------------------------------------------------- */
 
 const openingTurnBonus = computed<number>(() =>
 	(tileValue.value === undefined) ? 0 : calculateStartingStoneBonus(tileValue.value)
@@ -59,15 +71,16 @@ watchEffect(() => {
 /* -------------------------------------------------------------------------- */
 
 /**
- * Creates a ScoredTurnInput object based on what the user has selected in the
+ * Creates a TurnInput object based on what the user has selected in the
  * turn screen.
  *
- * @returns A ScoredTurnInput object containing the turn input and the score.
+ * @returns A TurnInput object containing the turn input.
  */
-function createScoredTurnInput(): ScoredTurnInput {
-	const turnInput: TurnInput = tileValue.value === undefined
+function createTurnInput(): TurnInput {
+	return tileValue.value === undefined
 		? {
-			tilesDrawn: tilesDrawn.value,
+			// On an initial turn the user has no option to draw tiles.
+			tilesDrawn: props.isInitialTurn ? 0 : tilesDrawn.value,
 			tilesPlayed: 0,
 			tileValue: undefined
 		}
@@ -75,16 +88,23 @@ function createScoredTurnInput(): ScoredTurnInput {
 			bonusBridge: selectedBonusShape.value === 'bridge',
 			bonusDouble: selectedBonusShape.value === 'double',
 			bonusHexagon: selectedBonusShape.value === 'hexagon',
-			tilesDrawn: tilesDrawn.value,
+			// On an initial turn the user has no option to draw tiles.
+			tilesDrawn: props.isInitialTurn ? 0 : tilesDrawn.value,
 			tilesPlayed: 1,
 			tileValue: tileValue.value,
 			triple: props.isInitialTurn && isTripleStone.value
 		};
+}
 
-	return {
-		...turnInput,
-		score: calculateTurnScore(turnInput)
-	};
+function getInitialBonusShape(): BonusShape | undefined {
+	if (props.turn === null) return undefined;
+	if (props.turn.tilesPlayed === 0) return undefined;
+
+	if (props.turn.bonusBridge) return 'bridge';
+	if (props.turn.bonusDouble) return 'double';
+	if (props.turn.bonusHexagon) return 'hexagon';
+
+	return undefined;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -96,7 +116,7 @@ function onToggleBonusScoring(value: string | string[] | undefined) {
 }
 
 function onNavigateForward() {
-	emit('turn-played', createScoredTurnInput());
+	emit('turn-played', createTurnInput());
 }
 
 function onToggleIsTripleStone(value: boolean) {
@@ -141,6 +161,7 @@ function onToggleIsTripleStone(value: boolean) {
 
 				<ToggleButtonGroup
 					orientation="horizontal"
+					:model-value="selectedBonusShape"
 					@update:model-value="onToggleBonusScoring"
 				>
 					<ShapeToggleButton :id="'bridge' satisfies BonusShape">
@@ -173,25 +194,16 @@ function onToggleIsTripleStone(value: boolean) {
 				type="button"
 				@click="onNavigateForward"
 			>
-				{{ $t('common.next') }}
+				{{ primaryActionLabel }}
 			</button>
+		</template>
+		<template #secondary-action>
+			<slot name="secondary-action" />
 		</template>
 	</AppScreen>
 </template>
 
 <style scoped lang="scss">
-.completed-shape {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: get-spacing(x-small);
-
-	img {
-		width: 48px;
-		height: 48px;
-	}
-}
-
 .tiles-drawn-wrapper {
 	align-items: center;
 	display: flex;

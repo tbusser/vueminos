@@ -14,6 +14,17 @@ export const useTurnsStore = defineStore('turns', () => {
 
 	/* ---------------------------------------------------------------------- */
 
+	function findTurnIndex(id: Id): number {
+		const index = turns.value.findIndex(t => t.id === id);
+		if (index === -1) {
+			throw new TurnIdNotFoundError(`Unable to find turn, turn with ID ${id} not found`);
+		}
+
+		return index;
+	}
+
+	/* ---------------------------------------------------------------------- */
+
 	/**
 	 * Resets the turns store to its initial state.
 	 */
@@ -38,6 +49,22 @@ export const useTurnsStore = defineStore('turns', () => {
 	}
 
 	/**
+	 * Replaces a turn in the list of turns.
+	 *
+	 * @param id The ID of the turn to replace.
+	 * @param turn The new turn state.
+	 *
+	 * @throws {TurnIdNotFoundError} If the turn with the specified ID is not
+	 *         found in the turns store, an error is thrown to prevent replacing
+	 *         a non-existent turn.
+	 */
+	function replaceTurn(id: Id, turn: Turn): void {
+		const index = findTurnIndex(id);
+
+		turns.value[index] = turn;
+	}
+
+	/**
 	 * Updates a turn in the list of turns.
 	 *
 	 * @param id The ID of the turn to update.
@@ -48,11 +75,7 @@ export const useTurnsStore = defineStore('turns', () => {
 	 *         a non-existent turn.
 	 */
 	function updateTurn(id: Id, update: Partial<Omit<Turn, 'id' | 'roundId'>>): void {
-		const index = turns.value.findIndex(turn => turn.id === id);
-
-		if (index === -1) {
-			throw new TurnIdNotFoundError(`Unable to update turn, turn with ID ${id} not found`);
-		}
+		const index = findTurnIndex(id);
 
 		turns.value[index] = { ...turns.value[index], ...update } as Turn;
 	}
@@ -67,6 +90,7 @@ export const useTurnsStore = defineStore('turns', () => {
 		$reset,
 		addTurn,
 		deleteTurns,
+		replaceTurn,
 		updateTurn
 	};
 }, {

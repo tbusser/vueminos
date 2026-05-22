@@ -32,7 +32,7 @@ export function useRoundManager() {
 		currentPlayerStats,
 		currentRound
 	} = storeToRefs(roundsStore);
-	const { determineRoundWinnerAndPoints } = useRules();
+	const { calculateTurnScore, determineRoundWinnerAndPoints } = useRules();
 	const { turns } = storeToRefs(turnsStore);
 
 	/* ---------------------------------------------------------------------- */
@@ -63,6 +63,12 @@ export function useRoundManager() {
 	 * Indicates whether the current turn is the first turn of the round.
 	 */
 	const isFirstTurnOfRound = computed<boolean>(() => turns.value.length === 0);
+
+	function isTurnFirstTurnOfRound(turnId: Id): boolean {
+		if (turns.value.length === 0) return false;
+
+		return turns.value[0].id === turnId;
+	}
 
 	/* ---------------------------------------------------------------------- */
 
@@ -104,6 +110,15 @@ export function useRoundManager() {
 
 		// When all the last turns have no tiles played, the round is blocked.
 		return lastTurns.every(turn => turn.tilesPlayed === 0);
+	}
+
+	function checkIfPlayerHasNoTiles(playerId: Id): boolean {
+		const playerStats = roundsStore.currentRound?.playerStats.find(player => player.id === playerId);
+
+		if (playerStats === undefined) return false;
+		if (playerStats.tiles !== 0) return false;
+
+		return true;
 	}
 
 	function checkIfCurrentPlayerHasNoTiles(): boolean {
@@ -155,8 +170,12 @@ export function useRoundManager() {
 		return { success: true };
 	}
 
-	function saveTurn(turn: ScoredTurnInput): Feedback {
-		const saveResult = roundsLogic.saveTurn(turn);
+	function saveTurn(turn: TurnInput): Feedback {
+		const scoredTurn: ScoredTurnInput = {
+			...turn,
+			score: calculateTurnScore(turn)
+		};
+		const saveResult = roundsLogic.saveTurn(scoredTurn);
 		if (!saveResult.success) return saveResult;
 
 		if (checkIfRoundIsBlocked()) {
@@ -173,6 +192,32 @@ export function useRoundManager() {
 			});
 		} else {
 			advanceToNextPlayer();
+		}
+
+		return { success: true };
+	}
+
+	function updateTurn(playerId: Id, turnId: Id, turn: TurnInput): Feedback {
+		const scoredTurn: ScoredTurnInput = {
+			...turn,
+			score: calculateTurnScore(turn)
+		};
+
+		const updateResult = roundsLogic.updateTurn(playerId, turnId, scoredTurn);
+		if (!updateResult.success) return updateResult;
+
+		if (checkIfRoundIsBlocked()) {
+			roundsStore.updateCurrentRound({
+				isBlocked: true,
+				phase: 'round-end'
+			});
+		} else if (checkIfPlayerHasNoTiles(playerId)) {
+			// The current player has no tiles left, so the round ends. The
+			// current player is the winner of the round.
+			roundsStore.updateCurrentRound({
+				phase: 'round-end',
+				winnerId: playerId
+			});
 		}
 
 		return { success: true };
@@ -204,10 +249,12 @@ export function useRoundManager() {
 	return {
 		currentPhase,
 		currentPlayer,
-		isFirstTurnOfRound,
 		finishRound,
-		setStartingPlayer,
+		isFirstTurnOfRound,
+		isTurnFirstTurnOfRound,
 		saveTurn,
-		tilesPerPlayer
+		setStartingPlayer,
+		tilesPerPlayer,
+		updateTurn
 	};
 }

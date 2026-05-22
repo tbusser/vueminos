@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { TurnIdNotFoundError } from '@/errors';
 
-import { addNewTurnsToStore, createSkippedTurn } from '@/test-factories';
+import { addNewTurnsToStore, createPlayedTurn, createSkippedTurn } from '@/test-factories';
 
 import { generateId } from '@/utilities/id';
 
@@ -40,6 +40,30 @@ describe('Turns Store', () => {
 			turnStore.deleteTurns();
 
 			expect(turnStore.turns).toHaveLength(0);
+		});
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	describe('replaceTurn', () => {
+		it('should replace the turn with the specified ID with the new values', () => {
+			const playerId = generateId();
+			const [turnA, turnB] = addNewTurnsToStore([playerId, generateId()], { tilesPlayed: 0 });
+			const turnAReplacement = createPlayedTurn(playerId);
+
+			const turnStore = useTurnsStore();
+			turnStore.replaceTurn(turnA.id, turnAReplacement);
+
+			expect(turnStore.turns[0]).toEqual(turnAReplacement);
+			expect(turnStore.turns[1]).toEqual(turnB);
+		});
+
+		it('should throw an error if the turn with the specified ID is not found', () => {
+			const turnStore = useTurnsStore();
+
+			expect(() =>
+				turnStore.replaceTurn(generateId(), createSkippedTurn(generateId()))
+			).toThrow(TurnIdNotFoundError);
 		});
 	});
 
