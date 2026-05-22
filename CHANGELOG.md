@@ -1,3 +1,26 @@
+## [1.1.0](https://github.com/tbusser/vueminos/compare/v1.0.13..v1.1.0) - 2026-05-22
+
+### 🚀 Features
+
+- *(history)* Allow editing of recent turns during a round ([#55](https://github.com/tbusser/vueminos/pull/55))
+
+### 💼 Other
+
+- *(deps)* Bump dependencies to latest patch/minor versions
+
+### 🚜 Refactor
+
+- *(test-factories)* Replace flat factories with domain-scoped modules ([#53](https://github.com/tbusser/vueminos/pull/53))
+- Enforce no-shadow rule and rename shadowing parameters ([#54](https://github.com/tbusser/vueminos/pull/54))
+
+### 📚 Documentation
+
+- *(cursor)* Add code style rule file
+
+### ⚙️ Miscellaneous Tasks
+
+- Add intlify to cSpell wordlist
+
 ## [1.0.13](https://github.com/tbusser/vueminos/compare/v1.0.12..v1.0.13) - 2026-05-12
 
 ### 🐛 Bug Fixes
