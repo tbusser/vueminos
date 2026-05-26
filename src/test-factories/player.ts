@@ -6,7 +6,7 @@ import { assertActivePinia } from './assertActivePinia';
 
 /* ========================================================================== */
 
-function createPlayer(id: Id, name: string): Player {
+function createPlayer(name: string, id: Id = generateId()): Player {
 	return {
 		active: true,
 		id,
