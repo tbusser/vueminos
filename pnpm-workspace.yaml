@@ -2,4 +2,7 @@ onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
 
+# Ignore releases younger than 3 days. This matches the cooldown period of the
+# Dependabot PR workflow for patches.
+minReleaseAge: 4320
 useNodeVersion: 24.14.1
