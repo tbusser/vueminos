@@ -1,3 +1,17 @@
+## [1.2.0](https://github.com/tbusser/vueminos/compare/v1.1.0..v1.2.0) - 2026-05-26
+
+### 🚀 Features
+
+- *(pwa)* Add web app manifest, icons, and service worker ([#58](https://github.com/tbusser/vueminos/pull/58))
+
+### 🐛 Bug Fixes
+
+- *(scoring)* Detect game end when finishing winning round ([#57](https://github.com/tbusser/vueminos/pull/57))
+
+### 💼 Other
+
+- Bump dev dependencies to latest versions
+
 ## [1.1.0](https://github.com/tbusser/vueminos/compare/v1.0.13..v1.1.0) - 2026-05-22
 
 ### 🚀 Features
