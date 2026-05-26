@@ -1,4 +1,3 @@
-import { nextTick } from 'vue';
 import { createPinia, setActivePinia } from 'pinia';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -148,6 +147,26 @@ describe('useGameScores', () => {
 
 			expect(hasReachedPointsLimit.value).toBe(true);
 		});
+
+		it('should return true synchronously after a current round is completed past the limit', () => {
+			const playerId = generateId();
+			const roundsStore = useRoundsStore();
+
+			createGame(100);
+			createRounds([{
+				id: generateId(),
+				isCurrentRound: true,
+				phase: 'round-end',
+				playerStats: [{ id: playerId, score: 110, tiles: 0 }],
+				winnerId: playerId
+			}]);
+
+			const { hasReachedPointsLimit } = useGameScores();
+
+			roundsStore.completeCurrentRound({ [playerId]: 110 });
+
+			expect(hasReachedPointsLimit.value).toBe(true);
+		});
 	});
 
 	/* ---------------------------------------------------------------------- */
@@ -259,7 +278,7 @@ describe('useGameScores', () => {
 			});
 		});
 
-		it('should include a round completed after composable creation', async () => {
+		it('should include a round completed after composable creation', () => {
 			const playerId = generateId();
 			createRounds([{
 				id: generateId(),
@@ -270,7 +289,6 @@ describe('useGameScores', () => {
 
 			const { totalScore } = useGameScores();
 
-			// Simulate a round being completed during active gameplay
 			createRounds([
 				{
 					id: generateId(),
@@ -285,8 +303,6 @@ describe('useGameScores', () => {
 					winnerId: playerId
 				}
 			]);
-
-			await nextTick();
 
 			expect(totalScore.value).toEqual({ [playerId]: 60 });
 		});

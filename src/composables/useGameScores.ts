@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { useGameStore } from '@/stores/game';
@@ -17,26 +17,6 @@ export function useGameScores() {
 
 	/* -- Score Aggregation ------------------------------------------------- */
 
-	function addFinishedRoundScore(
-		aggregatedScore: ScorePerPlayer,
-		round: CompletedRound
-	): ScorePerPlayer {
-		const updatedScores = { ...aggregatedScore };
-
-		(Object.keys(round.scores) as Id[]).forEach(playerId => {
-			updatedScores[playerId] = (updatedScores[playerId] ?? 0) + round.scores[playerId];
-		});
-
-		return updatedScores;
-	}
-
-	function initializeFinishedRoundsScore(): ScorePerPlayer {
-		return completedRounds.value.reduce(
-			(acc, round) => addFinishedRoundScore(acc, round),
-			{} as ScorePerPlayer
-		);
-	}
-
 	const currentRoundScore = computed<ScorePerPlayer>(() => {
 		if (currentRound.value === undefined) return {};
 
@@ -46,7 +26,15 @@ export function useGameScores() {
 		}, {} as ScorePerPlayer);
 	});
 
-	const finishedRoundsScore = ref<ScorePerPlayer>(initializeFinishedRoundsScore());
+	const finishedRoundsScore = computed<ScorePerPlayer>(() => {
+		return completedRounds.value.reduce((acc, round) => {
+			(Object.keys(round.scores) as Id[]).forEach(playerId => {
+				acc[playerId] = (acc[playerId] ?? 0) + round.scores[playerId];
+			});
+
+			return acc;
+		}, {} as ScorePerPlayer);
+	});
 
 	const totalScore = computed<ScorePerPlayer>(() => {
 		const keys = new Set<Id>([
@@ -62,17 +50,6 @@ export function useGameScores() {
 
 		return result;
 	});
-
-	watch(completedRounds, (rounds, oldRounds) => {
-		// completedRounds changes frequently but actual updates are rare. Only
-		// recalculate the scores when the number of completed rounds changes.
-		if (rounds.length === oldRounds.length) return;
-
-		finishedRoundsScore.value = addFinishedRoundScore(
-			finishedRoundsScore.value,
-			rounds.at(-1) as CompletedRound
-		);
-	}, { immediate: false });
 
 	/* -- Game State -------------------------------------------------------- */
 
