@@ -35,9 +35,9 @@
 		"@stylistic/eslint-plugin": "^5.10.0",
 		"@tsconfig/node22": "^22.0.5",
 		"@types/jsdom": "^28.0.3",
-		"@types/node": "^25.8.0",
+		"@types/node": "^25.9.1",
 		"@vitejs/plugin-vue": "^6.0.7",
-		"@vitest/eslint-plugin": "^1.6.17",
+		"@vitest/eslint-plugin": "^1.6.18",
 		"@vue/eslint-config-typescript": "^14.7.0",
 		"@vue/test-utils": "^2.4.10",
 		"@vue/tsconfig": "^0.9.1",
@@ -49,15 +49,15 @@
 		"husky": "^9.1.7",
 		"jsdom": "^29.1.1",
 		"jsonc-eslint-parser": "^3.1.0",
-		"npm-run-all2": "^8.0.4",
+		"npm-run-all2": "^9.0.1",
 		"playwright": "^1.60.0",
-		"sass-embedded": "^1.99.0",
+		"sass-embedded": "^1.100.0",
 		"typescript": "~6.0.3",
-		"vite": "^8.0.13",
+		"vite": "^8.0.14",
 		"vite-plugin-mkcert": "^2.0.0",
 		"vite-plugin-vue-devtools": "^8.1.2",
-		"vitest": "^4.1.6",
-		"vue-tsc": "^3.2.9"
+		"vitest": "^4.1.7",
+		"vue-tsc": "^3.3.2"
 	},
 	"packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
 }
