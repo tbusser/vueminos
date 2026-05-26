@@ -38,3 +38,5 @@ watch(locale, selectedLocale => {
 });
 
 useColorScheme(colorScheme);
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/vueminos/sw.js');
