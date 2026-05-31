@@ -29,10 +29,10 @@ function createCompletedRound(winnerId: Id, scores: Scores): CompletedRound {
 	} satisfies CompletedRound;
 }
 
-function addNewCurrentRoundToStore(playerIds: Id[]): Round {
+function addNewCurrentRoundToStore(playerIds: Id[], phase?: RoundPhase): Round {
 	assertActivePinia('addNewCurrentRoundToStore');
 
-	const round = createCurrentRound(playerIds);
+	const round = createCurrentRound(playerIds, phase);
 	useRoundsStore().addRound(round);
 
 	return round;

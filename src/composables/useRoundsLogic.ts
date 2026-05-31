@@ -10,6 +10,7 @@ import { useTurnsStore } from '@/stores/turns';
 import { generateId } from '@/utilities/id';
 
 import { useRules } from './useRules';
+import { PlayerIdNotFoundError } from '@/errors';
 
 /* ========================================================================== */
 
@@ -75,12 +76,29 @@ export function useRoundsLogic() {
 	 *
 	 * @returns True if the round was successfully finished, false if there is
 	 *          no current round to finish.
+	 *
+	 * @throws {PlayerIdNotFoundError} If there is no player ID set for the
+	 *         winner of the round, an error is thrown to prevent completing a
+	 *         round without a winner.
+	 * @throws {PlayerIdNotFoundError} If the player with the specified ID is
+	 *         not found in the player stats of the current round, an error is
+	 *         thrown to prevent completing a round for a non-existent player.
 	 */
 	function finishCurrentRound(scores: Scores): Feedback {
 		const result = requireCurrentRound();
 		if (!result.success) return result;
 
-		roundsStore.completeCurrentRound(scores);
+		try {
+			roundsStore.completeCurrentRound(scores);
+		} catch (error) {
+			if (error instanceof PlayerIdNotFoundError) {
+				return {
+					message: 'No winner ID set for the current round',
+					success: false
+				};
+			}
+			throw error;
+		}
 
 		return { success: true };
 	}
