@@ -21,8 +21,7 @@ function addNewPlayersToStore(count: number): Player[] {
 	const players: Player[] = [];
 
 	for (let i = 0; i < count; i++) {
-		const id = generateId();
-		const player = createPlayer(id, id);
+		const player = createPlayer(`Player ${i + 1}`);
 		playersStore.addPlayer(player);
 		players.push(player);
 	}
