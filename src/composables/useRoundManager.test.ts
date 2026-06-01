@@ -1,7 +1,14 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { addNewCurrentRoundToStore, addNewPlayersToStore, addNewTurnsToStore, createPlayedTurn, createPlayer, createSkippedTurn } from '@/test-factories';
+import {
+	addNewCurrentRoundToStore,
+	addNewPlayersToStore,
+	addNewTurnsToStore,
+	createPlayedTurn,
+	createPlayer,
+	createSkippedTurn
+} from '@/test-factories';
 
 import { generateId } from '@/utilities/id';
 
