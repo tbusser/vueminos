@@ -6,7 +6,7 @@ import { generateId } from '@/utilities/id';
 import { usePlayersStore } from '@/stores/players';
 import { useRoundsStore } from '@/stores/rounds';
 
-import { useCollectPoints } from './useCollectPoints';
+import { useCollectPoints, type CollectedPoints } from './useCollectPoints';
 
 /* ========================================================================== */
 
@@ -39,6 +39,40 @@ beforeEach(() => setActivePinia(createPinia()));
 /* -------------------------------------------------------------------------- */
 
 describe('useCollectPoints', () => {
+	describe('areCollectedPointsComplete', () => {
+		it('should return false when the collected points are an empty object', () => {
+			const input: CollectedPoints = {};
+
+			const { areCollectedPointsComplete } = useCollectPoints();
+
+			expect(areCollectedPointsComplete(input)).toBe(false);
+		});
+
+		it('should return false as long as a player has not collected points', () => {
+			const input: CollectedPoints = {
+				[generateId()]: 0,
+				[generateId()]: undefined,
+				[generateId()]: 12
+			};
+
+			const { areCollectedPointsComplete } = useCollectPoints();
+
+			expect(areCollectedPointsComplete(input)).toBe(false);
+		});
+
+		it('should return true when all players have collected points', () => {
+			const input: CollectedPoints = {
+				[generateId()]: 0,
+				[generateId()]: 12,
+				[generateId()]: 24
+			};
+
+			const { areCollectedPointsComplete } = useCollectPoints();
+
+			expect(areCollectedPointsComplete(input)).toBe(true);
+		});
+	});
+
 	describe('collectedPoints', () => {
 		it('should be an empty object when there are no active players', () => {
 			const { collectedPoints } = useCollectPoints();
