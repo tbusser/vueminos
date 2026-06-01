@@ -20,6 +20,7 @@ const { t } = useGlobalI18n();
 
 const {
 	activePlayers,
+	areCollectedPointsComplete,
 	collectedPoints,
 	hasPlayerWonTheRound,
 	isComplete,
@@ -76,7 +77,10 @@ function onSavePoints(): void {
 }
 
 function onSubmit(): void {
-	emit('navigate-forward', collectedPoints.value as LeftoverPoints);
+	// Make sure all players have collected points.
+	if (!areCollectedPointsComplete(collectedPoints.value)) return;
+
+	emit('navigate-forward', collectedPoints.value);
 }
 </script>
 

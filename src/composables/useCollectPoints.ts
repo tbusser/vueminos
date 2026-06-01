@@ -6,7 +6,7 @@ import { useRoundsStore } from '@/stores/rounds';
 
 /* ========================================================================== */
 
-type CollectedPoints = {
+export type CollectedPoints = {
 	[id: Id]: number | undefined;
 };
 
@@ -37,9 +37,7 @@ export function useCollectPoints() {
 		}, {})
 	);
 
-	const isComplete = computed<boolean>(() => {
-		return Object.values(collectedPoints.value).every(points => points !== undefined);
-	});
+	const isComplete = computed<boolean>(() => areCollectedPointsComplete(collectedPoints.value));
 
 	const winningPlayerName = computed<string | undefined>(() => {
 		if (currentRound.value?.winnerId === undefined) return undefined;
@@ -50,6 +48,14 @@ export function useCollectPoints() {
 	});
 
 	/* ---------------------------------------------------------------------- */
+
+	function areCollectedPointsComplete(points: CollectedPoints): points is LeftoverPoints {
+		const values = Object.values(points);
+
+		return (values.length === 0)
+			? false
+			: values.every(p => p !== undefined);
+	}
 
 	function hasPlayerWonTheRound(playerId: Id): boolean {
 		return currentRound.value?.winnerId === playerId;
@@ -65,6 +71,8 @@ export function useCollectPoints() {
 
 	return {
 		activePlayers,
+
+		areCollectedPointsComplete,
 
 		/**
 		 * The collected points for each player in the current round. The value
