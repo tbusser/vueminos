@@ -6,9 +6,9 @@ import NumberSpinner from './NumberSpinner.vue';
 
 const state = reactive({
 	min: 0,
-	max: 10
+	max: 10,
+	valueLabel: 'Number of tiles drawn'
 });
-
 </script>
 
 <template>
@@ -17,6 +17,7 @@ const state = reactive({
 			<NumberSpinner
 				:min="state.min"
 				:max="state.max"
+				:value-label="state.valueLabel"
 			/>
 		</div>
 	</Story>

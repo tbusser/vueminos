@@ -92,6 +92,7 @@
 		"bonusDoubleLabel": "Dubbel",
 		"bonusHexagonLabel": "Hexagoon",
 		"bonusScoringLabel": "Bonuspunten",
+		"numberSpinnerValueLabel": "Aantal getrokken stenen",
 		"tilesDrawnLabel": "Getrokken stenen",
 		"tripleStone": "De gespeelde steen is een drievoud, alle zijden hebben dezelfde waarde (+{bonus} bonuspunten)."
 	}

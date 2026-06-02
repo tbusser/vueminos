@@ -151,6 +151,7 @@ function onToggleIsTripleStone(value: boolean) {
 				<number-spinner
 					v-model="tilesDrawn"
 					:max="3"
+					:value-label="$t('turn.numberSpinnerValueLabel')"
 				/>
 			</div>
 

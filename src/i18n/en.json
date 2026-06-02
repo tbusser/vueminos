@@ -92,6 +92,7 @@
 		"bonusDoubleLabel": "Double",
 		"bonusHexagonLabel": "Hexagon",
 		"bonusScoringLabel": "Bonus scoring",
+		"numberSpinnerValueLabel": "Number of tiles drawn",
 		"tilesDrawnLabel": "Tiles drawn",
 		"tripleStone": "The played stone is a triple, all sides have the same value (+{bonus} bonus points)."
 	}
