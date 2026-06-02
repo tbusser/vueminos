@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<{
 	 * The lowest value the spinner can have.
 	 */
 	min?: number;
+
+	valueLabel: string;
 }>(), {
 	max: Infinity,
 	min: 0
@@ -101,7 +103,7 @@ function onKeyDown(event: KeyboardEvent) {
 			:aria-valuemin="props.min"
 			:aria-valuenow="value"
 			:aria-valuetext="value.toString()"
-			aria-label="tiles drawn"
+			:aria-label="valueLabel"
 			role="spinbutton"
 			tabindex="0"
 			class="value"
