@@ -52,7 +52,8 @@ export const useTurnsStore = defineStore('turns', () => {
 	 * Replaces a turn in the list of turns.
 	 *
 	 * @param id The ID of the turn to replace.
-	 * @param turn The new turn state.
+	 * @param turn The new turn state. The ID of the original turn is preserved,
+	 *        so the new turn has the same ID as the original turn.
 	 *
 	 * @throws {TurnIdNotFoundError} If the turn with the specified ID is not
 	 *         found in the turns store, an error is thrown to prevent replacing
@@ -61,7 +62,8 @@ export const useTurnsStore = defineStore('turns', () => {
 	function replaceTurn(id: Id, turn: Turn): void {
 		const index = findTurnIndex(id);
 
-		turns.value[index] = turn;
+		// Make sure the original turn ID is preserved.
+		turns.value[index] = { ...turn, id };
 	}
 
 	/**

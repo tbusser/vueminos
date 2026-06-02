@@ -14,15 +14,15 @@ type ErrorFeedback = {
 	success: false;
 };
 
-type SuccessFeedback = {
+type SuccessFeedback<T = void> = {
 	/**
 	 * Indicates whether the operation was successful or not.
 	 */
 	success: true;
-};
+} & (T extends void ? object : { payload: T });
 
 /* ========================================================================== */
 
 declare global {
-	type Feedback = ErrorFeedback | SuccessFeedback;
+	type Feedback<T = void> = ErrorFeedback | SuccessFeedback<T>;
 };
