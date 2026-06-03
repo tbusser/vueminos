@@ -15,8 +15,7 @@ import TurnScreen from '@/screens/TurnScreen.vue';
 
 import { useGameScores } from '@/composables/useGameScores';
 import { useNavigation } from '@/composables/useNavigation';
-import { useRoundsLogic } from '@/composables/useRoundsLogic';
-import { useRoundManager } from '@/composables/useRoundManager';
+import { useRounds } from '@/composables/useRounds';
 import { useTurnHistory } from '@/composables/useTurnHistory';
 
 import { useRoundsStore } from '@/stores/rounds';
@@ -38,19 +37,19 @@ const {
 } = useTurnHistory();
 
 const { safeNavigateBack } = useNavigation();
-const { startNewRound } = useRoundsLogic();
 const { currentPlayerStats, hasCurrentRound } = storeToRefs(roundsStore);
 const {
 	currentPhase,
 	currentPlayer,
-	finishRound,
+	finishCurrentRound,
 	isFirstTurnOfRound,
 	isTurnFirstTurnOfRound,
 	saveTurn,
 	setStartingPlayer,
+	startNewRound,
 	tilesPerPlayer,
 	updateTurn
-} = useRoundManager();
+} = useRounds();
 const turnKey = ref<symbol | Id>(Symbol('turn'));
 
 /* -------------------------------------------------------------------------- */
@@ -129,7 +128,7 @@ function onNavigateForwardInHistory(): void {
 }
 
 function onNavigateForwardFromCollectPoints(leftoverPoints: Record<Id, number>): void {
-	finishRound(leftoverPoints);
+	finishCurrentRound(leftoverPoints);
 	// Check if the game is over and when it is, go to the game over screen.
 	if (hasReachedPointsLimit.value) {
 		// The game is finished, go to the game over screen.
@@ -154,7 +153,7 @@ function onTurnPlayed(turn: TurnInput): void {
 		saveTurn(turn);
 		turnKey.value = Symbol('turn');
 	} else if (historicalTurnPlayer.value) {
-		updateTurn(historicalTurnPlayer.value.id, historicalTurn.value.id, turn);
+		updateTurn(historicalTurn.value.id, turn);
 	}
 }
 </script>

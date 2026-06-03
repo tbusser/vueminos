@@ -10,7 +10,7 @@ import ScoreLeaderboard from '@/components/ScoreLeaderboard.vue';
 import SettingsPanel from '@/components/SettingsPanel.vue';
 
 import { useBuildInfo } from '@/composables/useBuildInfo';
-import { useRoundManager } from '@/composables/useRoundManager';
+import { useRounds } from '@/composables/useRounds';
 
 /* ========================================================================== */
 
@@ -19,7 +19,7 @@ const emit = defineEmits<{ resetConfirmed: [] }>();
 /* ========================================================================== */
 
 const { hasActiveGame } = storeToRefs(useGameStore());
-const { currentPlayer, tilesPerPlayer } = useRoundManager();
+const { currentPlayer, tilesPerPlayer } = useRounds();
 const { appVersion, formattedBuildTimestamp } = useBuildInfo();
 
 /* -------------------------------------------------------------------------- */

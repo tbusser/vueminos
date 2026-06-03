@@ -9,7 +9,7 @@ import ToggleButton from '@/components/ToggleButton.vue';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
 
 import { useRules } from '@/composables/useRules';
-import { useRoundsLogic } from '@/composables/useRoundsLogic';
+import { useRounds } from '@/composables/useRounds';
 
 import AppScreen from '@/screens/AppScreen.vue';
 
@@ -22,7 +22,7 @@ const emit = defineEmits<{
 
 /* -------------------------------------------------------------------------- */
 
-const { currentRoundOrdinal } = useRoundsLogic();
+const { currentRoundOrdinal } = useRounds();
 
 const playerStore = usePlayersStore();
 
