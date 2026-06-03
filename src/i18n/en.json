@@ -32,6 +32,8 @@
 		"noCurrentPlayer": "Invalid action, there is no current player",
 		"noCurrentRound": "Invalid action, there is no current round",
 		"noWinner": "Invalid action, there is no winner for the current round",
+		"notInTurnsPhase": "Invalid action, the current round is not in the turns phase",
+		"playerIdNotInRound": "Invalid action, the player ID is not in the current round",
 		"turnNotFound": "Invalid action, could not find selected turn to update"
 	},
 	"gameLimit": {

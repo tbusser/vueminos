@@ -49,7 +49,7 @@ describe('Turns Store', () => {
 		it('should replace the turn with the specified ID with the new values', () => {
 			const playerId = generateId();
 			const [turnA, turnB] = addNewTurnsToStore([playerId, generateId()], { tilesPlayed: 0 });
-			const turnAReplacement = createPlayedTurn(playerId);
+			const turnAReplacement = { ...createPlayedTurn(playerId), id: turnA.id };
 
 			const turnStore = useTurnsStore();
 			turnStore.replaceTurn(turnA.id, turnAReplacement);
