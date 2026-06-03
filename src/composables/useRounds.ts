@@ -112,7 +112,8 @@ export function useRounds() {
 	}
 
 	function checkIfRoundIsBlocked(): boolean {
-		const lastTurns = turns.value.slice(-playersStore.activePlayers.length);
+		const playerCount = currentRound.value?.playerStats.length ?? 0;
+		const lastTurns = turns.value.slice(-playerCount);
 
 		if (lastTurns.length < playersStore.activePlayers.length) return false;
 
