@@ -344,6 +344,9 @@ export function useRounds() {
 		const result = requireCurrentRound();
 		if (!result.success) return result;
 
+		const isInRound = result.round.playerStats.some(p => p.id === playerId);
+		if (!isInRound) return { success: false, message: t('error.playerIdNotInRound') };
+
 		roundsStore.updateCurrentRound({
 			currentPlayerId: playerId,
 			phase: 'turns'

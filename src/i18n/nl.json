@@ -33,6 +33,7 @@
 		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde",
 		"noWinner": "Ongeldige actie, er is geen winnaar voor de huidige ronde",
 		"notInTurnsPhase": "Ongeldige actie, de huidige ronde is niet in de turns fase",
+		"playerIdNotInRound": "Ongeldige actie, de speler ID is niet in de huidige ronde",
 		"turnNotFound": "Ongeldige actie, kon de geselecteerde ronde niet vinden"
 	},
 	"gameLimit": {
