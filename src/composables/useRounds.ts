@@ -304,6 +304,11 @@ export function useRounds() {
 					success: false
 				};
 			}
+
+			return {
+				message: (error as Error).message,
+				success: false
+			};
 		}
 
 		// Clear the turns for the round which was the current round up to a
