@@ -3,6 +3,7 @@ import { createPinia, setActivePinia } from 'pinia';
 
 import {
 	addNewCurrentRoundToStore,
+	addNewGameToStore,
 	addNewPlayersToStore,
 	addNewTurnsToStore,
 	createPlayedTurn,
@@ -418,6 +419,56 @@ describe('useRounds', () => {
 			expect(setStartingPlayer(playerAId)).toEqual({ success: true });
 			expect(roundsStore.currentRound?.currentPlayerId).toBe(playerAId);
 			expect(roundsStore.currentRound?.phase).toEqual('turns');
+		});
+	});
+
+	/* ---------------------------------------------------------------------- */
+
+	describe('startNewRound', () => {
+		it('should return a failure when there is no active game', () => {
+			const roundsLogic = useRounds();
+
+			const result = roundsLogic.startNewRound();
+
+			expect(result).toEqual({ success: false, message: 'error.noActiveGame' });
+		});
+
+		it('should return a failure when there is already a current round', () => {
+			addNewGameToStore(100);
+			addNewCurrentRoundToStore([generateId()]);
+			const roundsLogic = useRounds();
+
+			const result = roundsLogic.startNewRound();
+
+			expect(result).toEqual({ success: false, message: 'error.hasCurrentRound' });
+		});
+
+		it('should return success and add a new current round to the rounds store', () => {
+			addNewGameToStore(100);
+			const roundsLogic = useRounds();
+
+			const result = roundsLogic.startNewRound();
+
+			expect(result).toEqual({ success: true });
+			expect(useRoundsStore().currentRound).toBeDefined();
+		});
+
+		it('should initialize player stats for all active players', () => {
+			addNewGameToStore(100);
+
+			const playerIds = addNewPlayersToStore(2).map(p => p.id);
+
+			useRounds().startNewRound();
+
+			const { playerStats } = useRoundsStore().currentRound!;
+			const initialTileCount = useRules().determineStonesPerPlayer(playerIds.length);
+
+			expect(playerStats).toHaveLength(playerIds.length);
+			playerStats.forEach(stat => {
+				expect(playerIds).toContain(stat.id);
+				expect(stat.score).toBe(0);
+				expect(stat.tiles).toBe(initialTileCount);
+			});
 		});
 	});
 

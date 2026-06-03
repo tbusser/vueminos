@@ -12,6 +12,7 @@ import { useTurnsStore } from '@/stores/turns';
 import { generateId } from '@/utilities/id';
 
 import { useRules } from './useRules';
+import { useGameStore } from '@/stores/game';
 
 /* ========================================================================== */
 
@@ -28,9 +29,14 @@ type RequireCurrentRoundResult =
 /* ========================================================================== */
 
 export function useRounds() {
+	const gameStore = useGameStore();
 	const playersStore = usePlayersStore();
 	const roundsStore = useRoundsStore();
-	const { calculateTurnScore, determineRoundWinnerAndPoints } = useRules();
+	const {
+		calculateTurnScore,
+		determineRoundWinnerAndPoints,
+		determineStonesPerPlayer
+	} = useRules();
 	const turnsStore = useTurnsStore();
 	const { t } = useGlobalI18n();
 
@@ -179,6 +185,27 @@ export function useRounds() {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Initializes player stats for a new round based on the active players.
+	 *
+	 * @returns An object mapping player IDs to their initial stats,
+	 */
+	function initializePlayerStats(): PlayerStats[] {
+		const stats: PlayerStats[] = [];
+		const activePlayers = playersStore.activePlayers;
+		const stoneCount = determineStonesPerPlayer(activePlayers.length);
+
+		for (const player of activePlayers) {
+			stats.push({
+				id: player.id,
+				score: 0,
+				tiles: stoneCount
+			});
+		};
+
+		return stats;
 	}
 
 	function insertTurn(turnInput: TurnInput, playerId: Id): Feedback {
@@ -337,6 +364,37 @@ export function useRounds() {
 	}
 
 	/**
+	 * Starts a new round in the current game, initializing player stats
+	 * and setting the current player.
+	 *
+	 * @returns True if the round was successfully started, false otherwise.
+	 */
+	function startNewRound(): Feedback {
+		if (!gameStore.hasActiveGame) {
+			return {
+				message: t('error.noActiveGame'),
+				success: false
+			};
+		};
+
+		if (currentRound.value !== undefined) {
+			return {
+				message: t('error.hasCurrentRound'),
+				success: false
+			};
+		}
+
+		roundsStore.addRound({
+			id: generateId(),
+			isCurrentRound: true,
+			phase: 'player-select',
+			playerStats: initializePlayerStats()
+		});
+
+		return { success: true };
+	}
+
+	/**
 	 * Sets the starting player for the current round. Once the starting player
 	 * is set, the round phase is changed to 'turns', indicating that the round
 	 * is ready to start taking turns.
@@ -380,6 +438,7 @@ export function useRounds() {
 		isTurnFirstTurnOfRound,
 		saveTurn,
 		setStartingPlayer,
+		startNewRound,
 		tilesPerPlayer,
 		updateTurn
 	};
