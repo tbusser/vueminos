@@ -257,16 +257,17 @@ describe('useRounds', () => {
 			const { saveTurn } = useRounds();
 
 			expect(
-				saveTurn(createPlayedTurn(generateId()))).toEqual({ success: false, message: 'error.noCurrentPlayer' }
+				saveTurn(createPlayedTurn(generateId()))).toEqual({ success: false, message: 'error.noCurrentRound' }
 			);
 		});
 
 		it('should return a failure when there is no current player', () => {
 			addNewCurrentRoundToStore([generateId(), generateId()]);
+			const turn = createPlayedTurn(generateId());
 			const { saveTurn } = useRounds();
 
 			expect(
-				saveTurn(createPlayedTurn(generateId()))).toEqual({ success: false, message: 'error.noCurrentPlayer' }
+				saveTurn(turn)).toEqual({ success: false, message: 'error.noCurrentPlayer' }
 			);
 		});
 
@@ -407,6 +408,13 @@ describe('useRounds', () => {
 			expect(
 				setStartingPlayer(generateId())).toEqual({ success: false, message: 'error.noCurrentRound' }
 			);
+		});
+
+		it('should return a failure when the player ID is not in the round player stats', () => {
+			addNewCurrentRoundToStore([generateId()]);
+			const { setStartingPlayer } = useRounds();
+
+			expect(setStartingPlayer(generateId())).toEqual({ success: false, message: 'error.playerIdNotInRound' });
 		});
 
 		it('should return a success when there is a current round', () => {

@@ -22,10 +22,6 @@ type ComputeFinalScoresResult = Feedback<{
 	winnerId: Id;
 }>;
 
-type RequireCurrentRoundResult =
-	| { success: true; round: CurrentRound }
-	| { success: false; message: string };
-
 /* ========================================================================== */
 
 export function useRounds() {
@@ -45,6 +41,11 @@ export function useRounds() {
 		currentRoundOrdinal
 	} = storeToRefs(roundsStore);
 	const { turns } = storeToRefs(turnsStore);
+
+	const noCurrentRoundFeedback: Feedback = {
+		message: t('error.noCurrentRound'),
+		success: false
+	};
 
 	/* -- Getters ----------------------------------------------------------- */
 
@@ -93,11 +94,10 @@ export function useRounds() {
 	 * ID for the current round.
 	 */
 	function advanceToNextPlayer(): void {
-		const result = requireCurrentRound();
-		if (!result.success) return;
+		if (!hasCurrentRound(currentRound.value)) return;
 		if (currentPlayer.value === undefined) return;
 
-		const playerIds = result.round.playerStats.map(player => player.id);
+		const playerIds = currentRound.value.playerStats.map(player => player.id);
 		const currentPlayerIndex = playerIds.indexOf(currentPlayer.value.id);
 
 		if (currentPlayerIndex === -1) return;
@@ -121,20 +121,18 @@ export function useRounds() {
 		const playerCount = currentRound.value?.playerStats.length ?? 0;
 		const lastTurns = turns.value.slice(-playerCount);
 
-		if (lastTurns.length < playersStore.activePlayers.length) return false;
+		if (lastTurns.length < playerCount) return false;
 
 		// When all the last turns have no tiles played, the round is blocked.
 		return lastTurns.every(turn => turn.tilesPlayed === 0);
 	}
 
 	function computeFinalScores(leftoverPoints: Scores): ComputeFinalScoresResult {
-		const result = requireCurrentRound();
-		if (!result.success) return result;
+		if (!hasCurrentRound(currentRound.value)) return { success: false, message: t('error.noCurrentRound') };
 
-		const round = result.round;
-		const isBlocked = round.isBlocked ?? false;
+		const isBlocked = currentRound.value.isBlocked ?? false;
 
-		if (!isBlocked && round.winnerId === undefined) {
+		if (!isBlocked && currentRound.value.winnerId === undefined) {
 			return {
 				message: t('error.noWinner'),
 				success: false
@@ -143,11 +141,11 @@ export function useRounds() {
 
 		const pointsForWinner = isBlocked
 			? determineRoundWinnerAndPoints(leftoverPoints, true)
-			: determineRoundWinnerAndPoints(leftoverPoints, false, round.winnerId!);
+			: determineRoundWinnerAndPoints(leftoverPoints, false, currentRound.value.winnerId!);
 
 		// Take the scores for each player in the round, add the leftover
 		// points to the score of the winner.
-		const scores = round.playerStats.reduce<Scores>((accumulator, player) => {
+		const scores = currentRound.value.playerStats.reduce<Scores>((accumulator, player) => {
 			accumulator[player.id] = player.score;
 			if (player.id === pointsForWinner.winnerId) accumulator[player.id] += pointsForWinner.points;
 
@@ -187,6 +185,10 @@ export function useRounds() {
 		return false;
 	}
 
+	function hasCurrentRound(round: CurrentRound | undefined): round is CurrentRound {
+		return round !== undefined;
+	}
+
 	/**
 	 * Initializes player stats for a new round based on the active players.
 	 *
@@ -209,8 +211,7 @@ export function useRounds() {
 	}
 
 	function insertTurn(turnInput: TurnInput, playerId: Id): Feedback {
-		const result = requireCurrentRound();
-		if (!result.success) return result;
+		if (!hasCurrentRound(currentRound.value)) return noCurrentRoundFeedback;
 
 		const score = calculateTurnScore(turnInput);
 		const turn: Turn = {
@@ -232,7 +233,7 @@ export function useRounds() {
 			);
 		} catch (error) {
 			return {
-				message: (error as PlayerIdNotFoundError).message,
+				message: (error as Error).message,
 				success: false
 			};
 		}
@@ -287,14 +288,6 @@ export function useRounds() {
 		};
 	}
 
-	function requireCurrentRound(): RequireCurrentRoundResult {
-		const round = currentRound.value;
-
-		return round === undefined
-			? { success: false, message: t('error.noCurrentRound') }
-			: { success: true, round };
-	}
-
 	/* ---------------------------------------------------------------------- */
 
 	/**
@@ -346,6 +339,8 @@ export function useRounds() {
 	}
 
 	function saveTurn(turn: TurnInput): Feedback {
+		if (!hasCurrentRound(currentRound.value)) return noCurrentRoundFeedback;
+
 		if (currentPlayer.value === undefined) {
 			return {
 				message: t('error.noCurrentPlayer'),
@@ -377,7 +372,7 @@ export function useRounds() {
 			};
 		};
 
-		if (currentRound.value !== undefined) {
+		if (hasCurrentRound(currentRound.value)) {
 			return {
 				message: t('error.hasCurrentRound'),
 				success: false
@@ -404,10 +399,9 @@ export function useRounds() {
 	 * @returns A feedback object indicating success or failure.
 	 */
 	function setStartingPlayer(playerId: Id): Feedback {
-		const result = requireCurrentRound();
-		if (!result.success) return result;
+		if (!hasCurrentRound(currentRound.value)) return noCurrentRoundFeedback;
 
-		const isInRound = result.round.playerStats.some(p => p.id === playerId);
+		const isInRound = currentRound.value.playerStats.some(p => p.id === playerId);
 		if (!isInRound) return { success: false, message: t('error.playerIdNotInRound') };
 
 		roundsStore.updateCurrentRound({
