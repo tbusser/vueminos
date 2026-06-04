@@ -1,4 +1,13 @@
 <script setup lang="ts">
+/* -----------------------------------------------------------------------------
+ | Intended usage:
+ | The turn screen is meant to display a single turn. When a different turn
+ | needs to be displayed, the parent component should re-key the turn screen.
+ | This is done by passing a unique key to the `key` runtime attribute on the
+ | turn screen component in the parent template. Just updating the props will
+ | not be enough.
+ \--------------------------------------------------------------------------- */
+
 import { computed, ref, watchEffect } from 'vue';
 
 import AppScreen from '@/screens/AppScreen.vue';
