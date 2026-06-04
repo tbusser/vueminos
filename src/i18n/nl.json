@@ -34,7 +34,7 @@
 		"noWinner": "Ongeldige actie, er is geen winnaar voor de huidige ronde",
 		"notInTurnsPhase": "Ongeldige actie, de huidige ronde is niet in de turns fase",
 		"playerIdNotInRound": "Ongeldige actie, de speler ID is niet in de huidige ronde",
-		"turnNotFound": "Ongeldige actie, kon de geselecteerde ronde niet vinden"
+		"turnNotFound": "Ongeldige actie, kon de geselecteerde beurt niet vinden"
 	},
 	"gameLimit": {
 		"description": "Stel het aantal punten in dat nodig is om de laatste ronde te starten. De standaardwaarde is 400 punten.",
