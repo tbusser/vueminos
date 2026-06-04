@@ -93,20 +93,22 @@ export function useRounds() {
 	 * Determines the next player in the round and updates the current player
 	 * ID for the current round.
 	 */
-	function advanceToNextPlayer(): void {
-		if (!hasCurrentRound(currentRound.value)) return;
-		if (currentPlayer.value === undefined) return;
+	function advanceToNextPlayer(): Feedback {
+		if (!hasCurrentRound(currentRound.value)) return noCurrentRoundFeedback;
+		if (currentPlayer.value === undefined) return { success: false, message: t('error.noCurrentPlayer') };
 
 		const playerIds = currentRound.value.playerStats.map(player => player.id);
 		const currentPlayerIndex = playerIds.indexOf(currentPlayer.value.id);
 
-		if (currentPlayerIndex === -1) return;
+		if (currentPlayerIndex === -1) return { success: false, message: t('error.noCurrentPlayer') };
 
 		const nextPlayerIndex = (currentPlayerIndex + 1) % playerIds.length;
 
 		roundsStore.updateCurrentRound({
 			currentPlayerId: playerIds[nextPlayerIndex]
 		});
+
+		return { success: true };
 	}
 
 	function checkIfPlayerHasNoTiles(playerId: Id): boolean {
@@ -352,7 +354,7 @@ export function useRounds() {
 		if (!saveResult.success) return saveResult;
 
 		if (!handleRoundEnd(currentPlayer.value.id)) {
-			advanceToNextPlayer();
+			return advanceToNextPlayer();
 		}
 
 		return { success: true };
