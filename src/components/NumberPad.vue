@@ -18,7 +18,9 @@ defineProps<{
 /* -------------------------------------------------------------------------- */
 
 function onKeyClicked(event: Event) {
-	const target = event.target as HTMLButtonElement;
+	const target = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-value]');
+	if (target === null) return;
+
 	const value = target.dataset.value;
 
 	if (value === 'backspace') {
@@ -37,54 +39,63 @@ function onKeyClicked(event: Event) {
 		@click="onKeyClicked"
 	>
 		<button
+			type="button"
 			data-value="1"
 			class="key"
 		>
 			1
 		</button>
 		<button
+			type="button"
 			data-value="2"
 			class="key"
 		>
 			2
 		</button>
 		<button
+			type="button"
 			data-value="3"
 			class="key"
 		>
 			3
 		</button>
 		<button
+			type="button"
 			data-value="4"
 			class="key"
 		>
 			4
 		</button>
 		<button
+			type="button"
 			data-value="5"
 			class="key"
 		>
 			5
 		</button>
 		<button
+			type="button"
 			data-value="6"
 			class="key"
 		>
 			6
 		</button>
 		<button
+			type="button"
 			data-value="7"
 			class="key"
 		>
 			7
 		</button>
 		<button
+			type="button"
 			data-value="8"
 			class="key"
 		>
 			8
 		</button>
 		<button
+			type="button"
 			data-value="9"
 			class="key"
 		>
@@ -93,6 +104,7 @@ function onKeyClicked(event: Event) {
 
 		<template v-if="showClear">
 			<button
+				type="button"
 				data-value="clear"
 				class="key is-function-key"
 				:aria-label="$t('numberPad.clearLabel')"
@@ -102,6 +114,7 @@ function onKeyClicked(event: Event) {
 		</template>
 
 		<button
+			type="button"
 			data-value="0"
 			class="key"
 			:class="{ 'in-center': !showClear}"
@@ -109,6 +122,7 @@ function onKeyClicked(event: Event) {
 			0
 		</button>
 		<button
+			type="button"
 			data-value="backspace"
 			class="key is-function-key"
 			:aria-label="$t('numberPad.deleteLabel')"
