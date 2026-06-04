@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watchEffect } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
@@ -50,7 +50,19 @@ const {
 	tilesPerPlayer,
 	updateTurn
 } = useRounds();
-const turnKey = ref<symbol | Id>(Symbol('turn'));
+const turnKey = ref<symbol>(Symbol('turn'));
+
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Whenever the current player or the historical turn player changes, indicating
+ * that a different turn is being played / shown, update the turn key to a new
+ * symbol. This forces the TurnScreen component to remount and start fresh.
+ */
+watch(
+	[currentPlayer, historicalTurnPlayer],
+	() => turnKey.value = Symbol('turn')
+);
 
 /* -------------------------------------------------------------------------- */
 
@@ -94,12 +106,6 @@ const showHistoryNavigation = computed<boolean>(() => {
 const primaryActionLabel = computed<string>(() =>
 	(historicalTurn.value === null) ? t('common.next') : t('common.update')
 );
-
-watchEffect(() => {
-	// When a historical turn is selected, use the turn's ID as the key,
-	// otherwise use a new symbol.
-	turnKey.value = historicalTurn.value?.id ?? Symbol('turn');
-});
 
 /* -------------------------------------------------------------------------- */
 
@@ -151,7 +157,6 @@ function onNavigateForwardFromStartingPlayer(playerId: Id): void {
 function onTurnPlayed(turn: TurnInput): void {
 	if (historicalTurn.value === null) {
 		saveTurn(turn);
-		turnKey.value = Symbol('turn');
 	} else if (historicalTurnPlayer.value) {
 		updateTurn(historicalTurn.value.id, turn);
 	}
