@@ -92,8 +92,7 @@ export const useRoundsStore = defineStore('round', () => {
 	 *
 	 * @returns The index of the current round in the rounds array.
 	 *
-	 * @throws {RoundIdNotFoundError} If the round with the specified ID is
-	 *         not found, an error is thrown.
+	 * @throws {NoCurrentRoundExistsError} When no current round exists.
 	 */
 	function getCurrentRoundIndex(): number {
 		const round = currentRound.value;
