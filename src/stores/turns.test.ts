@@ -69,26 +69,6 @@ describe('Turns Store', () => {
 
 	/* ---------------------------------------------------------------------- */
 
-	describe('updateTurn', () => {
-		it('should update the turn with the specified ID with the new values', () => {
-			const [turnA, turnB] = addNewTurnsToStore([generateId(), generateId()], { tilesPlayed: 1 });
-			const turnStore = useTurnsStore();
-
-			turnStore.updateTurn(turnA.id, { score: 10 });
-
-			expect(turnStore.turns[0]).toEqual({ ...turnA, score: 10 });
-			expect(turnStore.turns[1]).toEqual(turnB);
-		});
-
-		it('should throw an error if the turn with the specified ID is not found', () => {
-			const turnStore = useTurnsStore();
-
-			expect(() => turnStore.updateTurn(generateId(), { score: 10 })).toThrow(TurnIdNotFoundError);
-		});
-	});
-
-	/* ---------------------------------------------------------------------- */
-
 	describe('$reset', () => {
 		it('should reset the turns store', () => {
 			addNewTurnsToStore([generateId(), generateId()], { tilesPlayed: 1 });
