@@ -5,7 +5,6 @@ import { useSlot } from '@/composables/useSlot';
 /* ========================================================================== */
 
 const props = defineProps<{
-	subtitle?: string;
 	title: string;
 }>();
 
@@ -21,8 +20,6 @@ const slots = defineSlots<{
 /* -------------------------------------------------------------------------- */
 
 const { isEmpty: subtitleIsMissing } = useSlot(slots.subtitle);
-
-// const hasSubtitle = computed(() => (props.subtitle ?? '').trim() !== '');
 </script>
 
 <template>
@@ -76,7 +73,6 @@ const { isEmpty: subtitleIsMissing } = useSlot(slots.subtitle);
 .subtitle,
 .title {
 	@include truncate-text;
-	// text-align: center;
 }
 
 .subtitle {
