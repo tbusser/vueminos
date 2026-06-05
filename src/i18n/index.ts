@@ -10,6 +10,9 @@ type MessageSchema = typeof en;
 
 /* ========================================================================== */
 
+export const locales: Locale[] = ['en', 'nl'];
+export const defaultLocale: Locale = 'en';
+
 export const i18n = createI18n<[MessageSchema], Locale>({
 	fallbackLocale: 'en',
 	legacy: false,
