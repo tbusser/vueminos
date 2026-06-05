@@ -143,8 +143,4 @@ function onDeletePlayer(id: Id) {
 	display: flex;
 	flex-direction: row;
 }
-
-.input {
-	flex-grow: 1;
-}
 </style>
