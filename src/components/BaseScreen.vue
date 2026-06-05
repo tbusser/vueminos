@@ -81,10 +81,4 @@ const props = defineProps<{
 .header {
 	grid-area: header;
 }
-
-.footer {
-	display: flex;
-	grid-area: footer;
-	justify-content: space-between;
-}
 </style>
