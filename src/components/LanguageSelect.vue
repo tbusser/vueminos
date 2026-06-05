@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import SelectField, { type SelectOption } from '@/components/SelectField.vue';
-import { useGlobalI18n } from '@/i18n';
+import { useGlobalI18n, type Locale } from '@/i18n';
 
 /* ========================================================================== */
 
-const model = defineModel<string | undefined>();
+const model = defineModel<Locale | undefined>();
 
 const { t } = useGlobalI18n();
 
@@ -20,13 +20,13 @@ const options = computed<SelectOption[]>(() => [
 		id: 'en',
 		label: t('languageSelect.languageEnglish'),
 		selected: model.value === 'en',
-		value: 'en'
+		value: 'en' satisfies Locale
 	},
 	{
 		id: 'nl',
 		label: t('languageSelect.languageDutch'),
 		selected: model.value === 'nl',
-		value: 'nl'
+		value: 'nl' satisfies Locale
 	}
 ]);
 </script>

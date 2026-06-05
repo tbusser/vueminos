@@ -102,25 +102,6 @@ function onKeyDown(event: KeyboardEvent): void {
 	opacity: 1;
 }
 
-.backdrop {
-	background-color: rgba(0, 0, 0, 0.5);
-	bottom: 0;
-	height: 100%;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 999; /* Ensure it appears above other content */
-}
-
-.close-button {
-	align-self: flex-end;
-	aspect-ratio: 1 / 1;
-	border-radius: 50%;
-	margin-right: get-spacing();
-	position: relative;
-}
-
 .content-container {
 	background-color: var(--color-background);
 	border-top-left-radius: get-spacing(small);
