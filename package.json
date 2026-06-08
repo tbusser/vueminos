@@ -24,7 +24,7 @@
 		"pinia": "^3.0.4",
 		"pinia-plugin-persistedstate": "^4.7.1",
 		"vue": "^3.5.35",
-		"vue-i18n": "^11.4.4",
+		"vue-i18n": "^11.4.5",
 		"vue-router": "^5.1.0"
 	},
 	"devDependencies": {
@@ -35,10 +35,10 @@
 		"@stylistic/eslint-plugin": "^5.10.0",
 		"@tsconfig/node22": "^22.0.5",
 		"@types/jsdom": "^28.0.3",
-		"@types/node": "^25.9.1",
+		"@types/node": "^25.9.2",
 		"@vitejs/plugin-vue": "^6.0.7",
 		"@vitest/eslint-plugin": "^1.6.19",
-		"@vue/eslint-config-typescript": "^14.7.0",
+		"@vue/eslint-config-typescript": "^14.8.0",
 		"@vue/test-utils": "^2.4.11",
 		"@vue/tsconfig": "^0.9.1",
 		"eslint": "^10.4.1",
@@ -54,10 +54,10 @@
 		"sass-embedded": "^1.100.0",
 		"typescript": "~6.0.3",
 		"vite": "^8.0.16",
-		"vite-plugin-mkcert": "^2.0.0",
+		"vite-plugin-mkcert": "^2.1.0",
 		"vite-plugin-vue-devtools": "^8.1.2",
 		"vitest": "^4.1.8",
-		"vue-tsc": "^3.3.3"
+		"vue-tsc": "^3.3.4"
 	},
 	"packageManager": "pnpm@10.33.4+sha512.1c67b3b359b2d408119ba1ed289f34b8fc3c6873412bec6fd264fbdc82489e510fcbecb9ce9d22dae7f3b76269d8441046014bdca53b9979cd7a561ad631b800"
 }
