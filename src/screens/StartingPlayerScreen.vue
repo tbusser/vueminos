@@ -2,8 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { usePlayersStore } from '@/stores/players';
-
+import BaseScreen from '@/components/BaseScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
@@ -11,7 +10,7 @@ import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
 import { useRules } from '@/composables/useRules';
 import { useRounds } from '@/composables/useRounds';
 
-import AppScreen from '@/screens/AppScreen.vue';
+import { usePlayersStore } from '@/stores/players';
 
 /* ========================================================================== */
 
@@ -59,7 +58,7 @@ function onNavigateForward(): void {
 </script>
 
 <template>
-	<AppScreen :title="$t('startingPlayer.title', { ordinal: currentRoundOrdinal ?? 0 })">
+	<BaseScreen :title="$t('startingPlayer.title', { ordinal: currentRoundOrdinal ?? 0 })">
 		<MessageBox>
 			<i18n-t
 				keypath="startingPlayer.description"
@@ -109,5 +108,5 @@ function onNavigateForward(): void {
 				{{ $t('common.back') }}
 			</button>
 		</template>
-	</AppScreen>
+	</BaseScreen>
 </template>

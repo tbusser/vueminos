@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import AppScreen from '@/screens/AppScreen.vue';
+import BaseScreen from '@/components/BaseScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import NumberDisplay from '@/components/NumberDisplay.vue';
 import NumberInput from '@/components/NumberInput.vue';
+
 import { useGameLogic } from '@/composables/useGameLogic';
 
 /* ========================================================================== */
@@ -46,7 +47,7 @@ function onNavigateForward() {
 </script>
 
 <template>
-	<AppScreen :title="$t('gameLimit.title')">
+	<BaseScreen :title="$t('gameLimit.title')">
 		<MessageBox>
 			{{ $t('gameLimit.description') }}
 		</MessageBox>
@@ -74,5 +75,5 @@ function onNavigateForward() {
 				{{ $t('common.back') }}
 			</button>
 		</template>
-	</AppScreen>
+	</BaseScreen>
 </template>

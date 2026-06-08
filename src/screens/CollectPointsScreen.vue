@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-import AppScreen from '@/screens/AppScreen.vue';
+import BaseScreen from '@/components/BaseScreen.vue';
 import CollectPointsPlayerItem from '@/components/CollectPointsPlayerItem.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PointsBottomSheet from '@/components/PointsBottomSheet.vue';
 import { useCollectPoints } from '@/composables/useCollectPoints';
+
 import { useGlobalI18n } from '@/i18n';
 
 /* ========================================================================== */
@@ -85,7 +86,7 @@ function onSubmit(): void {
 </script>
 
 <template>
-	<AppScreen :title="$t('collectPoints.title')">
+	<BaseScreen :title="$t('collectPoints.title')">
 		<MessageBox>
 			{{ infoMessage }}
 		</MessageBox>
@@ -123,5 +124,5 @@ function onSubmit(): void {
 				{{ $t('common.next') }}
 			</button>
 		</template>
-	</AppScreen>
+	</BaseScreen>
 </template>

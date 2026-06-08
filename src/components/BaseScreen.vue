@@ -1,36 +1,27 @@
 <script setup lang="ts">
-import HeaderBar from '@/components/HeaderBar.vue';
+import { watch } from 'vue';
+
 import FooterBar from '@/components/FooterBar.vue';
+
+import { useScreenTitle } from '@/composables/useScreenTitle';
 
 /* ========================================================================== */
 
 const props = defineProps<{
-	/**
-	 * The title of the screen.
-	 */
+	subtitle?: string;
 	title: string;
 }>();
+
+/* -------------------------------------------------------------------------- */
+
+const { subtitle: screenSubtitle, title: screenTitle } = useScreenTitle();
+
+watch(() => props.subtitle, value => screenSubtitle.value = value, { immediate: true });
+watch(() => props.title, value => screenTitle.value = value, { immediate: true });
 </script>
 
 <template>
 	<article class="base-screen">
-		<HeaderBar
-			:title="props.title"
-			class="header"
-		>
-			<template #subtitle>
-				<slot name="subtitle" />
-			</template>
-
-			<template #before-title>
-				<slot name="before-title" />
-			</template>
-
-			<template #after-title>
-				<slot name="after-title" />
-			</template>
-		</HeaderBar>
-
 		<div class="content">
 			<slot />
 		</div>
@@ -49,14 +40,12 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
 .base-screen {
-	background-color: var(--color-background);
 	display: grid;
 	grid-template-areas:
-		'header'
 		'content'
 		'footer';
-	grid-template-rows: max-content auto max-content;
-	height: 100dvh;
+	grid-template-rows: 1fr max-content;
+	height: 100%;
 	overflow-x: hidden;
 	position: relative;
 	width: 100vw;
