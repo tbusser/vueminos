@@ -2,10 +2,11 @@
 import { ref, watch } from 'vue';
 import { useGlobalI18n } from '@/i18n';
 
-import AppScreen from '@/screens/AppScreen.vue';
+import BaseScreen from '@/components/BaseScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PlayerSelect from '@/components/PlayerSelect.vue';
 import TextInput from '@/components/TextInput.vue';
+
 import { usePlayerManager } from '@/composables/usePlayerManager';
 
 // https://github.com/drag-drop-touch-js/dragdroptouch?tab=readme-ov-file
@@ -73,7 +74,7 @@ function onDeletePlayer(id: Id) {
 </script>
 
 <template>
-	<AppScreen :title="$t('gamePlayers.title')">
+	<BaseScreen :title="$t('gamePlayers.title')">
 		<MessageBox>
 			{{ $t('gamePlayers.description') }}
 		</MessageBox>
@@ -135,7 +136,7 @@ function onDeletePlayer(id: Id) {
 				{{ $t('common.next') }}
 			</button>
 		</template>
-	</AppScreen>
+	</BaseScreen>
 </template>
 
 <style lang="scss" scoped>
