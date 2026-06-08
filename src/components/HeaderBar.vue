@@ -1,14 +1,16 @@
 <script setup lang="ts">
 
-import { useSlot } from '@/composables/useSlot';
+import { isNilOrEmptyString } from '@/utilities/string';
+import { computed } from 'vue';
 
 /* ========================================================================== */
 
 const props = defineProps<{
+	subtitle?: string;
 	title: string;
 }>();
 
-const slots = defineSlots<{
+defineSlots<{
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	'after-title'?: any;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,7 +21,7 @@ const slots = defineSlots<{
 
 /* -------------------------------------------------------------------------- */
 
-const { isEmpty: subtitleIsMissing } = useSlot(slots.subtitle);
+const subtitleIsMissing = computed<boolean>(() => isNilOrEmptyString(props.subtitle));
 </script>
 
 <template>
@@ -37,7 +39,7 @@ const { isEmpty: subtitleIsMissing } = useSlot(slots.subtitle);
 				v-if="!subtitleIsMissing"
 				class="subtitle"
 			>
-				<slot name="subtitle" />
+				{{ props.subtitle }}
 			</div>
 		</div>
 

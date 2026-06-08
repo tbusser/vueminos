@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import AppScreen from '@/screens/AppScreen.vue';
-import ScoreLeaderboard from '@/components/ScoreLeaderboard.vue';
+import BaseScreen from '@/components/BaseScreen.vue';
 import MessageBox from '@/components/MessageBox.vue';
+import ScoreLeaderboard from '@/components/ScoreLeaderboard.vue';
+
 import { useGameScores } from '@/composables/useGameScores';
 
 /* ========================================================================== */
@@ -24,7 +25,7 @@ function onContinue() {
 </script>
 
 <template>
-	<AppScreen :title="$t('gameResult.title')">
+	<BaseScreen :title="$t('gameResult.title')">
 		<MessageBox>
 			{{ $t('gameResult.description', { winner: winner?.name }) }}
 		</MessageBox>
@@ -38,5 +39,5 @@ function onContinue() {
 				{{ $t('gameResult.newGameLabel') }}
 			</button>
 		</template>
-	</AppScreen>
+	</BaseScreen>
 </template>

@@ -10,7 +10,7 @@
 
 import { computed, ref, watchEffect } from 'vue';
 
-import AppScreen from '@/screens/AppScreen.vue';
+import BaseScreen from '@/components/BaseScreen.vue';
 import NumberDisplay from '@/components/NumberDisplay.vue';
 import NumberInput from '@/components/NumberInput.vue';
 import NumberSpinner from '@/components/NumberSpinner.vue';
@@ -134,11 +134,10 @@ function onToggleIsTripleStone(value: boolean) {
 </script>
 
 <template>
-	<AppScreen :title>
-		<template #subtitle>
-			{{ subtitle }}
-		</template>
-
+	<BaseScreen
+		:title
+		:subtitle
+	>
 		<NumberDisplay :value="tileValue" />
 		<NumberInput v-model="tileValue" />
 
@@ -210,7 +209,7 @@ function onToggleIsTripleStone(value: boolean) {
 		<template #secondary-action>
 			<slot name="secondary-action" />
 		</template>
-	</AppScreen>
+	</BaseScreen>
 </template>
 
 <style scoped lang="scss">
