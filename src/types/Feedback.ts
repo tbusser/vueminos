@@ -1,7 +1,3 @@
-export {};
-
-/* ========================================================================== */
-
 type ErrorFeedback = {
 	/**
 	 * The message describing the error that occurred.
@@ -23,6 +19,4 @@ type SuccessFeedback<T = void> = {
 
 /* ========================================================================== */
 
-declare global {
-	type Feedback<T = void> = ErrorFeedback | SuccessFeedback<T>;
-};
+export type Feedback<T = void> = ErrorFeedback | SuccessFeedback<T>;

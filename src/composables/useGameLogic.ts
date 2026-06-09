@@ -4,6 +4,8 @@ import { useGameStore } from '@/stores/game';
 import { useRoundsStore } from '@/stores/rounds';
 import { useTurnsStore } from '@/stores/turns';
 
+import type { Feedback } from '@/types/Feedback';
+
 /* ========================================================================== */
 
 export function useGameLogic() {

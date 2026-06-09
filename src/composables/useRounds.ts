@@ -9,6 +9,8 @@ import { usePlayersStore } from '@/stores/players';
 import { useRoundsStore, type Scores } from '@/stores/rounds';
 import { useTurnsStore } from '@/stores/turns';
 
+import type { Feedback } from '@/types/Feedback';
+
 import { generateId } from '@/utilities/id';
 
 import { useRules } from './useRules';
