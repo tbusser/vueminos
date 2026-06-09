@@ -125,7 +125,7 @@ export function useRules() {
 	 * @returns The number of bonus stones the player receives for the played
 	 *          tile. If the tile value is undefined, it returns 0.
 	 */
-	function calculateStartingStoneBonus(tileValue: number): number {
+	function calculateStartingTileBonus(tileValue: number): number {
 		if (!canTileBeTripleStone(tileValue)) return 0;
 
 		return tileValue === 0
@@ -154,7 +154,7 @@ export function useRules() {
 		if (hasPlayedTile) {
 			// Add bonus points for the played tile if it is a triple, this can
 			// only be true for the first turn of a round.
-			if (turn.triple) score += calculateStartingStoneBonus(turn.tileValue);
+			if (turn.triple) score += calculateStartingTileBonus(turn.tileValue);
 
 			// Check for the special bonuses that can be applied to the
 			// turn score.
@@ -170,7 +170,7 @@ export function useRules() {
 	/* ---------------------------------------------------------------------- */
 
 	return {
-		calculateStartingStoneBonus,
+		calculateStartingTileBonus,
 		calculateTurnScore,
 		canTileBeTripleStone,
 		determineRoundWinnerAndPoints,

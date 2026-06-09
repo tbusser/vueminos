@@ -7,24 +7,24 @@ import { useRules } from './useRules';
 /* ========================================================================== */
 
 describe('useRules', () => {
-	describe('calculateStartingStoneBonus', () => {
+	describe('calculateStartingTileBonus', () => {
 		it('should return 40 when the tile value is 0 (opening zero bonus)', () => {
-			const { calculateStartingStoneBonus } = useRules();
-			expect(calculateStartingStoneBonus(0)).toBe(40);
+			const { calculateStartingTileBonus } = useRules();
+			expect(calculateStartingTileBonus(0)).toBe(40);
 		});
 
 		it('should return 10 for possible triple stone values', () => {
-			const { calculateStartingStoneBonus } = useRules();
-			expect(calculateStartingStoneBonus(3)).toBe(10);
-			expect(calculateStartingStoneBonus(9)).toBe(10);
-			expect(calculateStartingStoneBonus(15)).toBe(10);
+			const { calculateStartingTileBonus } = useRules();
+			expect(calculateStartingTileBonus(3)).toBe(10);
+			expect(calculateStartingTileBonus(9)).toBe(10);
+			expect(calculateStartingTileBonus(15)).toBe(10);
 		});
 
 		it('should return 0 for tiles which cannot be a triple stone', () => {
-			const { calculateStartingStoneBonus } = useRules();
-			expect(calculateStartingStoneBonus(7)).toBe(0);
-			expect(calculateStartingStoneBonus(11)).toBe(0);
-			expect(calculateStartingStoneBonus(2)).toBe(0);
+			const { calculateStartingTileBonus } = useRules();
+			expect(calculateStartingTileBonus(7)).toBe(0);
+			expect(calculateStartingTileBonus(11)).toBe(0);
+			expect(calculateStartingTileBonus(2)).toBe(0);
 		});
 	});
 
