@@ -29,7 +29,7 @@ const { activePlayers } = storeToRefs(playerStore);
 
 const { determineTilesPerPlayer } = useRules();
 
-const stonesPerPlayer = computed<number>(
+const tilesPerPlayer = computed<number>(
 	() => determineTilesPerPlayer(activePlayers.value.length)
 );
 
@@ -64,8 +64,8 @@ function onNavigateForward(): void {
 				keypath="startingPlayer.description"
 				tag="div"
 			>
-				<template #stones>
-					<strong>{{ $t('common.tile', stonesPerPlayer) }}</strong>
+				<template #tiles>
+					<strong>{{ $t('common.tile', tilesPerPlayer) }}</strong>
 				</template>
 			</i18n-t>
 		</MessageBox>

@@ -199,13 +199,13 @@ export function useRounds() {
 	function initializePlayerStats(): PlayerStats[] {
 		const stats: PlayerStats[] = [];
 		const activePlayers = playersStore.activePlayers;
-		const stoneCount = determineTilesPerPlayer(activePlayers.length);
+		const tiles = determineTilesPerPlayer(activePlayers.length);
 
 		for (const player of activePlayers) {
 			stats.push({
 				id: player.id,
 				score: 0,
-				tiles: stoneCount
+				tiles
 			});
 		};
 

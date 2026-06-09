@@ -96,7 +96,7 @@ export function useRules() {
 	}
 
 	/**
-	 * Calculates the number of starting stones per player based on the number
+	 * Calculates the number of starting tiles per player based on the number
 	 * of active players. When there are no active players, it defaults to 0.
 	 */
 	function determineTilesPerPlayer(numberOfPlayers: number): number {
@@ -122,7 +122,7 @@ export function useRules() {
 	 * @param tileValue The number of points the tile played in the turn
 	 *        is worth.
 	 *
-	 * @returns The number of bonus stones the player receives for the played
+	 * @returns The number of bonus points the player receives for the played
 	 *          tile. If the tile value is undefined, it returns 0.
 	 */
 	function calculateStartingTileBonus(tileValue: number): number {

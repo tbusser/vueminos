@@ -85,7 +85,7 @@
 		"tilesLabel": "Tiles"
 	},
 	"startingPlayer": {
-		"description": "Each player gets {stones}. Select the player who will start the round.",
+		"description": "Each player gets {tiles}. Select the player who will start the round.",
 		"errorNoStartingPlayer": "You must select a player who will start the round.",
 		"title": "Round {ordinal} start"
 	},
@@ -96,6 +96,6 @@
 		"bonusScoringLabel": "Bonus scoring",
 		"numberSpinnerValueLabel": "Number of tiles drawn",
 		"tilesDrawnLabel": "Tiles drawn",
-		"tripleStone": "The played stone is a triple, all sides have the same value (+{bonus} bonus points)."
+		"tripleTile": "The played tile is a triple, all sides have the same value (+{bonus} bonus points)."
 	}
 }

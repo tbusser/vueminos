@@ -50,7 +50,7 @@ const { calculateStartingTileBonus, canTileBeTriple } = useRules();
 // These refs are initialized once from props.turn at mount time. The parent is
 // responsible for re-keying this component whenever the turn changes, so no
 // watchers are needed here.
-const isTripleStone = ref<boolean>(
+const isTripleTile = ref<boolean>(
 	props.turn?.tilesPlayed === 1 ? props.turn.triple : false
 );
 const selectedBonusShape = ref<BonusShape | undefined>(getInitialBonusShape());
@@ -63,18 +63,18 @@ const openingTurnBonus = computed<number>(() =>
 	(tileValue.value === undefined) ? 0 : calculateStartingTileBonus(tileValue.value)
 );
 
-const isTripleStoneEnabled = computed<boolean>(() =>
+const isTripleTileEnabled = computed<boolean>(() =>
 	(tileValue.value === undefined) ? false : canTileBeTriple(tileValue.value)
 );
 
 /* -------------------------------------------------------------------------- */
 
 watchEffect(() => {
-	if (isTripleStoneEnabled.value) return;
+	if (isTripleTileEnabled.value) return;
 
-	// When the played value cannot be a triple, the isTripleStone flag should
+	// When the played value cannot be a triple, the isTripleTile flag should
 	// be reset to false.
-	isTripleStone.value = false;
+	isTripleTile.value = false;
 });
 
 /* -------------------------------------------------------------------------- */
@@ -101,7 +101,7 @@ function createTurnInput(): TurnInput {
 			tilesDrawn: props.isInitialTurn ? 0 : tilesDrawn.value,
 			tilesPlayed: 1,
 			tileValue: tileValue.value,
-			triple: props.isInitialTurn && isTripleStone.value
+			triple: props.isInitialTurn && isTripleTile.value
 		};
 }
 
@@ -128,8 +128,8 @@ function onNavigateForward() {
 	emit('turn-played', createTurnInput());
 }
 
-function onToggleIsTripleStone(value: boolean) {
-	isTripleStone.value = value;
+function onToggleIsTripleTile(value: boolean) {
+	isTripleTile.value = value;
 }
 </script>
 
@@ -143,12 +143,12 @@ function onToggleIsTripleStone(value: boolean) {
 
 		<template v-if="isInitialTurn">
 			<ToggleButton
-				v-if="isTripleStoneEnabled"
+				v-if="isTripleTileEnabled"
 				:allow-wrap="true"
-				:is-selected="isTripleStone"
-				@toggle="onToggleIsTripleStone"
+				:is-selected="isTripleTile"
+				@toggle="onToggleIsTripleTile"
 			>
-				{{ $t('turn.tripleStone', { bonus: openingTurnBonus }) }}
+				{{ $t('turn.tripleTile', { bonus: openingTurnBonus }) }}
 			</ToggleButton>
 		</template>
 		<template v-else>

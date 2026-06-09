@@ -85,7 +85,7 @@
 		"tilesLabel": "Stenen"
 	},
 	"startingPlayer": {
-		"description": "Elke speler krijgt {stones}. Kies de speler die de ronde zal beginnen.",
+		"description": "Elke speler krijgt {tiles}. Kies de speler die de ronde zal beginnen.",
 		"errorNoStartingPlayer": "Je moet een speler selecteren die de ronde zal beginnen.",
 		"title": "Start ronde {ordinal}"
 	},
@@ -96,6 +96,6 @@
 		"bonusScoringLabel": "Bonuspunten",
 		"numberSpinnerValueLabel": "Aantal getrokken stenen",
 		"tilesDrawnLabel": "Getrokken stenen",
-		"tripleStone": "De gespeelde steen is een drievoud, alle zijden hebben dezelfde waarde (+{bonus} bonuspunten)."
+		"tripleTile": "De gespeelde steen is een drievoud, alle zijden hebben dezelfde waarde (+{bonus} bonuspunten)."
 	}
 }
