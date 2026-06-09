@@ -35,6 +35,13 @@ type ComputeFinalScoresResult = Feedback<{
 
 /* ========================================================================== */
 
+/**
+ * Represents the number of tiles each player has in their hands in the
+ * current round. The keys are player IDs, and the values are the number of
+ * tiles each player has in their hands.
+ */
+export type TilesPerPlayer = Record<Id, number>;
+
 export function useRounds() {
 	const gameStore = useGameStore();
 	const playersStore = usePlayersStore();
