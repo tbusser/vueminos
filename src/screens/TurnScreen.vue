@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<{
 
 /* -------------------------------------------------------------------------- */
 
-const { calculateStartingTileBonus, canTileBeTripleStone } = useRules();
+const { calculateStartingTileBonus, canTileBeTriple } = useRules();
 
 /* -------------------------------------------------------------------------- */
 
@@ -64,7 +64,7 @@ const openingTurnBonus = computed<number>(() =>
 );
 
 const isTripleStoneEnabled = computed<boolean>(() =>
-	(tileValue.value === undefined) ? false : canTileBeTripleStone(tileValue.value)
+	(tileValue.value === undefined) ? false : canTileBeTriple(tileValue.value)
 );
 
 /* -------------------------------------------------------------------------- */

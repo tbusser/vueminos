@@ -126,14 +126,14 @@ export function useRules() {
 	 *          tile. If the tile value is undefined, it returns 0.
 	 */
 	function calculateStartingTileBonus(tileValue: number): number {
-		if (!canTileBeTripleStone(tileValue)) return 0;
+		if (!canTileBeTriple(tileValue)) return 0;
 
 		return tileValue === 0
 			? scoreModifiers.openingZero
 			: scoreModifiers.openingTriple;
 	}
 
-	function canTileBeTripleStone(value: number): boolean {
+	function canTileBeTriple(value: number): boolean {
 		return value % 3 === 0;
 	}
 
@@ -172,7 +172,7 @@ export function useRules() {
 	return {
 		calculateStartingTileBonus,
 		calculateTurnScore,
-		canTileBeTripleStone,
+		canTileBeTriple,
 		determineRoundWinnerAndPoints,
 		determineTilesPerPlayer,
 		maximumNumberOfPlayers,
