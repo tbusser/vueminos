@@ -36,10 +36,9 @@ watch(isOpen, value => {
 
 /* -------------------------------------------------------------------------- */
 
-// When the component is unmounted, ensure the isBottomSheetOpen is set to
-// false. This is to prevent the bottom sheet from being displayed when the
-// component is unmounted. This is a workaround to prevent a UI glitch where
-// the body is still shrunk without the bottom sheet being visible.
+// Reset global ref on unmount; the close handler won't fire when the parent
+// component is torn down while the sheet is open, leaving the
+// app un-scrollable.
 onUnmounted(() => isBottomSheetOpen.value = false);
 
 /* -------------------------------------------------------------------------- */
