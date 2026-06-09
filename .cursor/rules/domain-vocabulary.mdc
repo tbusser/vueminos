@@ -1,0 +1,80 @@
+---
+description: Triominos domain vocabulary — preferred terms and their meanings
+globs: src/**/*.{ts,vue,d.ts}
+alwaysApply: false
+---
+
+# Domain Vocabulary
+
+This app scores a game of Triominos. It does not simulate playing it.
+
+## Core model
+
+```
+Game → Round(s) → Turn(s)
+```
+
+A **game** runs until a player reaches the **points limit** (default 400).  
+A **round** consists of three phases: `player-select` → `turns` → `round-end`.  
+A **turn** is one player action within the `turns` phase.
+
+## Terms
+
+### Game session
+
+| Term | Meaning |
+|------|---------|
+| **game** | A full scored session from setup to game winner |
+| **pointsLimit** | Score threshold that triggers the final round (default 400) |
+| **final round** | The round played after a player first reaches `pointsLimit` |
+
+### Round
+
+| Term | Meaning |
+|------|---------|
+| **round** | One deal-to-scoring cycle |
+| **CurrentRound** | In-progress round (`isCurrentRound: true`) |
+| **CompletedRound** | Archived round with final scores and a `winnerId` |
+| **blocked round** | All players passed in a full cycle; winner = fewest leftover points |
+| **won round** | A player emptied their hand; that player is the `winnerId` |
+| **leftover points** | Points remaining in losers' hands at round end |
+
+### Turn
+
+| Term | Meaning |
+|------|---------|
+| **turn** | One player action: play a tile, or pass |
+| **PlayedTurn** | `tilesPlayed: 1` — player placed a tile |
+| **SkippedTurn** | `tilesPlayed: 0` — player passed |
+| **opening turn** / **initial turn** | The first turn of a round; subject to triple-stone bonuses |
+| **tilesDrawn** | Tiles taken from the well before playing or passing (max 3 in UI) |
+
+### Tiles / hand
+
+| Term | Meaning |
+|------|---------|
+| **tile** | Preferred term for a Triominos piece (avoid **stone** in new code) |
+| **stone** | Legacy alias for tile — still appears in some composables and i18n |
+| **tileValue** | Point value of the played tile |
+| **triple** / **triple stone** | Opening tile where all three sides are equal (value divisible by 3) |
+| **well** | The draw pile |
+
+### Scoring modifiers
+
+| Term | Points | Trigger |
+|------|--------|---------|
+| **bonusBridge** | +40 | Bridge placement |
+| **bonusDouble** | +40 | Double-sided placement |
+| **bonusHexagon** | +50 | Hexagon placement |
+| **openingTriple** | +10 | First turn, triple tile with value > 0 |
+| **openingZero** | +40 | First turn, triple tile with value 0 |
+| **skippedTurn** | −10 | Passing |
+| **tileDrawn** | −5 each | Drawing from the well |
+| **wonGame** | +25 | Base bonus for the round winner who emptied their hand |
+
+## Naming conventions
+
+- Prefer **tile** over **stone** in new code and i18n keys.
+- Use **leftoverPoints** (camelCase) for hand totals at round end.
+- Use **pointsLimit** (not `limit`, `targetScore`, or `maxPoints`).
+- Use **round winner** and **game winner** to disambiguate scope.
