@@ -36,6 +36,14 @@ watch(isOpen, value => {
 
 /* -------------------------------------------------------------------------- */
 
+// When the component is unmounted, ensure the isBottomSheetOpen is set to
+// false. This is to prevent the bottom sheet from being displayed when the
+// component is unmounted. This is a workaround to prevent a UI glitch where
+// the body is still shrunk without the bottom sheet being visible.
+onUnmounted(() => isBottomSheetOpen.value = false);
+
+/* -------------------------------------------------------------------------- */
+
 function addEventListenersToDocument(): void {
 	document.addEventListener('keydown', onKeyDown);
 }
