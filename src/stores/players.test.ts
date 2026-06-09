@@ -1,9 +1,11 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { generateId } from '@/utilities/id';
-import { usePlayersStore } from './players';
 import { PlayerIdNotFoundError } from '@/errors';
+
+import { generateId } from '@/utilities/id';
+
+import { usePlayersStore, type Player } from './players';
 
 /* ========================================================================== */
 

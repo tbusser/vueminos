@@ -20,6 +20,8 @@ import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
 
 import { useRules } from '@/composables/useRules';
 
+import type { Turn, TurnInput } from '@/stores/turns';
+
 /* ========================================================================== */
 
 type BonusShape = 'bridge' | 'double' | 'hexagon';

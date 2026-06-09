@@ -3,6 +3,7 @@ import { computed } from 'vue';
 
 import { useGameScores } from '@/composables/useGameScores';
 import { usePlayerManager } from '@/composables/usePlayerManager';
+import type { TilesPerPlayer } from '@/composables/useRounds';
 
 /* ========================================================================== */
 

@@ -7,13 +7,31 @@ import {
 	PlayerIdNotFoundError
 } from '@/errors';
 
-/* ========================================================================== */
+import type {
+	CompletedRound,
+	CurrentRound,
+	PlayerScoreMap,
+	PlayerStats,
+	Round,
+	RoundPhase
+} from './rounds.types';
 
-export type Scores = CompletedRound['scores'];
+/* ========================================================================== */
 
 type UpdatableFields = Required<Pick<CurrentRound, 'currentPlayerId' | 'isBlocked' | 'phase' | 'winnerId'>>;
 
 /* ========================================================================== */
+
+export type {
+	CompletedRound,
+	CurrentRound,
+	PlayerScoreMap,
+	PlayerStats,
+	Round,
+	RoundPhase
+};
+
+/* -------------------------------------------------------------------------- */
 
 export const useRoundsStore = defineStore('round', () => {
 	/**
@@ -167,7 +185,7 @@ export const useRoundsStore = defineStore('round', () => {
 	 *         not found in the player stats of the current round, an error is
 	 *         thrown to prevent completing a round for a non-existent player.
 	 */
-	function completeCurrentRound(scores: Scores): void {
+	function completeCurrentRound(scores: PlayerScoreMap): void {
 		const round = currentRound.value;
 		if (round === undefined) {
 			throw new NoCurrentRoundExistsError('Unable to complete round, no current round present for the game');

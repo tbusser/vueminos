@@ -1,6 +1,13 @@
 import { useRules } from '@/composables/useRules';
 
-import { useRoundsStore, type Scores } from '@/stores/rounds';
+import {
+	useRoundsStore,
+	type CurrentRound,
+	type CompletedRound,
+	type PlayerScoreMap,
+	type RoundPhase,
+	type Round
+} from '@/stores/rounds';
 
 import { generateId } from '@/utilities/id';
 
@@ -20,7 +27,7 @@ function createCurrentRound(playerIds: Id[], phase: RoundPhase = 'turns', winner
 	} satisfies CurrentRound;
 }
 
-function createCompletedRound(winnerId: Id, scores: Scores): CompletedRound {
+function createCompletedRound(winnerId: Id, scores: PlayerScoreMap): CompletedRound {
 	return {
 		id: generateId(),
 		isCurrentRound: false,

@@ -1,4 +1,4 @@
-import { usePlayersStore } from '@/stores/players';
+import { usePlayersStore, type Player } from '@/stores/players';
 
 import { generateId } from '@/utilities/id';
 

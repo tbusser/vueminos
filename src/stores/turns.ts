@@ -3,7 +3,13 @@ import { defineStore } from 'pinia';
 
 import { TurnIdNotFoundError } from '@/errors';
 
+import type { PlayedTurn, SkippedTurn, Turn, TurnInput } from './turns.types';
+
 /* ========================================================================== */
+
+export type { PlayedTurn, SkippedTurn, Turn, TurnInput };
+
+/* -------------------------------------------------------------------------- */
 
 export const useTurnsStore = defineStore('turns', () => {
 	/**

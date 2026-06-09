@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useGlobalI18n } from '@/i18n';
 
+import type { Player } from '@/stores/players';
+
 /* ========================================================================== */
 
 const emit = defineEmits<{
