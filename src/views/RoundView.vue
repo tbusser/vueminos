@@ -19,6 +19,7 @@ import { useRounds } from '@/composables/useRounds';
 import { useTurnHistory } from '@/composables/useTurnHistory';
 
 import { useRoundsStore } from '@/stores/rounds';
+import type { TurnInput } from '@/stores/turns';
 
 /* ========================================================================== */
 

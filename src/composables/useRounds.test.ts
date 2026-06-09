@@ -12,7 +12,10 @@ import {
 import { generateId } from '@/utilities/id';
 
 import { useRoundsStore } from '@/stores/rounds';
-import { useTurnsStore } from '@/stores/turns';
+import {
+	useTurnsStore,
+	type TurnInput
+} from '@/stores/turns';
 
 import { useRules } from './useRules';
 import { useRounds } from './useRounds';

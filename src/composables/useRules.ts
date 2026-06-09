@@ -1,3 +1,7 @@
+import type { TurnInput } from '@/stores/turns';
+
+/* ========================================================================== */
+
 /**
  * The points to be awarded to the winner of a round.
  */

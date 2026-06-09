@@ -13,7 +13,11 @@ import {
 	type PlayerStats,
 	type RoundPhase
 } from '@/stores/rounds';
-import { useTurnsStore } from '@/stores/turns';
+import {
+	useTurnsStore,
+	type Turn,
+	type TurnInput
+} from '@/stores/turns';
 
 import type { Feedback } from '@/types/Feedback';
 
