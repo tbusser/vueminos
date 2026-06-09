@@ -17,32 +17,32 @@ export function useGameScores() {
 
 	/* -- Score Aggregation ------------------------------------------------- */
 
-	const currentRoundScore = computed<ScorePerPlayer>(() => {
+	const currentRoundScore = computed<PlayerScoreMap>(() => {
 		if (currentRound.value === undefined) return {};
 
 		return currentRound.value.playerStats.reduce((acc, playerStat) => {
 			acc[playerStat.id] = playerStat.score;
 			return acc;
-		}, {} as ScorePerPlayer);
+		}, {} as PlayerScoreMap);
 	});
 
-	const finishedRoundsScore = computed<ScorePerPlayer>(() => {
+	const finishedRoundsScore = computed<PlayerScoreMap>(() => {
 		return completedRounds.value.reduce((acc, round) => {
 			(Object.keys(round.scores) as Id[]).forEach(playerId => {
 				acc[playerId] = (acc[playerId] ?? 0) + round.scores[playerId];
 			});
 
 			return acc;
-		}, {} as ScorePerPlayer);
+		}, {} as PlayerScoreMap);
 	});
 
-	const totalScore = computed<ScorePerPlayer>(() => {
+	const totalScore = computed<PlayerScoreMap>(() => {
 		const keys = new Set<Id>([
 			...Object.keys(currentRoundScore.value) as Id[],
 			...Object.keys(finishedRoundsScore.value) as Id[]
 		]);
 
-		const result: ScorePerPlayer = {};
+		const result: PlayerScoreMap = {};
 		keys.forEach(key => {
 			result[key] =
 				(currentRoundScore.value[key] ?? 0) + (finishedRoundsScore.value[key] ?? 0);

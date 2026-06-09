@@ -12,7 +12,7 @@ import { useGlobalI18n } from '@/i18n';
 /* ========================================================================== */
 
 const emit = defineEmits<{
-	(event: 'navigate-forward', leftoverPoints: LeftoverPoints): void;
+	(event: 'navigate-forward', leftoverPoints: PlayerScoreMap): void;
 }>();
 
 /* -------------------------------------------------------------------------- */
