@@ -5,7 +5,8 @@ import { PlayerIdNotFoundError } from '@/errors';
 
 import { useGlobalI18n } from '@/i18n';
 
-import { usePlayersStore } from '@/stores/players';
+import { useGameStore } from '@/stores/game';
+import { usePlayersStore, type Player } from '@/stores/players';
 import { useRoundsStore, type Scores } from '@/stores/rounds';
 import { useTurnsStore } from '@/stores/turns';
 
@@ -14,7 +15,6 @@ import type { Feedback } from '@/types/Feedback';
 import { generateId } from '@/utilities/id';
 
 import { useRules } from './useRules';
-import { useGameStore } from '@/stores/game';
 
 /* ========================================================================== */
 

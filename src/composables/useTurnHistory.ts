@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
-import { usePlayersStore } from '@/stores/players';
+import { usePlayersStore, type Player } from '@/stores/players';
 import { useTurnsStore } from '@/stores/turns';
 
 /* ========================================================================== */

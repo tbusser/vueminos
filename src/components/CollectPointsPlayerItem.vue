@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { useGlobalI18n } from '@/i18n';
 import { computed } from 'vue';
+import { useGlobalI18n } from '@/i18n';
+
+import type { Player } from '@/stores/players';
 
 /* ========================================================================== */
 

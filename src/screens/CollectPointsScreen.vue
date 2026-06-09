@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
+import { useGlobalI18n } from '@/i18n';
+
 import BaseScreen from '@/components/BaseScreen.vue';
 import CollectPointsPlayerItem from '@/components/CollectPointsPlayerItem.vue';
 import MessageBox from '@/components/MessageBox.vue';
 import PointsBottomSheet from '@/components/PointsBottomSheet.vue';
+
 import { useCollectPoints } from '@/composables/useCollectPoints';
 
-import { useGlobalI18n } from '@/i18n';
+import type { Player } from '@/stores/players';
 
 /* ========================================================================== */
 

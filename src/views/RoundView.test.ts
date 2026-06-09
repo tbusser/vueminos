@@ -1,16 +1,18 @@
-import { shallowMount } from '@vue/test-utils';
-import { createPinia, setActivePinia } from 'pinia';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { createPinia, setActivePinia } from 'pinia';
+import { shallowMount } from '@vue/test-utils';
 
 import { routeName } from '@/router/routerName';
 
+import CollectPointsScreen from '@/screens/CollectPointsScreen.vue';
+
 import { useGameStore } from '@/stores/game';
-import { usePlayersStore } from '@/stores/players';
+import { usePlayersStore, type Player } from '@/stores/players';
 import { useRoundsStore } from '@/stores/rounds';
 
-import RoundView from './RoundView.vue';
-import CollectPointsScreen from '@/screens/CollectPointsScreen.vue';
 import { createPlayer, createCompletedRound, createCurrentRound } from '@/test-factories';
+
+import RoundView from './RoundView.vue';
 
 /* ========================================================================== */
 
