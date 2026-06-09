@@ -12,7 +12,5 @@ declare global {
 	 *     ...
 	 * }
 	 */
-	type ScorePerPlayer = {
-		[id: Id]: number;
-	};
+	type PlayerScoreMap = Record<Id, number>;
 }

@@ -99,7 +99,7 @@ declare global {
 		 * A record of scores for each player in the round. The keys are
 		 * player IDs and the values are the scores they achieved in this round.
 		 */
-		scores: Record<Id, number>;
+		scores: PlayerScoreMap;
 
 		/**
 		 * The ID of the player who won the round.

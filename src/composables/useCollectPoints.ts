@@ -49,7 +49,7 @@ export function useCollectPoints() {
 
 	/* ---------------------------------------------------------------------- */
 
-	function areCollectedPointsComplete(points: CollectedPoints): points is LeftoverPoints {
+	function areCollectedPointsComplete(points: CollectedPoints): points is PlayerScoreMap {
 		const values = Object.values(points);
 
 		return (values.length === 0)
