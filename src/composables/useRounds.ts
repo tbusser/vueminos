@@ -31,7 +31,7 @@ export function useRounds() {
 	const {
 		calculateTurnScore,
 		determineRoundWinnerAndPoints,
-		determineStonesPerPlayer
+		determineTilesPerPlayer
 	} = useRules();
 	const turnsStore = useTurnsStore();
 	const { t } = useGlobalI18n();
@@ -199,7 +199,7 @@ export function useRounds() {
 	function initializePlayerStats(): PlayerStats[] {
 		const stats: PlayerStats[] = [];
 		const activePlayers = playersStore.activePlayers;
-		const stoneCount = determineStonesPerPlayer(activePlayers.length);
+		const stoneCount = determineTilesPerPlayer(activePlayers.length);
 
 		for (const player of activePlayers) {
 			stats.push({

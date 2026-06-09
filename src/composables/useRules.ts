@@ -99,7 +99,7 @@ export function useRules() {
 	 * Calculates the number of starting stones per player based on the number
 	 * of active players. When there are no active players, it defaults to 0.
 	 */
-	function determineStonesPerPlayer(numberOfPlayers: number): number {
+	function determineTilesPerPlayer(numberOfPlayers: number): number {
 		if (numberOfPlayers === 2) return 9;
 
 		if (
@@ -174,7 +174,7 @@ export function useRules() {
 		calculateTurnScore,
 		canTileBeTripleStone,
 		determineRoundWinnerAndPoints,
-		determineStonesPerPlayer,
+		determineTilesPerPlayer,
 		maximumNumberOfPlayers,
 		minimumNumberOfPlayers
 	};

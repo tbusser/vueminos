@@ -189,7 +189,7 @@ describe('Rounds Store', () => {
 		});
 
 		it('should update the current round player stats with the provided update', () => {
-			const initialTiles = useRules().determineStonesPerPlayer(2);
+			const initialTiles = useRules().determineTilesPerPlayer(2);
 			const playerA = generateId();
 			const playerB = generateId();
 			const round = addNewCurrentRoundToStore([playerA, playerB]);
@@ -384,7 +384,7 @@ describe('Rounds Store', () => {
 		});
 
 		it('should return the number of tiles for the player in the current round', () => {
-			const initialTiles = useRules().determineStonesPerPlayer(2);
+			const initialTiles = useRules().determineTilesPerPlayer(2);
 			const playerId = generateId();
 			// A valid game needs at least two players.
 			addNewCurrentRoundToStore([playerId, generateId()]);

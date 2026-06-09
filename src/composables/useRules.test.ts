@@ -313,28 +313,28 @@ describe('useRules', () => {
 
 	/* ---------------------------------------------------------------------- */
 
-	describe('determineStonesPerPlayer', () => {
+	describe('determineTilesPerPlayer', () => {
 		it('should return 9 when the number of players is 2', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(2)).toBe(9);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(2)).toBe(9);
 		});
 
 		it('should return 7 when the number of players is 3 or 4', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(3)).toBe(7);
-			expect(determineStonesPerPlayer(4)).toBe(7);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(3)).toBe(7);
+			expect(determineTilesPerPlayer(4)).toBe(7);
 		});
 
 		it('should return 6 when the number of players is 5 or 6', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(5)).toBe(6);
-			expect(determineStonesPerPlayer(6)).toBe(6);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(5)).toBe(6);
+			expect(determineTilesPerPlayer(6)).toBe(6);
 		});
 
 		it('should return 0 when the number of players is not 2, 3, 4, 5, or 6', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(1)).toBe(0);
-			expect(determineStonesPerPlayer(7)).toBe(0);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(1)).toBe(0);
+			expect(determineTilesPerPlayer(7)).toBe(0);
 		});
 	});
 });

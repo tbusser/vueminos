@@ -27,10 +27,10 @@ const playerStore = usePlayersStore();
 
 const { activePlayers } = storeToRefs(playerStore);
 
-const { determineStonesPerPlayer } = useRules();
+const { determineTilesPerPlayer } = useRules();
 
 const stonesPerPlayer = computed<number>(
-	() => determineStonesPerPlayer(activePlayers.value.length)
+	() => determineTilesPerPlayer(activePlayers.value.length)
 );
 
 const selectedId = ref<Id | undefined>(undefined);
