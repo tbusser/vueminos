@@ -11,6 +11,7 @@ import PointsBottomSheet from '@/components/PointsBottomSheet.vue';
 import { useCollectPoints } from '@/composables/useCollectPoints';
 
 import type { Player } from '@/stores/players';
+import type { PlayerScoreMap } from '@/stores/rounds';
 
 /* ========================================================================== */
 

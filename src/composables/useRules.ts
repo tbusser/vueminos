@@ -1,3 +1,4 @@
+import type { PlayerScoreMap } from '@/stores/rounds';
 import type { TurnInput } from '@/stores/turns';
 
 /* ========================================================================== */

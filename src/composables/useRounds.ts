@@ -10,6 +10,7 @@ import { usePlayersStore, type Player } from '@/stores/players';
 import {
 	useRoundsStore,
 	type CurrentRound,
+	type PlayerScoreMap,
 	type PlayerStats,
 	type RoundPhase
 } from '@/stores/rounds';

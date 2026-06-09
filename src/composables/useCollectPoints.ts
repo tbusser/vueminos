@@ -2,7 +2,7 @@ import { computed, readonly, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { usePlayersStore } from '@/stores/players';
-import { useRoundsStore } from '@/stores/rounds';
+import { useRoundsStore, type PlayerScoreMap } from '@/stores/rounds';
 
 /* ========================================================================== */
 

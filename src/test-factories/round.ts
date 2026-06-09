@@ -4,6 +4,7 @@ import {
 	useRoundsStore,
 	type CurrentRound,
 	type CompletedRound,
+	type PlayerScoreMap,
 	type RoundPhase,
 	type Round
 } from '@/stores/rounds';

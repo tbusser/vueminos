@@ -7,7 +7,14 @@ import {
 	PlayerIdNotFoundError
 } from '@/errors';
 
-import type { CompletedRound, CurrentRound, PlayerStats, Round, RoundPhase } from './rounds.types';
+import type {
+	CompletedRound,
+	CurrentRound,
+	PlayerScoreMap,
+	PlayerStats,
+	Round,
+	RoundPhase
+} from './rounds.types';
 
 /* ========================================================================== */
 
@@ -15,7 +22,14 @@ type UpdatableFields = Required<Pick<CurrentRound, 'currentPlayerId' | 'isBlocke
 
 /* ========================================================================== */
 
-export type { CompletedRound, CurrentRound, PlayerStats, Round, RoundPhase };
+export type {
+	CompletedRound,
+	CurrentRound,
+	PlayerScoreMap,
+	PlayerStats,
+	Round,
+	RoundPhase
+};
 
 /* -------------------------------------------------------------------------- */
 

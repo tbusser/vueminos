@@ -9,6 +9,17 @@ type BaseRound = {
 
 /* ========================================================================== */
 
+/**
+ * Represents the score of each player. The keys are player IDs, and the
+ * values are the number of points.
+ *
+ * @example {
+ *     '123e4567-e89b-12d3-a456-426614174000': 4,
+ *     ...
+ * }
+ */
+export type PlayerScoreMap = Record<Id, number>;
+
 export type PlayerStats = {
 	/**
 	 * The unique identifier of the player.
