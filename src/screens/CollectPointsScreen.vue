@@ -32,9 +32,11 @@ const {
 const isSheetOpen = ref<boolean>(false);
 const selectedPlayer = ref<Player | undefined>(undefined);
 
-const points = ref<number | undefined>(undefined);
-
 /* -------------------------------------------------------------------------- */
+
+const initialPoints = computed<number | undefined>(() =>
+	(selectedPlayer.value === undefined) ? undefined : collectedPoints.value[selectedPlayer.value.id]
+);
 
 const infoMessage = computed<string>(() => {
 	if (winningPlayerName.value === undefined) {
@@ -47,19 +49,14 @@ const infoMessage = computed<string>(() => {
 /* -------------------------------------------------------------------------- */
 
 function closeSheet(): void {
-	// Reset the state of the sheet.
 	isSheetOpen.value = false;
-
-	// Clear the selected player and points.
 	selectedPlayer.value = undefined;
-	points.value = undefined;
 }
 
 /* -------------------------------------------------------------------------- */
 
 function onCollectPoints(player: Player): void {
 	selectedPlayer.value = player;
-	points.value = collectedPoints.value[player.id];
 	isSheetOpen.value = true;
 }
 
@@ -67,12 +64,12 @@ function onCloseSheet(): void {
 	closeSheet();
 }
 
-function onSavePoints(): void {
+function onSavePoints(value?: number): void {
 	// This should never happen, but just in case.
 	if (selectedPlayer.value === undefined) return;
 
 	// Set the left over points for the selected player.
-	setCollectedPoints(selectedPlayer.value.id, points.value);
+	setCollectedPoints(selectedPlayer.value.id, value);
 
 	closeSheet();
 }
@@ -108,11 +105,11 @@ function onSubmit(): void {
 		</ol>
 
 		<PointsBottomSheet
-			v-model="points"
+			:initial-points
 			:open="isSheetOpen"
 			:player-name="selectedPlayer?.name"
 			@cancel="onCloseSheet"
-			@close="onSavePoints"
+			@save="onSavePoints"
 		/>
 
 		<template #primary-action>
