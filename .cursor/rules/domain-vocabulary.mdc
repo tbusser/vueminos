@@ -14,8 +14,8 @@ This app scores a game of Triominos. It does not simulate playing it.
 Game → Round(s) → Turn(s)
 ```
 
-A **game** runs until a player reaches the **points limit** (default 400).  
-A **round** consists of three phases: `player-select` → `turns` → `round-end`.  
+A **game** runs until a player reaches the **points limit** (default 400).
+A **round** consists of three phases: `player-select` → `turns` → `round-end`.
 A **turn** is one player action within the `turns` phase.
 
 ## Terms
@@ -46,17 +46,16 @@ A **turn** is one player action within the `turns` phase.
 | **turn** | One player action: play a tile, or pass |
 | **PlayedTurn** | `tilesPlayed: 1` — player placed a tile |
 | **SkippedTurn** | `tilesPlayed: 0` — player passed |
-| **opening turn** / **initial turn** | The first turn of a round; subject to triple-stone bonuses |
+| **opening turn** / **initial turn** | The first turn of a round; subject to triple-tile bonuses |
 | **tilesDrawn** | Tiles taken from the well before playing or passing (max 3 in UI) |
 
 ### Tiles / hand
 
 | Term | Meaning |
 |------|---------|
-| **tile** | Preferred term for a Triominos piece (avoid **stone** in new code) |
-| **stone** | Legacy alias for tile — still appears in some composables and i18n |
+| **tile** | Preferred term for a Triominos piece |
 | **tileValue** | Point value of the played tile |
-| **triple** / **triple stone** | Opening tile where all three sides are equal (value divisible by 3) |
+| **triple** | Opening tile where all three sides are equal (value divisible by 3) |
 | **well** | The draw pile |
 
 ### Scoring modifiers
@@ -74,7 +73,6 @@ A **turn** is one player action within the `turns` phase.
 
 ## Naming conventions
 
-- Prefer **tile** over **stone** in new code and i18n keys.
 - Use **leftoverPoints** (camelCase) for hand totals at round end.
 - Use **pointsLimit** (not `limit`, `targetScore`, or `maxPoints`).
 - Use **round winner** and **game winner** to disambiguate scope.
