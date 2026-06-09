@@ -7,7 +7,12 @@ import { useGlobalI18n } from '@/i18n';
 
 import { useGameStore } from '@/stores/game';
 import { usePlayersStore, type Player } from '@/stores/players';
-import { useRoundsStore, type Scores } from '@/stores/rounds';
+import {
+	useRoundsStore,
+	type CurrentRound,
+	type PlayerStats,
+	type RoundPhase
+} from '@/stores/rounds';
 import { useTurnsStore } from '@/stores/turns';
 
 import type { Feedback } from '@/types/Feedback';
@@ -20,7 +25,7 @@ import { useRules } from './useRules';
 
 type ComputeFinalScoresResult = Feedback<{
 	isBlocked: boolean;
-	scores: Scores;
+	scores: PlayerScoreMap;
 	winnerId: Id;
 }>;
 
@@ -131,7 +136,7 @@ export function useRounds() {
 		return lastTurns.every(turn => turn.tilesPlayed === 0);
 	}
 
-	function computeFinalScores(leftoverPoints: Scores): ComputeFinalScoresResult {
+	function computeFinalScores(leftoverPoints: PlayerScoreMap): ComputeFinalScoresResult {
 		if (!hasCurrentRound(currentRound.value)) return { success: false, message: t('error.noCurrentRound') };
 
 		const isBlocked = currentRound.value.isBlocked ?? false;
@@ -149,7 +154,7 @@ export function useRounds() {
 
 		// Take the scores for each player in the round, add the leftover
 		// points to the score of the winner.
-		const scores = currentRound.value.playerStats.reduce<Scores>((accumulator, player) => {
+		const scores = currentRound.value.playerStats.reduce<PlayerScoreMap>((accumulator, player) => {
 			accumulator[player.id] = player.score;
 			if (player.id === pointsForWinner.winnerId) accumulator[player.id] += pointsForWinner.points;
 
@@ -304,7 +309,7 @@ export function useRounds() {
 	 * @returns True if the round was successfully finished, false if there is
 	 *          no current round to finish.
 	 */
-	function finishCurrentRound(leftOverPoints: Scores): Feedback {
+	function finishCurrentRound(leftOverPoints: PlayerScoreMap): Feedback {
 		const result = computeFinalScores(leftOverPoints);
 		if (!result.success) return result;
 

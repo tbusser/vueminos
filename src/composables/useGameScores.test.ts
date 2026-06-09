@@ -5,7 +5,7 @@ import { generateId } from '@/utilities/id';
 
 import { useGameStore } from '@/stores/game';
 import { usePlayersStore, type Player } from '@/stores/players';
-import { useRoundsStore } from '@/stores/rounds';
+import { useRoundsStore, type Round } from '@/stores/rounds';
 
 import { useGameScores } from './useGameScores';
 

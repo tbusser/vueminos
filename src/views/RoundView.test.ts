@@ -8,7 +8,11 @@ import CollectPointsScreen from '@/screens/CollectPointsScreen.vue';
 
 import { useGameStore } from '@/stores/game';
 import { usePlayersStore, type Player } from '@/stores/players';
-import { useRoundsStore } from '@/stores/rounds';
+import {
+	useRoundsStore,
+	type CompletedRound,
+	type PlayerStats
+} from '@/stores/rounds';
 
 import { createPlayer, createCompletedRound, createCurrentRound } from '@/test-factories';
 
