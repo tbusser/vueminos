@@ -7,24 +7,24 @@ import { useRules } from './useRules';
 /* ========================================================================== */
 
 describe('useRules', () => {
-	describe('calculateStartingStoneBonus', () => {
+	describe('calculateStartingTileBonus', () => {
 		it('should return 40 when the tile value is 0 (opening zero bonus)', () => {
-			const { calculateStartingStoneBonus } = useRules();
-			expect(calculateStartingStoneBonus(0)).toBe(40);
+			const { calculateStartingTileBonus } = useRules();
+			expect(calculateStartingTileBonus(0)).toBe(40);
 		});
 
-		it('should return 10 for possible triple stone values', () => {
-			const { calculateStartingStoneBonus } = useRules();
-			expect(calculateStartingStoneBonus(3)).toBe(10);
-			expect(calculateStartingStoneBonus(9)).toBe(10);
-			expect(calculateStartingStoneBonus(15)).toBe(10);
+		it('should return 10 for possible triple tile values', () => {
+			const { calculateStartingTileBonus } = useRules();
+			expect(calculateStartingTileBonus(3)).toBe(10);
+			expect(calculateStartingTileBonus(9)).toBe(10);
+			expect(calculateStartingTileBonus(15)).toBe(10);
 		});
 
-		it('should return 0 for tiles which cannot be a triple stone', () => {
-			const { calculateStartingStoneBonus } = useRules();
-			expect(calculateStartingStoneBonus(7)).toBe(0);
-			expect(calculateStartingStoneBonus(11)).toBe(0);
-			expect(calculateStartingStoneBonus(2)).toBe(0);
+		it('should return 0 for tiles which cannot be a triple tile', () => {
+			const { calculateStartingTileBonus } = useRules();
+			expect(calculateStartingTileBonus(7)).toBe(0);
+			expect(calculateStartingTileBonus(11)).toBe(0);
+			expect(calculateStartingTileBonus(2)).toBe(0);
 		});
 	});
 
@@ -161,24 +161,24 @@ describe('useRules', () => {
 
 	/* ---------------------------------------------------------------------- */
 
-	describe('canTileBeTripleStone', () => {
+	describe('canTileBeTriple', () => {
 		it('should return true for 0', () => {
-			const { canTileBeTripleStone } = useRules();
-			expect(canTileBeTripleStone(0)).toBe(true);
+			const { canTileBeTriple } = useRules();
+			expect(canTileBeTriple(0)).toBe(true);
 		});
 
 		it('should return true when the tile value is a multiple of 3', () => {
-			const { canTileBeTripleStone } = useRules();
-			expect(canTileBeTripleStone(3)).toBe(true);
-			expect(canTileBeTripleStone(9)).toBe(true);
-			expect(canTileBeTripleStone(15)).toBe(true);
+			const { canTileBeTriple } = useRules();
+			expect(canTileBeTriple(3)).toBe(true);
+			expect(canTileBeTriple(9)).toBe(true);
+			expect(canTileBeTriple(15)).toBe(true);
 		});
 
 		it('should return false when the tile value is not a multiple of 3', () => {
-			const { canTileBeTripleStone } = useRules();
-			expect(canTileBeTripleStone(7)).toBe(false);
-			expect(canTileBeTripleStone(11)).toBe(false);
-			expect(canTileBeTripleStone(2)).toBe(false);
+			const { canTileBeTriple } = useRules();
+			expect(canTileBeTriple(7)).toBe(false);
+			expect(canTileBeTriple(11)).toBe(false);
+			expect(canTileBeTriple(2)).toBe(false);
 		});
 	});
 
@@ -313,28 +313,28 @@ describe('useRules', () => {
 
 	/* ---------------------------------------------------------------------- */
 
-	describe('determineStonesPerPlayer', () => {
+	describe('determineTilesPerPlayer', () => {
 		it('should return 9 when the number of players is 2', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(2)).toBe(9);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(2)).toBe(9);
 		});
 
 		it('should return 7 when the number of players is 3 or 4', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(3)).toBe(7);
-			expect(determineStonesPerPlayer(4)).toBe(7);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(3)).toBe(7);
+			expect(determineTilesPerPlayer(4)).toBe(7);
 		});
 
 		it('should return 6 when the number of players is 5 or 6', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(5)).toBe(6);
-			expect(determineStonesPerPlayer(6)).toBe(6);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(5)).toBe(6);
+			expect(determineTilesPerPlayer(6)).toBe(6);
 		});
 
 		it('should return 0 when the number of players is not 2, 3, 4, 5, or 6', () => {
-			const { determineStonesPerPlayer } = useRules();
-			expect(determineStonesPerPlayer(1)).toBe(0);
-			expect(determineStonesPerPlayer(7)).toBe(0);
+			const { determineTilesPerPlayer } = useRules();
+			expect(determineTilesPerPlayer(1)).toBe(0);
+			expect(determineTilesPerPlayer(7)).toBe(0);
 		});
 	});
 });

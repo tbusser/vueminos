@@ -9,7 +9,7 @@ import { assertActivePinia } from './assertActivePinia';
 /* ========================================================================== */
 
 function createCurrentRound(playerIds: Id[], phase: RoundPhase = 'turns', winnerId?: Id): CurrentRound {
-	const tileCount = useRules().determineStonesPerPlayer(playerIds.length);
+	const tileCount = useRules().determineTilesPerPlayer(playerIds.length);
 
 	return {
 		id: generateId(),

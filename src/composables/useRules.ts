@@ -96,10 +96,10 @@ export function useRules() {
 	}
 
 	/**
-	 * Calculates the number of starting stones per player based on the number
+	 * Calculates the number of starting tiles per player based on the number
 	 * of active players. When there are no active players, it defaults to 0.
 	 */
-	function determineStonesPerPlayer(numberOfPlayers: number): number {
+	function determineTilesPerPlayer(numberOfPlayers: number): number {
 		if (numberOfPlayers === 2) return 9;
 
 		if (
@@ -122,18 +122,18 @@ export function useRules() {
 	 * @param tileValue The number of points the tile played in the turn
 	 *        is worth.
 	 *
-	 * @returns The number of bonus stones the player receives for the played
+	 * @returns The number of bonus points the player receives for the played
 	 *          tile. If the tile value is undefined, it returns 0.
 	 */
-	function calculateStartingStoneBonus(tileValue: number): number {
-		if (!canTileBeTripleStone(tileValue)) return 0;
+	function calculateStartingTileBonus(tileValue: number): number {
+		if (!canTileBeTriple(tileValue)) return 0;
 
 		return tileValue === 0
 			? scoreModifiers.openingZero
 			: scoreModifiers.openingTriple;
 	}
 
-	function canTileBeTripleStone(value: number): boolean {
+	function canTileBeTriple(value: number): boolean {
 		return value % 3 === 0;
 	}
 
@@ -154,7 +154,7 @@ export function useRules() {
 		if (hasPlayedTile) {
 			// Add bonus points for the played tile if it is a triple, this can
 			// only be true for the first turn of a round.
-			if (turn.triple) score += calculateStartingStoneBonus(turn.tileValue);
+			if (turn.triple) score += calculateStartingTileBonus(turn.tileValue);
 
 			// Check for the special bonuses that can be applied to the
 			// turn score.
@@ -170,11 +170,11 @@ export function useRules() {
 	/* ---------------------------------------------------------------------- */
 
 	return {
-		calculateStartingStoneBonus,
+		calculateStartingTileBonus,
 		calculateTurnScore,
-		canTileBeTripleStone,
+		canTileBeTriple,
 		determineRoundWinnerAndPoints,
-		determineStonesPerPlayer,
+		determineTilesPerPlayer,
 		maximumNumberOfPlayers,
 		minimumNumberOfPlayers
 	};
