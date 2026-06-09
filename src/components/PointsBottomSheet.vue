@@ -2,25 +2,43 @@
 import BottomSheet from '@/components/BottomSheet.vue';
 import NumberDisplay from '@/components/NumberDisplay.vue';
 import NumberInput from '@/components/NumberInput.vue';
+import { ref, watch } from 'vue';
 
 /* ========================================================================== */
 
 const emit = defineEmits<{
 	(event: 'cancel'): void;
-	(event: 'close'): void;
+	(event: 'save', points?: number): void;
 }>();
 
-const model = defineModel<number>();
+const props = defineProps<{
+	initialPoints?: number;
 
-defineProps<{
 	/**
 	 * Controls the visibility of the BottomSheet component. If set to true,
 	 * the BottomSheet will be displayed; if false, it will be hidden.
 	 */
 	open?: boolean;
 
+	/**
+	 * The name of the player who is collecting points.
+	 */
 	playerName?: string;
 }>();
+
+/* -------------------------------------------------------------------------- */
+
+const collectedPoints = ref<number | undefined>(props.initialPoints);
+
+/* -------------------------------------------------------------------------- */
+
+// When the sheet is opened, ensure the collected points are set to the
+// initial points.
+watch(() => props.open, value => {
+	if (!value) return;
+
+	collectedPoints.value = props.initialPoints;
+});
 
 /* -------------------------------------------------------------------------- */
 
@@ -29,7 +47,7 @@ function onCancel(): void {
 }
 
 function onClose(): void {
-	emit('close');
+	emit('save', collectedPoints.value);
 }
 </script>
 
@@ -60,8 +78,8 @@ function onClose(): void {
 			</header>
 		</template>
 
-		<NumberDisplay :value="model" />
-		<NumberInput v-model="model" />
+		<NumberDisplay :value="collectedPoints" />
+		<NumberInput v-model="collectedPoints" />
 	</BottomSheet>
 </template>
 
