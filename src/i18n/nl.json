@@ -28,6 +28,7 @@
 	},
 	"error": {
 		"hasCurrentRound": "Ongeldige actie, er is al een huidige ronde",
+		"invalidName": "Ongeldige naam, de naam moet minimaal 1 karakter lang zijn",
 		"noActiveGame": "Ongeldige actie, er is geen actieve game",
 		"noCurrentPlayer": "Ongeldige actie, er is geen huidige speler",
 		"noCurrentRound": "Ongeldige actie, er is geen huidige ronde",

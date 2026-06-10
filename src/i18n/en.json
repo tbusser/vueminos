@@ -28,6 +28,7 @@
 	},
 	"error": {
 		"hasCurrentRound": "Invalid action, there is already a current round",
+		"invalidName": "Invalid name, the name must be at least 1 character long",
 		"noActiveGame": "Invalid action, there is no active game",
 		"noCurrentPlayer": "Invalid action, there is no current player",
 		"noCurrentRound": "Invalid action, there is no current round",
