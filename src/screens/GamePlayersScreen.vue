@@ -47,7 +47,9 @@ watch(name, () => validationError.value = undefined);
 function onAddPlayer(event: Event) {
 	event.preventDefault();
 
-	if (addNewPlayer(name.value) === undefined) return;
+	const result = addNewPlayer(name.value);
+
+	if (!result.success) return;
 
 	name.value = '';
 }
