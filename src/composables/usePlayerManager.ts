@@ -53,8 +53,8 @@ export function usePlayerManager() {
 	 *
 	 * @param name The name of the player to add.
 	 *
-	 * @returns The ID of the newly added player, or undefined if the name
-	 *          is not a valid name.
+	 * @returns A feedback object indicating success or failure. In case of
+	 *          success, the payload is the ID of the newly added player.
 	 */
 	function addNewPlayer(name: string): Feedback<Id> {
 		if (!isValidName(name)) return { success: false, message: t('error.invalidName') };
