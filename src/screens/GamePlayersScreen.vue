@@ -38,9 +38,13 @@ const {
 } = usePlayerManager();
 
 const name = ref('');
+const nameValidationErrorMessage = ref<string | undefined>(undefined);
 const validationError = ref<string | undefined>(undefined);
 
-watch(name, () => validationError.value = undefined);
+watch(name, () => {
+	nameValidationErrorMessage.value = undefined;
+	validationError.value = undefined;
+});
 
 /* -------------------------------------------------------------------------- */
 
@@ -49,7 +53,10 @@ function onAddPlayer(event: Event) {
 
 	const result = addNewPlayer(name.value);
 
-	if (!result.success) return;
+	if (!result.success) {
+		nameValidationErrorMessage.value = result.message;
+		return;
+	}
 
 	name.value = '';
 }
@@ -104,6 +111,13 @@ function onDeletePlayer(id: Id) {
 					</button>
 				</template>
 			</TextInput>
+
+			<MessageBox
+				v-if="nameValidationErrorMessage"
+				type="warning"
+			>
+				{{ nameValidationErrorMessage }}
+			</MessageBox>
 		</form>
 
 		<section>
@@ -144,6 +158,6 @@ function onDeletePlayer(id: Id) {
 <style lang="scss" scoped>
 .form {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 }
 </style>
