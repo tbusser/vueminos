@@ -53,6 +53,8 @@ const {
 } = useRounds();
 const turnKey = ref<symbol>(Symbol('turn'));
 
+const feedbackMessage = ref<string | undefined>(undefined);
+
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -135,14 +137,26 @@ function onNavigateForwardInHistory(): void {
 }
 
 function onNavigateForwardFromCollectPoints(leftoverPoints: Record<Id, number>): void {
-	finishCurrentRound(leftoverPoints);
+	feedbackMessage.value = undefined;
+
+	const result = finishCurrentRound(leftoverPoints);
+	if (!result.success) {
+		feedbackMessage.value = result.message;
+		return;
+	}
+
 	// Check if the game is over and when it is, go to the game over screen.
 	if (hasReachedPointsLimit.value) {
 		// The game is finished, go to the game over screen.
 		router.replace({ name: routeName.gameResult });
-	} else {
-		// The game is not yet finished, start a new round.
-		startNewRound();
+		return;
+	}
+
+	// The game is not yet finished, start a new round.
+	const newRoundResult = startNewRound();
+	if (!newRoundResult.success) {
+		feedbackMessage.value = newRoundResult.message;
+		return;
 	}
 }
 
@@ -196,6 +210,7 @@ function onTurnPlayed(turn: TurnInput): void {
 
 	<CollectPointsScreen
 		v-else-if="currentPhase === 'round-end'"
+		:error-message="feedbackMessage"
 		@navigate-forward="onNavigateForwardFromCollectPoints"
 	/>
 </template>

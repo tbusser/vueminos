@@ -19,6 +19,13 @@ const emit = defineEmits<{
 	(event: 'navigate-forward', leftoverPoints: PlayerScoreMap): void;
 }>();
 
+defineProps<{
+	/**
+	 * Optional property to pass an error message to the screen.
+	 */
+	errorMessage?: string;
+}>();
+
 /* -------------------------------------------------------------------------- */
 
 const { t } = useGlobalI18n();
@@ -107,6 +114,13 @@ function onSubmit(): void {
 				</li>
 			</template>
 		</ol>
+
+		<MessageBox
+			v-if="errorMessage"
+			type="warning"
+		>
+			{{ errorMessage }}
+		</MessageBox>
 
 		<PointsBottomSheet
 			:initial-points
