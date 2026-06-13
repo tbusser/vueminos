@@ -1,7 +1,11 @@
 import { computed, readonly } from 'vue';
 import { storeToRefs } from 'pinia';
 
+import { useGlobalI18n } from '@/i18n';
+
 import { usePlayersStore } from '@/stores/players';
+
+import type { Feedback } from '@/types/Feedback';
 
 import { generateId } from '@/utilities/id';
 import { isNilOrEmptyString } from '@/utilities/string';
@@ -12,6 +16,7 @@ import { useRules } from './useRules';
 
 export function usePlayerManager() {
 	const playerStore = usePlayersStore();
+	const { t } = useGlobalI18n();
 
 	/* ---------------------------------------------------------------------- */
 
@@ -48,11 +53,11 @@ export function usePlayerManager() {
 	 *
 	 * @param name The name of the player to add.
 	 *
-	 * @returns The ID of the newly added player, or undefined if the name
-	 *          is not a valid name.
+	 * @returns A feedback object indicating success or failure. In case of
+	 *          success, the payload is the ID of the newly added player.
 	 */
-	function addNewPlayer(name: string): Id | undefined {
-		if (!isValidName(name)) return;
+	function addNewPlayer(name: string): Feedback<Id> {
+		if (!isValidName(name)) return { success: false, message: t('error.invalidName') };
 
 		const id: Id = generateId();
 
@@ -62,7 +67,7 @@ export function usePlayerManager() {
 			name
 		});
 
-		return id;
+		return { success: true, payload: id };
 	}
 
 	/**

@@ -1,8 +1,10 @@
 import { createPinia, setActivePinia } from 'pinia';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { usePlayerManager } from './usePlayerManager';
 import { generateId } from '@/utilities/id';
 import { useRules } from './useRules';
+import type { SuccessFeedback } from '@/types/Feedback';
+import { assertSuccessfulFeedback } from '@/test-factories/assertSuccessfulFeedback';
 
 /* ========================================================================== */
 
@@ -14,17 +16,21 @@ function addPlayers(playerManager: ReturnType<typeof usePlayerManager>, count: n
 
 /* -------------------------------------------------------------------------- */
 
+vi.mock('@/i18n');
+
+/* -------------------------------------------------------------------------- */
+
 beforeEach(() => setActivePinia(createPinia()));
 
 /* -------------------------------------------------------------------------- */
 
 describe('usePlayerManager', () => {
 	describe('addNewPlayer', () => {
-		it('should return undefined if the name is not a valid name', () => {
+		it('should return a feedback object with a false success property if the name is not a valid name', () => {
 			const playerManager = usePlayerManager();
 
-			expect(playerManager.addNewPlayer('')).toBeUndefined();
-			expect(playerManager.addNewPlayer('   ')).toBeUndefined();
+			expect(playerManager.addNewPlayer('')).toEqual({ success: false, message: 'error.invalidName' });
+			expect(playerManager.addNewPlayer('   ')).toEqual({ success: false, message: 'error.invalidName' });
 
 			expect(playerManager.players.value).toHaveLength(0);
 		});
@@ -33,9 +39,13 @@ describe('usePlayerManager', () => {
 			const playerManager = usePlayerManager();
 
 			const name = 'John Doe';
-			const id = playerManager.addNewPlayer(name);
+			const result = playerManager.addNewPlayer(name);
 
-			expect(id).toBeDefined();
+			expect(result.success).toBe(true);
+
+			const id = (result as SuccessFeedback<Id>).payload;
+			expect(id).toBeTypeOf('string');
+
 			expect(playerManager.players.value).toHaveLength(1);
 			expect(playerManager.players.value[0]).toEqual({
 				active: true,
@@ -50,7 +60,7 @@ describe('usePlayerManager', () => {
 	describe('deletePlayer', () => {
 		it('should do nothing if the player with the specified ID is not found', () => {
 			const playerManager = usePlayerManager();
-			const id = playerManager.addNewPlayer('John Doe');
+			const id = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'));
 
 			playerManager.deletePlayer(generateId());
 
@@ -64,10 +74,10 @@ describe('usePlayerManager', () => {
 
 		it('should only delete the player with the specified ID', () => {
 			const playerManager = usePlayerManager();
-			const idJohn = playerManager.addNewPlayer('John Doe');
-			const idJane = playerManager.addNewPlayer('Jane Doe');
+			const idJohn = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'));
+			const idJane = assertSuccessfulFeedback(playerManager.addNewPlayer('Jane Doe'));
 
-			playerManager.deletePlayer(idJohn!);
+			playerManager.deletePlayer(idJohn);
 
 			expect(playerManager.players.value).toHaveLength(1);
 			expect(playerManager.players.value[0].id).toBe(idJane);
@@ -256,9 +266,9 @@ describe('usePlayerManager', () => {
 		it('should return the list of players', () => {
 			const playerManager = usePlayerManager();
 
-			const idJohn = playerManager.addNewPlayer('John Doe');
-			const idJane = playerManager.addNewPlayer('Jane Doe');
-			const idJim = playerManager.addNewPlayer('Jim Doe');
+			const idJohn = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'));
+			const idJane = assertSuccessfulFeedback(playerManager.addNewPlayer('Jane Doe'));
+			const idJim = assertSuccessfulFeedback(playerManager.addNewPlayer('Jim Doe'));
 
 			expect(playerManager.players.value).toHaveLength(3);
 			expect(playerManager.players.value[0]).toEqual({
