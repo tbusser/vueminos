@@ -1,3 +1,63 @@
+## [1.2.1](https://github.com/tbusser/vueminos/compare/v1.2.0..v1.2.1) - 2026-06-16
+
+### 🐛 Bug Fixes
+
+- *(useRoundsLogic)* Convert PlayerIdNotFoundError into failure feedback
+- *(useCollectPoints)* Replace unsafe cast with type guard for leftover points ([#91](https://github.com/tbusser/vueminos/pull/91))
+- *(types)* Remove spurious roundId from ScoredTurnInput and TurnInput ([#92](https://github.com/tbusser/vueminos/pull/92))
+- *(NumberSpinner)* Replace hardcoded aria-label with valueLabel prop ([#93](https://github.com/tbusser/vueminos/pull/93))
+- *(SettingsPanel)* Bind v-models directly to store refs ([#94](https://github.com/tbusser/vueminos/pull/94))
+- *(useRounds)* Return Feedback from advanceToNextPlayer instead of void
+- *(i18n)* Correct Dutch translation for turnNotFound error ([#100](https://github.com/tbusser/vueminos/pull/100))
+- *(NumberPad)* Make event delegation robust and add missing button types ([#101](https://github.com/tbusser/vueminos/pull/101))
+- *(i18n)* Derive locale validation from canonical source of truth ([#106](https://github.com/tbusser/vueminos/pull/106))
+- *(BottomSheet)* Reset global ref on unmount to prevent stuck scroll ([#110](https://github.com/tbusser/vueminos/pull/110))
+- *(RoundView)* Check Feedback from all composable calls ([#121](https://github.com/tbusser/vueminos/pull/121))
+
+### 💼 Other
+
+- *(tsconfig)* Include service worker in compilation and reformat include array
+
+### 🚜 Refactor
+
+- *(test-factories)* Remove redundant id variable in addNewPlayersStore ([#90](https://github.com/tbusser/vueminos/pull/90))
+- *(useRounds)* Merge useRoundManager and useRoundsLogic into a single composable ([#99](https://github.com/tbusser/vueminos/pull/99))
+- *(RoundView)* Replace watchEffect with explicit watch for turn key ([#102](https://github.com/tbusser/vueminos/pull/102))
+- *(PointsBottomSheet)* Replace close event with save and remove v-model ([#109](https://github.com/tbusser/vueminos/pull/109))
+- Replace "stone" with "tile" across the codebase ([#111](https://github.com/tbusser/vueminos/pull/111))
+- *(types)* Consolidate ScorePerPlayer and LeftoverPoints into P… ([#112](https://github.com/tbusser/vueminos/pull/112))
+- *(types)* Convert global type declarations to explicit exported types ([#113](https://github.com/tbusser/vueminos/pull/113))
+- *(usePlayerManager)* Return Feedback from addNewPlayer ([#114](https://github.com/tbusser/vueminos/pull/114))
+- *(useRounds)* Surface game-over signal from finishCurrentRound ([#122](https://github.com/tbusser/vueminos/pull/122))
+- *(layout)* Collapse layout state singletons into a Pinia store ([#123](https://github.com/tbusser/vueminos/pull/123))
+
+### 📚 Documentation
+
+- *(BottomSheet)* Tighten onUnmounted comment
+- *(rules)* Add domain vocabulary rule for Triominos terms
+- *(commit)* Trim redundant example triggers from skill
+- *(create-pr)* Add create-pr skill for generating PR titles and descriptions
+- *(create-pr)* Fix base-ref ambiguity and add label to gh pr create
+
+### ⚡ Performance
+
+- *(layout)* Instantiate MainMenu once per app lifetime via AppLayout ([#108](https://github.com/tbusser/vueminos/pull/108))
+
+### 🧪 Testing
+
+- *(useRoundManager)* Add comprehensive path coverage
+
+### ⚙️ Miscellaneous Tasks
+
+- Add dependabot config
+- Add cooldown to dependabot config
+- *(pnpm)* Update to latest v10 and set minimumReleaseAge to 3 days ([#59](https://github.com/tbusser/vueminos/pull/59))
+- *(rounds)* Remove dead RoundIdNotFoundError and fix JSDoc ([#103](https://github.com/tbusser/vueminos/pull/103))
+- *(turns)* Remove unused updateTurn action ([#104](https://github.com/tbusser/vueminos/pull/104))
+- Remove unused CSS rules and dead template props across multiple components ([#105](https://github.com/tbusser/vueminos/pull/105))
+- *(cliff)* Skip build(deps) commits from changelog
+- *(vscode)* Add extension recommendations and clean up settings
+
 ## [1.2.0](https://github.com/tbusser/vueminos/compare/v1.1.0..v1.2.0) - 2026-05-26
 
 ### 🚀 Features
