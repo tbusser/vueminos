@@ -53,6 +53,8 @@ const {
 } = useRounds();
 const turnKey = ref<symbol>(Symbol('turn'));
 
+const errorMessage = ref<string | undefined>(undefined);
+
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -111,9 +113,11 @@ const primaryActionLabel = computed<string>(() =>
 /* -------------------------------------------------------------------------- */
 
 onMounted(() => {
-	if (!hasCurrentRound.value) startNewRound();
-});
+	if (hasCurrentRound.value) return;
 
+	const result = startNewRound();
+	if (!result.success) console.error('Unexpected: startNewRound failed on mount', result.message);
+});
 /* -------------------------------------------------------------------------- */
 
 /**
@@ -135,15 +139,26 @@ function onNavigateForwardInHistory(): void {
 }
 
 function onNavigateForwardFromCollectPoints(leftoverPoints: Record<Id, number>): void {
-	finishCurrentRound(leftoverPoints);
+	errorMessage.value = undefined;
+
+	const result = finishCurrentRound(leftoverPoints);
+	if (!result.success) {
+		errorMessage.value = result.message;
+		return;
+	}
+
 	// Check if the game is over and when it is, go to the game over screen.
 	if (hasReachedPointsLimit.value) {
 		// The game is finished, go to the game over screen.
 		router.replace({ name: routeName.gameResult });
-	} else {
-		// The game is not yet finished, start a new round.
-		startNewRound();
+		return;
 	}
+
+	// The game is not yet finished, start a new round.
+	const newRoundResult = startNewRound();
+	// startNewRound cannot fail at this point: we just completed the
+	// current round, and the game is still active.
+	if (!newRoundResult.success) console.error('Unexpected: startNewRound failed', newRoundResult.message);
 }
 
 /**
@@ -152,14 +167,21 @@ function onNavigateForwardFromCollectPoints(leftoverPoints: Record<Id, number>):
  * @param playerId The ID of the player to set as the starting player.
  */
 function onNavigateForwardFromStartingPlayer(playerId: Id): void {
-	setStartingPlayer(playerId);
+	const result = setStartingPlayer(playerId);
+	// This should never happen and if it does, it is not something the user can
+	// do something to recover from this.
+	if (!result.success) console.error('Unexpected: setStartingPlayer failed', result.message);
 }
 
 function onTurnPlayed(turn: TurnInput): void {
+	errorMessage.value = undefined;
+
 	if (historicalTurn.value === null) {
-		saveTurn(turn);
+		const result = saveTurn(turn);
+		if (!result.success) errorMessage.value = result.message;
 	} else if (historicalTurnPlayer.value) {
-		updateTurn(historicalTurn.value.id, turn);
+		const result = updateTurn(historicalTurn.value.id, turn);
+		if (!result.success) errorMessage.value = result.message;
 	}
 }
 </script>
@@ -174,6 +196,7 @@ function onTurnPlayed(turn: TurnInput): void {
 	<TurnScreen
 		v-else-if="currentPhase === 'turns'"
 		:key="turnKey"
+		:error-message="errorMessage"
 		:is-initial-turn="isInitialTurn"
 		:primary-action-label="primaryActionLabel"
 		:subtitle
@@ -196,6 +219,7 @@ function onTurnPlayed(turn: TurnInput): void {
 
 	<CollectPointsScreen
 		v-else-if="currentPhase === 'round-end'"
+		:error-message="errorMessage"
 		@navigate-forward="onNavigateForwardFromCollectPoints"
 	/>
 </template>

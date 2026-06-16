@@ -11,6 +11,7 @@
 import { computed, ref, watchEffect } from 'vue';
 
 import BaseScreen from '@/components/BaseScreen.vue';
+import MessageBox from '@/components/MessageBox.vue';
 import NumberDisplay from '@/components/NumberDisplay.vue';
 import NumberInput from '@/components/NumberInput.vue';
 import NumberSpinner from '@/components/NumberSpinner.vue';
@@ -33,6 +34,7 @@ const emit = defineEmits<{
 }>();
 
 const props = withDefaults(defineProps<{
+	errorMessage: string | undefined;
 	isInitialTurn?: boolean;
 	primaryActionLabel: string;
 	subtitle: string;
@@ -140,6 +142,13 @@ function onToggleIsTripleTile(value: boolean) {
 		:title
 		:subtitle
 	>
+		<MessageBox
+			v-if="errorMessage"
+			type="warning"
+		>
+			{{ errorMessage }}
+		</MessageBox>
+
 		<NumberDisplay :value="tileValue" />
 		<NumberInput v-model="tileValue" />
 
