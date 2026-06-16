@@ -17,6 +17,6 @@ export type SuccessFeedback<T = void> = {
 	 * Indicates whether the operation was successful or not.
 	 */
 	success: true;
-} & (T extends void ? object : { payload: T });
+} & (T extends void ? object : T);
 
 export type Feedback<T = void> = ErrorFeedback | SuccessFeedback<T>;

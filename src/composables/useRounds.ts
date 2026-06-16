@@ -174,8 +174,10 @@ export function useRounds() {
 		}, {});
 
 		return {
-			payload: { isBlocked, scores, winnerId: pointsForWinner.winnerId },
-			success: true
+			isBlocked,
+			scores,
+			success: true,
+			winnerId: pointsForWinner.winnerId
 		} satisfies ComputeFinalScoresResult;
 	}
 
@@ -304,7 +306,7 @@ export function useRounds() {
 		}
 
 		return {
-			payload: { playerId: originalTurn.playerId },
+			playerId: originalTurn.playerId,
 			success: true
 		};
 	}
@@ -327,14 +329,14 @@ export function useRounds() {
 
 		// When the round is blocked, this is the first opportunity to set the
 		// winner of the round.
-		if (result.payload.isBlocked) {
+		if (result.isBlocked) {
 			roundsStore.updateCurrentRound({
-				winnerId: result.payload.winnerId
+				winnerId: result.winnerId
 			});
 		}
 
 		try {
-			roundsStore.completeCurrentRound(result.payload.scores);
+			roundsStore.completeCurrentRound(result.scores);
 		} catch (error) {
 			// completeCurrentRound can throw an error when there is no current
 			// round but the method already ensures there is a current at the
@@ -437,7 +439,7 @@ export function useRounds() {
 		const replaceResult = replaceTurn(turnId, turn);
 		if (!replaceResult.success) return replaceResult;
 
-		handleRoundEnd(replaceResult.payload.playerId);
+		handleRoundEnd(replaceResult.playerId);
 
 		return { success: true };
 	}
