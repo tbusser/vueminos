@@ -1,22 +1,27 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
-import { useBottomSheet } from '@/composables/useBottomSheet.ts';
 import { useGameLogic } from '@/composables/useGameLogic.ts';
-import { useScreenTitle } from '@/composables/useScreenTitle.ts';
 
 import { routeName } from '@/router/routerName.ts';
+
+import { useLayoutStore } from '@/stores/layout.ts';
 
 import HeaderBar from './HeaderBar.vue';
 import MainMenu from './MainMenu.vue';
 
 /* ========================================================================== */
 
-const { isBottomSheetOpen } = useBottomSheet();
 const gameLogic = useGameLogic();
+const layoutStore = useLayoutStore();
 const router = useRouter();
 
-const { subtitle, title } = useScreenTitle();
+const {
+	isBottomSheetOpen,
+	subtitle,
+	title
+} = storeToRefs(layoutStore);
 
 /* -------------------------------------------------------------------------- */
 
