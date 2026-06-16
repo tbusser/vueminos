@@ -25,6 +25,7 @@ import type { Feedback } from '@/types/Feedback';
 import { generateId } from '@/utilities/id';
 
 import { useRules } from './useRules';
+import { useGameScores } from './useGameScores';
 
 /* ========================================================================== */
 
@@ -33,6 +34,10 @@ type ComputeFinalScoresResult = Feedback<{
 	scores: PlayerScoreMap;
 	winnerId: Id;
 }>;
+
+type FinishCurrentRoundPayload = {
+	gameOver: boolean;
+};
 
 /* ========================================================================== */
 
@@ -47,6 +52,9 @@ export function useRounds() {
 	const gameStore = useGameStore();
 	const playersStore = usePlayersStore();
 	const roundsStore = useRoundsStore();
+	const {
+		hasReachedPointsLimit
+	} = useGameScores();
 	const {
 		calculateTurnScore,
 		determineRoundWinnerAndPoints,
@@ -320,10 +328,11 @@ export function useRounds() {
 	 * @param scores A record of scores for each player in the round, where the
 	 *        keys are player IDs and the values are their scores.
 	 *
-	 * @returns True if the round was successfully finished, false if there is
-	 *          no current round to finish.
+	 * @returns In case the round was successfully finished, the returned
+	 *          feedback object will contain a game over flag indicating whether
+	 *          the game has reached the points limit.
 	 */
-	function finishCurrentRound(leftOverPoints: PlayerScoreMap): Feedback {
+	function finishCurrentRound(leftOverPoints: PlayerScoreMap): Feedback<FinishCurrentRoundPayload> {
 		const result = computeFinalScores(leftOverPoints);
 		if (!result.success) return result;
 
@@ -358,7 +367,10 @@ export function useRounds() {
 		// moment ago. Once it is finished, its turns are no longer editable.
 		turnsStore.deleteTurns();
 
-		return { success: true };
+		return {
+			gameOver: hasReachedPointsLimit.value,
+			success: true
+		};
 	}
 
 	function saveTurn(turn: TurnInput): Feedback {

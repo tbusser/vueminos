@@ -152,7 +152,7 @@ describe('useRounds', () => {
 
 			const result = finishCurrentRound({ [playerAId]: 5, [playerBId]: 10 });
 
-			expect(result).toEqual({ success: true });
+			expect(result.success).toBe(true);
 			expect(useRoundsStore().completedRounds[0].winnerId).toBe(playerAId);
 		});
 
@@ -164,7 +164,7 @@ describe('useRounds', () => {
 
 			const result = finishCurrentRound({ [playerBId]: 10 });
 
-			expect(result).toEqual({ success: true });
+			expect(result.success).toBe(true);
 			expect(useRoundsStore().completedRounds[0].winnerId).toBe(playerAId);
 		});
 
@@ -183,7 +183,7 @@ describe('useRounds', () => {
 
 			const result = rounds.finishCurrentRound(scores);
 
-			expect(result).toEqual({ success: true });
+			expect(result.success).toBe(true);
 			expect(roundsStore.currentRound).toBeUndefined();
 			expect(roundsStore.completedRounds).toHaveLength(1);
 			expect(roundsStore.completedRounds[0]).toMatchObject({ winnerId: playerId, scores: endScores });
@@ -199,6 +199,28 @@ describe('useRounds', () => {
 			finishCurrentRound({ [playerBId]: 10 });
 
 			expect(useTurnsStore().turns).toHaveLength(0);
+		});
+
+		it('should return success and the game over flag when the game is over', () => {
+			const playerAId = addNewPlayersToStore(1)[0].id;
+			addNewGameToStore(100);
+			addNewCurrentRoundToStore([playerAId]);
+			useRoundsStore().updateCurrentRound({ winnerId: playerAId });
+			const { finishCurrentRound } = useRounds();
+
+			const result = finishCurrentRound({ [playerAId]: 100 });
+			expect(result).toEqual({ success: true, gameOver: true });
+		});
+
+		it('should return success and the game over flag false when the game is not over', () => {
+			const playerAId = addNewPlayersToStore(1)[0].id;
+			addNewGameToStore(100);
+			addNewCurrentRoundToStore([playerAId]);
+			useRoundsStore().updateCurrentRound({ winnerId: playerAId });
+			const { finishCurrentRound } = useRounds();
+
+			const result = finishCurrentRound({ [playerAId]: 50 });
+			expect(result).toEqual({ success: true, gameOver: false });
 		});
 	});
 
@@ -578,7 +600,7 @@ describe('useRounds', () => {
 			expect(useRoundsStore().currentRound?.winnerId).toBe(playerAId);
 		});
 
-		it('should mark the round as blocked when  updated turn makes all players have consecutively skipped', () => {
+		it('should mark the round as blocked when updated turn makes all players have consecutively skipped', () => {
 			const players = addNewPlayersToStore(2);
 			const [playerAId, playerBId] = players.map(p => p.id);
 			addNewCurrentRoundToStore([playerAId, playerBId]);
