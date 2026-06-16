@@ -148,7 +148,5 @@ Never run `git commit` without an explicit "yes" from the user.
 ## Example triggers
 
 - "Write a commit message for my staged changes"
-- "Generate a commit message"
-- "What should my commit say?"
-- "Commit message following conventional commits"
 - "Commit this"
+- "Commit staged changes"
