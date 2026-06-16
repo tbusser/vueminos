@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onUnmounted, toRef, watch } from 'vue';
 
-import { useBottomSheet } from '@/composables/useBottomSheet';
+import { useLayoutStore } from '@/stores/layout';
 
 /* ========================================================================== */
 
@@ -19,13 +19,15 @@ const props = defineProps<{
 
 /* -------------------------------------------------------------------------- */
 
-const { isBottomSheetOpen } = useBottomSheet();
+const layoutStore = useLayoutStore();
+const { setIsBottomSheetOpen } = layoutStore;
+
 const isOpen = toRef(props, 'open');
 
 /* -------------------------------------------------------------------------- */
 
 watch(isOpen, value => {
-	isBottomSheetOpen.value = value;
+	setIsBottomSheetOpen(value);
 
 	if (value) {
 		addEventListenersToDocument();
@@ -39,7 +41,7 @@ watch(isOpen, value => {
 // Reset global ref on unmount; the close handler won't fire when the parent
 // component is torn down while the sheet is open, leaving the
 // app un-scrollable.
-onUnmounted(() => isBottomSheetOpen.value = false);
+onUnmounted(() => setIsBottomSheetOpen(false));
 
 /* -------------------------------------------------------------------------- */
 

@@ -2,8 +2,7 @@
 import { watch } from 'vue';
 
 import FooterBar from '@/components/FooterBar.vue';
-
-import { useScreenTitle } from '@/composables/useScreenTitle';
+import { useLayoutStore } from '@/stores/layout';
 
 /* ========================================================================== */
 
@@ -14,10 +13,19 @@ const props = defineProps<{
 
 /* -------------------------------------------------------------------------- */
 
-const { subtitle: screenSubtitle, title: screenTitle } = useScreenTitle();
+const layoutStore = useLayoutStore();
+const { setSubtitle, setTitle } = layoutStore;
 
-watch(() => props.subtitle, value => screenSubtitle.value = value, { immediate: true });
-watch(() => props.title, value => screenTitle.value = value, { immediate: true });
+watch(
+	() => props.subtitle,
+	value => setSubtitle(value),
+	{ immediate: true }
+);
+watch(
+	() => props.title,
+	value => setTitle(value),
+	{ immediate: true }
+);
 </script>
 
 <template>
