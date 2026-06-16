@@ -56,7 +56,7 @@ export function usePlayerManager() {
 	 * @returns A feedback object indicating success or failure. In case of
 	 *          success, the payload is the ID of the newly added player.
 	 */
-	function addNewPlayer(name: string): Feedback<Id> {
+	function addNewPlayer(name: string): Feedback<{ id: Id }> {
 		if (!isValidName(name)) return { success: false, message: t('error.invalidName') };
 
 		const id: Id = generateId();
@@ -67,7 +67,7 @@ export function usePlayerManager() {
 			name
 		});
 
-		return { success: true, payload: id };
+		return { id, success: true };
 	}
 
 	/**

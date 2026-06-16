@@ -28,7 +28,7 @@ const router = useRouter();
 const { t } = useGlobalI18n();
 const roundsStore = useRoundsStore();
 
-const { hasReachedPointsLimit, totalScore } = useGameScores();
+const { totalScore } = useGameScores();
 const {
 	canGoBack,
 	canGoForward,
@@ -148,7 +148,7 @@ function onNavigateForwardFromCollectPoints(leftoverPoints: Record<Id, number>):
 	}
 
 	// Check if the game is over and when it is, go to the game over screen.
-	if (hasReachedPointsLimit.value) {
+	if (result.gameOver) {
 		// The game is finished, go to the game over screen.
 		router.replace({ name: routeName.gameResult });
 		return;

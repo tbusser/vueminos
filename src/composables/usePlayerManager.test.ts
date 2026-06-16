@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { usePlayerManager } from './usePlayerManager';
 import { generateId } from '@/utilities/id';
 import { useRules } from './useRules';
-import type { SuccessFeedback } from '@/types/Feedback';
 import { assertSuccessfulFeedback } from '@/test-factories/assertSuccessfulFeedback';
 
 /* ========================================================================== */
@@ -43,7 +42,7 @@ describe('usePlayerManager', () => {
 
 			expect(result.success).toBe(true);
 
-			const id = (result as SuccessFeedback<Id>).payload;
+			const id = result.success && result.id;
 			expect(id).toBeTypeOf('string');
 
 			expect(playerManager.players.value).toHaveLength(1);
@@ -60,7 +59,7 @@ describe('usePlayerManager', () => {
 	describe('deletePlayer', () => {
 		it('should do nothing if the player with the specified ID is not found', () => {
 			const playerManager = usePlayerManager();
-			const id = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'));
+			const id = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'), 'id');
 
 			playerManager.deletePlayer(generateId());
 
@@ -74,8 +73,8 @@ describe('usePlayerManager', () => {
 
 		it('should only delete the player with the specified ID', () => {
 			const playerManager = usePlayerManager();
-			const idJohn = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'));
-			const idJane = assertSuccessfulFeedback(playerManager.addNewPlayer('Jane Doe'));
+			const idJohn = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'), 'id');
+			const idJane = assertSuccessfulFeedback(playerManager.addNewPlayer('Jane Doe'), 'id');
 
 			playerManager.deletePlayer(idJohn);
 
@@ -266,9 +265,9 @@ describe('usePlayerManager', () => {
 		it('should return the list of players', () => {
 			const playerManager = usePlayerManager();
 
-			const idJohn = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'));
-			const idJane = assertSuccessfulFeedback(playerManager.addNewPlayer('Jane Doe'));
-			const idJim = assertSuccessfulFeedback(playerManager.addNewPlayer('Jim Doe'));
+			const idJohn = assertSuccessfulFeedback(playerManager.addNewPlayer('John Doe'), 'id');
+			const idJane = assertSuccessfulFeedback(playerManager.addNewPlayer('Jane Doe'), 'id');
+			const idJim = assertSuccessfulFeedback(playerManager.addNewPlayer('Jim Doe'), 'id');
 
 			expect(playerManager.players.value).toHaveLength(3);
 			expect(playerManager.players.value[0]).toEqual({
