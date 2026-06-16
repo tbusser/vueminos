@@ -18,22 +18,23 @@ Use this skill when:
 
 ### Step 1 — Identify the base branch and gather commits
 
-Run the following commands:yes
+Run the following commands:
 
 ```bash
 # Find the most likely base branch without a remote round-trip
+# Outputs the full ref, e.g. "origin/main" — use this directly as <base-ref>
 git rev-parse --abbrev-ref origin/HEAD
 # If that prints "origin/HEAD" (ref not set), fall back to:
 git branch -r | grep 'HEAD ->'
 
 # All commits on this branch not yet on the base
-git log origin/<base>..HEAD --oneline
+git log <base-ref>..HEAD --oneline
 
 # Full commit messages for those commits (motivation lives here)
-git log origin/<base>..HEAD --format="%H%n%s%n%b%n---"
+git log <base-ref>..HEAD --format="%H%n%s%n%b%n---"
 
 # Files changed, for scope awareness
-git diff origin/<base>...HEAD --name-status
+git diff <base-ref>...HEAD --name-status
 ```
 
 If the branch has no commits ahead of the base, stop and tell the user there
@@ -181,11 +182,15 @@ Handle each response:
   remote yet and ask whether to push first. If they confirm, run `git push`
   before proceeding. Then run:
   ```bash
-  gh pr create --title "<title>" --body "$(cat <<'EOF'
+  gh pr create --title "<title>" --label "<type>" --body "$(cat <<'EOF'
   <description>
   EOF
   )"
   ```
+  The `--label` value is the conventional commit type from the PR title (e.g.
+  `refactor`, `fix`, `feat`). These labels exist in the repo and match the
+  type names exactly. Omit `--label` only if the type has no matching label.
+
   Confirm success by printing the URL returned by `gh pr create`.
 
 - **no** — do nothing. Tell the user the branch is untouched.
