@@ -1,4 +1,4 @@
-import { useRules } from '@/composables/useRules';
+import { determineTilesPerPlayer } from '@/utilities/rules';
 
 import {
 	useRoundsStore,
@@ -16,7 +16,7 @@ import { assertActivePinia } from './assertActivePinia';
 /* ========================================================================== */
 
 function createCurrentRound(playerIds: Id[], phase: RoundPhase = 'turns', winnerId?: Id): CurrentRound {
-	const tileCount = useRules().determineTilesPerPlayer(playerIds.length);
+	const tileCount = determineTilesPerPlayer(playerIds.length);
 
 	return {
 		id: generateId(),

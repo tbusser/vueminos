@@ -1,4 +1,4 @@
-import { useRules } from '@/composables/useRules';
+import { calculateTurnScore } from '@/utilities/rules';
 import {
 	useTurnsStore,
 	type PlayedTurn,
@@ -33,7 +33,7 @@ function createPlayedTurn(playerId: Id, input?: Partial<PlayedTurnInput>): Playe
 		...defaultPlayedTurnInput,
 		...input
 	};
-	const score = useRules().calculateTurnScore(mergedInput);
+	const score = calculateTurnScore(mergedInput);
 
 	return {
 		...mergedInput,
@@ -45,7 +45,7 @@ function createPlayedTurn(playerId: Id, input?: Partial<PlayedTurnInput>): Playe
 
 function createSkippedTurn(playerId: Id, tilesDrawn: number = 3): SkippedTurn {
 	const input: TurnInput = { tilesDrawn, tilesPlayed: 0, tileValue: undefined };
-	const score = useRules().calculateTurnScore(input);
+	const score = calculateTurnScore(input);
 
 	return {
 		...input,

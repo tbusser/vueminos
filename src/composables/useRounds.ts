@@ -24,7 +24,12 @@ import type { Feedback } from '@/types/Feedback';
 
 import { generateId } from '@/utilities/id';
 
-import { useRules } from './useRules';
+import {
+	calculateTurnScore,
+	determineRoundWinnerAndPoints,
+	determineTilesPerPlayer
+} from '@/utilities/rules';
+
 import { useGameScores } from './useGameScores';
 
 /* ========================================================================== */
@@ -55,11 +60,6 @@ export function useRounds() {
 	const {
 		hasReachedPointsLimit
 	} = useGameScores();
-	const {
-		calculateTurnScore,
-		determineRoundWinnerAndPoints,
-		determineTilesPerPlayer
-	} = useRules();
 	const turnsStore = useTurnsStore();
 	const { t } = useGlobalI18n();
 
