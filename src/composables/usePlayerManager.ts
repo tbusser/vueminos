@@ -10,7 +10,7 @@ import type { Feedback } from '@/types/Feedback';
 import { generateId } from '@/utilities/id';
 import { isNilOrEmptyString } from '@/utilities/string';
 
-import { useRules } from './useRules';
+import { maximumNumberOfPlayers, minimumNumberOfPlayers } from '@/utilities/rules';
 
 /* ========================================================================== */
 
@@ -21,7 +21,6 @@ export function usePlayerManager() {
 	/* ---------------------------------------------------------------------- */
 
 	const { activePlayers, players } = storeToRefs(playerStore);
-	const { maximumNumberOfPlayers, minimumNumberOfPlayers } = useRules();
 
 	/* ---------------------------------------------------------------------- */
 

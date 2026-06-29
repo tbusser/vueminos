@@ -17,7 +17,7 @@ import {
 	type TurnInput
 } from '@/stores/turns';
 
-import { useRules } from './useRules';
+import { calculateTurnScore, determineTilesPerPlayer } from '@/utilities/rules';
 import { useRounds } from './useRounds';
 
 /* ========================================================================== */
@@ -307,7 +307,7 @@ describe('useRounds', () => {
 
 			const result = roundsLogic.saveTurn(turn);
 
-			const score = useRules().calculateTurnScore(turn);
+			const score = calculateTurnScore(turn);
 
 			expect(result).toEqual({ success: true });
 			expect(useTurnsStore().turns).toHaveLength(1);
@@ -353,7 +353,7 @@ describe('useRounds', () => {
 			useRoundsStore().updateCurrentRound({ currentPlayerId: playerAId });
 			// Bring playerA down to 1 tile so the played turn empties
 			// their hand.
-			const initialTileCount = useRules().determineTilesPerPlayer(2);
+			const initialTileCount = determineTilesPerPlayer(2);
 			useRoundsStore().updateCurrentRoundPlayerStats(playerAId, -(initialTileCount - 1), 0);
 			const { saveTurn } = useRounds();
 
@@ -416,7 +416,7 @@ describe('useRounds', () => {
 			};
 			roundsLogic.saveTurn(turn);
 
-			const score = useRules().calculateTurnScore(turn);
+			const score = calculateTurnScore(turn);
 
 			const updatedStats = roundsStore.currentRound!.playerStats.find(s => s.id === playerId)!;
 			expect(updatedStats.score).toBe(score);
@@ -494,7 +494,7 @@ describe('useRounds', () => {
 			useRounds().startNewRound();
 
 			const { playerStats } = useRoundsStore().currentRound!;
-			const initialTileCount = useRules().determineTilesPerPlayer(playerIds.length);
+			const initialTileCount = determineTilesPerPlayer(playerIds.length);
 
 			expect(playerStats).toHaveLength(playerIds.length);
 			playerStats.forEach(stat => {
@@ -519,7 +519,7 @@ describe('useRounds', () => {
 			addNewCurrentRoundToStore(playerIds);
 			const { tilesPerPlayer } = useRounds();
 
-			const initialTileCount = useRules().determineTilesPerPlayer(playerIds.length);
+			const initialTileCount = determineTilesPerPlayer(playerIds.length);
 			expect(tilesPerPlayer.value).toEqual({
 				[playerIds[0]]: initialTileCount,
 				[playerIds[1]]: initialTileCount
@@ -533,7 +533,7 @@ describe('useRounds', () => {
 
 			useRoundsStore().updateCurrentRoundPlayerStats(playerIds[0], -1, 0);
 
-			const initialTileCount = useRules().determineTilesPerPlayer(playerIds.length);
+			const initialTileCount = determineTilesPerPlayer(playerIds.length);
 			expect(tilesPerPlayer.value).toEqual({
 				[playerIds[0]]: initialTileCount - 1,
 				[playerIds[1]]: initialTileCount
@@ -587,7 +587,7 @@ describe('useRounds', () => {
 			const [existingTurn] = addNewTurnsToStore([playerAId], { tilesPlayed: 0, tilesDrawn: 0 });
 			// Bring playerA down to 1 tile so the updated played turn empties
 			// their hand.
-			const initialTileCount = useRules().determineTilesPerPlayer(2);
+			const initialTileCount = determineTilesPerPlayer(2);
 			useRoundsStore().updateCurrentRoundPlayerStats(playerAId, -(initialTileCount - 1), 0);
 			const { updateTurn } = useRounds();
 

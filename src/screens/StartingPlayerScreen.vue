@@ -7,8 +7,9 @@ import MessageBox from '@/components/MessageBox.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
 
-import { useRules } from '@/composables/useRules';
 import { useRounds } from '@/composables/useRounds';
+
+import { determineTilesPerPlayer } from '@/utilities/rules';
 
 import { usePlayersStore } from '@/stores/players';
 
@@ -26,8 +27,6 @@ const { currentRoundOrdinal } = useRounds();
 const playerStore = usePlayersStore();
 
 const { activePlayers } = storeToRefs(playerStore);
-
-const { determineTilesPerPlayer } = useRules();
 
 const tilesPerPlayer = computed<number>(
 	() => determineTilesPerPlayer(activePlayers.value.length)

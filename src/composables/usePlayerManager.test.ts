@@ -1,9 +1,12 @@
 import { createPinia, setActivePinia } from 'pinia';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { usePlayerManager } from './usePlayerManager';
+
 import { generateId } from '@/utilities/id';
-import { useRules } from './useRules';
+import { maximumNumberOfPlayers, minimumNumberOfPlayers } from '@/utilities/rules';
+
 import { assertSuccessfulFeedback } from '@/test-factories/assertSuccessfulFeedback';
+
+import { usePlayerManager } from './usePlayerManager';
 
 /* ========================================================================== */
 
@@ -103,7 +106,7 @@ describe('usePlayerManager', () => {
 		it('should return false when the number of players is equal to the maximum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().maximumNumberOfPlayers);
+			addPlayers(playerManager, maximumNumberOfPlayers);
 
 			expect(playerManager.hasExceededMaximum.value).toBe(false);
 		});
@@ -111,7 +114,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is greater than the maximum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().maximumNumberOfPlayers + 1);
+			addPlayers(playerManager, maximumNumberOfPlayers + 1);
 
 			expect(playerManager.hasExceededMaximum.value).toBe(true);
 		});
@@ -147,7 +150,7 @@ describe('usePlayerManager', () => {
 		it('should return false when the number of players is less than the maximum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().maximumNumberOfPlayers - 1);
+			addPlayers(playerManager, maximumNumberOfPlayers - 1);
 
 			expect(playerManager.hasReachedMaximum.value).toBe(false);
 		});
@@ -155,7 +158,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is equal to the maximum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().maximumNumberOfPlayers);
+			addPlayers(playerManager, maximumNumberOfPlayers);
 
 			expect(playerManager.hasReachedMaximum.value).toBe(true);
 		});
@@ -163,7 +166,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is greater than the maximum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().maximumNumberOfPlayers + 1);
+			addPlayers(playerManager, maximumNumberOfPlayers + 1);
 
 			expect(playerManager.hasReachedMaximum.value).toBe(true);
 		});
@@ -181,7 +184,7 @@ describe('usePlayerManager', () => {
 		it('should return false when the number of players is less than the minimum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().minimumNumberOfPlayers - 1);
+			addPlayers(playerManager, minimumNumberOfPlayers - 1);
 
 			expect(playerManager.hasReachedMinimum.value).toBe(false);
 		});
@@ -189,7 +192,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is equal to the minimum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().minimumNumberOfPlayers);
+			addPlayers(playerManager, minimumNumberOfPlayers);
 
 			expect(playerManager.hasReachedMinimum.value).toBe(true);
 		});
@@ -197,7 +200,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is greater than the minimum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().minimumNumberOfPlayers + 1);
+			addPlayers(playerManager, minimumNumberOfPlayers + 1);
 
 			expect(playerManager.hasReachedMinimum.value).toBe(true);
 		});
@@ -215,7 +218,7 @@ describe('usePlayerManager', () => {
 		it('should return false when the number of players is less than the minimum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().minimumNumberOfPlayers - 1);
+			addPlayers(playerManager, minimumNumberOfPlayers - 1);
 
 			expect(playerManager.hasValidNumberOfActivePlayers.value).toBe(false);
 		});
@@ -223,7 +226,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is equal to the minimum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().minimumNumberOfPlayers);
+			addPlayers(playerManager, minimumNumberOfPlayers);
 
 			expect(playerManager.hasValidNumberOfActivePlayers.value).toBe(true);
 		});
@@ -231,7 +234,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is greater than the minimum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().minimumNumberOfPlayers + 1);
+			addPlayers(playerManager, minimumNumberOfPlayers + 1);
 
 			expect(playerManager.hasValidNumberOfActivePlayers.value).toBe(true);
 		});
@@ -239,7 +242,7 @@ describe('usePlayerManager', () => {
 		it('should return true when the number of players is equal to the maximum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().maximumNumberOfPlayers);
+			addPlayers(playerManager, maximumNumberOfPlayers);
 
 			expect(playerManager.hasValidNumberOfActivePlayers.value).toBe(true);
 		});
@@ -247,7 +250,7 @@ describe('usePlayerManager', () => {
 		it('should return false when the number of players is greater than the maximum', () => {
 			const playerManager = usePlayerManager();
 
-			addPlayers(playerManager, useRules().maximumNumberOfPlayers + 1);
+			addPlayers(playerManager, maximumNumberOfPlayers + 1);
 
 			expect(playerManager.hasValidNumberOfActivePlayers.value).toBe(false);
 		});
