@@ -1,27 +1,26 @@
 import { describe, expect, it } from 'vitest';
+import { generateId } from './id';
 
-import { generateId } from '@/utilities/id';
-
-import { useRules } from './useRules';
+import * as rules from './rules';
 
 /* ========================================================================== */
 
-describe('useRules', () => {
+describe('rules', () => {
 	describe('calculateStartingTileBonus', () => {
 		it('should return 40 when the tile value is 0 (opening zero bonus)', () => {
-			const { calculateStartingTileBonus } = useRules();
+			const { calculateStartingTileBonus } = rules;
 			expect(calculateStartingTileBonus(0)).toBe(40);
 		});
 
 		it('should return 10 for possible triple tile values', () => {
-			const { calculateStartingTileBonus } = useRules();
+			const { calculateStartingTileBonus } = rules;
 			expect(calculateStartingTileBonus(3)).toBe(10);
 			expect(calculateStartingTileBonus(9)).toBe(10);
 			expect(calculateStartingTileBonus(15)).toBe(10);
 		});
 
 		it('should return 0 for tiles which cannot be a triple tile', () => {
-			const { calculateStartingTileBonus } = useRules();
+			const { calculateStartingTileBonus } = rules;
 			expect(calculateStartingTileBonus(7)).toBe(0);
 			expect(calculateStartingTileBonus(11)).toBe(0);
 			expect(calculateStartingTileBonus(2)).toBe(0);
@@ -33,7 +32,7 @@ describe('useRules', () => {
 	describe('calculateTurnScore', () => {
 		describe('skipped turns (tilesPlayed: 0)', () => {
 			it('should return -10 when no tiles are drawn', () => {
-				const { calculateTurnScore } = useRules();
+				const { calculateTurnScore } = rules;
 
 				expect(
 					calculateTurnScore({ tilesPlayed: 0, tilesDrawn: 0, tileValue: undefined })
@@ -41,7 +40,7 @@ describe('useRules', () => {
 			});
 
 			it('should subtract 5 per tile drawn on top of the skip penalty', () => {
-				const { calculateTurnScore } = useRules();
+				const { calculateTurnScore } = rules;
 
 				expect(
 					calculateTurnScore({ tilesPlayed: 0, tilesDrawn: 1, tileValue: undefined })
@@ -57,7 +56,7 @@ describe('useRules', () => {
 
 		describe('played turns (tilesPlayed: 1)', () => {
 			it('should return the tile value when no draws and no bonuses', () => {
-				const { calculateTurnScore } = useRules();
+				const { calculateTurnScore } = rules;
 
 				expect(calculateTurnScore({
 					tilesPlayed: 1, tilesDrawn: 0, tileValue: 15,
@@ -66,7 +65,7 @@ describe('useRules', () => {
 			});
 
 			it('should subtract 5 per tile drawn', () => {
-				const { calculateTurnScore } = useRules();
+				const { calculateTurnScore } = rules;
 
 				expect(calculateTurnScore({
 					tilesPlayed: 1, tilesDrawn: 1, tileValue: 15,
@@ -81,7 +80,7 @@ describe('useRules', () => {
 
 			describe('opening triple bonuses', () => {
 				it('should add 40 for a 0-value opening tile', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					expect(calculateTurnScore({
 						tilesPlayed: 1, tilesDrawn: 0, tileValue: 0,
@@ -90,7 +89,7 @@ describe('useRules', () => {
 				});
 
 				it('should add 10 for a non-zero opening tile', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					expect(calculateTurnScore({
 						tilesPlayed: 1, tilesDrawn: 0, tileValue: 9,
@@ -99,7 +98,7 @@ describe('useRules', () => {
 				});
 
 				it('should not apply opening bonus when triple is false', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					expect(calculateTurnScore({
 						tilesPlayed: 1, tilesDrawn: 0, tileValue: 9,
@@ -110,7 +109,7 @@ describe('useRules', () => {
 
 			describe('special tile bonuses', () => {
 				it('should add 40 for a bridge bonus', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					expect(calculateTurnScore({
 						tilesPlayed: 1, tilesDrawn: 0, tileValue: 15,
@@ -119,7 +118,7 @@ describe('useRules', () => {
 				});
 
 				it('should add 40 for a double-sided bonus', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					expect(calculateTurnScore({
 						tilesPlayed: 1, tilesDrawn: 0, tileValue: 15,
@@ -128,7 +127,7 @@ describe('useRules', () => {
 				});
 
 				it('should add 50 for a hexagon bonus', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					expect(calculateTurnScore({
 						tilesPlayed: 1, tilesDrawn: 0, tileValue: 15,
@@ -137,7 +136,7 @@ describe('useRules', () => {
 				});
 
 				it('should stack all three special bonuses', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					// 15 + 40 (bridge) + 40 (double) + 50 (hexagon) = 145
 					expect(calculateTurnScore({
@@ -147,7 +146,7 @@ describe('useRules', () => {
 				});
 
 				it('should combine draws and bonuses correctly', () => {
-					const { calculateTurnScore } = useRules();
+					const { calculateTurnScore } = rules;
 
 					// 15 - 5 (1 draw) + 40 (bridge) = 50
 					expect(calculateTurnScore({
@@ -163,19 +162,19 @@ describe('useRules', () => {
 
 	describe('canTileBeTriple', () => {
 		it('should return true for 0', () => {
-			const { canTileBeTriple } = useRules();
+			const { canTileBeTriple } = rules;
 			expect(canTileBeTriple(0)).toBe(true);
 		});
 
 		it('should return true when the tile value is a multiple of 3', () => {
-			const { canTileBeTriple } = useRules();
+			const { canTileBeTriple } = rules;
 			expect(canTileBeTriple(3)).toBe(true);
 			expect(canTileBeTriple(9)).toBe(true);
 			expect(canTileBeTriple(15)).toBe(true);
 		});
 
 		it('should return false when the tile value is not a multiple of 3', () => {
-			const { canTileBeTriple } = useRules();
+			const { canTileBeTriple } = rules;
 			expect(canTileBeTriple(7)).toBe(false);
 			expect(canTileBeTriple(11)).toBe(false);
 			expect(canTileBeTriple(2)).toBe(false);
@@ -187,7 +186,7 @@ describe('useRules', () => {
 	describe('determineRoundWinnerAndPoints', () => {
 		describe('blocked rounds (isBlocked: true)', () => {
 			it('should pick the player with the fewest leftover points as winner', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 
@@ -200,7 +199,7 @@ describe('useRules', () => {
 			});
 
 			it('should award the winner the sum of others\' points minus their own', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 
@@ -214,7 +213,7 @@ describe('useRules', () => {
 			});
 
 			it('should handle three players correctly', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 				const playerCId = generateId();
@@ -230,7 +229,7 @@ describe('useRules', () => {
 			});
 
 			it('should award 0 points when all players have 0 leftover', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 
@@ -243,7 +242,7 @@ describe('useRules', () => {
 			});
 
 			it('should pick the first player in iteration order when leftover points are tied', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 
@@ -263,7 +262,7 @@ describe('useRules', () => {
 
 		describe('won rounds (isBlocked: false)', () => {
 			it('should award the winner 25 base points plus all leftover points from other players', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 
@@ -279,7 +278,7 @@ describe('useRules', () => {
 			});
 
 			it('should sum all players\' leftover points', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 				const playerCId = generateId();
@@ -295,7 +294,7 @@ describe('useRules', () => {
 			});
 
 			it('should award exactly 25 points when all others have 0 leftover', () => {
-				const { determineRoundWinnerAndPoints } = useRules();
+				const { determineRoundWinnerAndPoints } = rules;
 				const playerAId = generateId();
 				const playerBId = generateId();
 				const playerCId = generateId();
@@ -315,24 +314,24 @@ describe('useRules', () => {
 
 	describe('determineTilesPerPlayer', () => {
 		it('should return 9 when the number of players is 2', () => {
-			const { determineTilesPerPlayer } = useRules();
+			const { determineTilesPerPlayer } = rules;
 			expect(determineTilesPerPlayer(2)).toBe(9);
 		});
 
 		it('should return 7 when the number of players is 3 or 4', () => {
-			const { determineTilesPerPlayer } = useRules();
+			const { determineTilesPerPlayer } = rules;
 			expect(determineTilesPerPlayer(3)).toBe(7);
 			expect(determineTilesPerPlayer(4)).toBe(7);
 		});
 
 		it('should return 6 when the number of players is 5 or 6', () => {
-			const { determineTilesPerPlayer } = useRules();
+			const { determineTilesPerPlayer } = rules;
 			expect(determineTilesPerPlayer(5)).toBe(6);
 			expect(determineTilesPerPlayer(6)).toBe(6);
 		});
 
 		it('should return 0 when the number of players is not 2, 3, 4, 5, or 6', () => {
-			const { determineTilesPerPlayer } = useRules();
+			const { determineTilesPerPlayer } = rules;
 			expect(determineTilesPerPlayer(1)).toBe(0);
 			expect(determineTilesPerPlayer(7)).toBe(0);
 		});

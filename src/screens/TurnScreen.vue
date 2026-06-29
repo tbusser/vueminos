@@ -19,7 +19,7 @@ import ShapeToggleButton from '@/components/ShapeToggleButton.vue';
 import ToggleButton from '@/components/ToggleButton.vue';
 import ToggleButtonGroup from '@/components/ToggleButtonGroup.vue';
 
-import { useRules } from '@/composables/useRules';
+import { calculateStartingTileBonus, canTileBeTriple } from '@/utilities/rules';
 
 import type { Turn, TurnInput } from '@/stores/turns';
 
@@ -44,10 +44,6 @@ const props = withDefaults(defineProps<{
 	isInitialTurn: false,
 	turn: null
 });
-
-/* -------------------------------------------------------------------------- */
-
-const { calculateStartingTileBonus, canTileBeTriple } = useRules();
 
 /* -------------------------------------------------------------------------- */
 
