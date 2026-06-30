@@ -6,5 +6,6 @@
 		"triominos"
 	],
 	"files.eol": "\n",
-	"workbench.remoteIndicator.showExtensionRecommendations": true
+	"workbench.remoteIndicator.showExtensionRecommendations": true,
+	"typescript.tsdk": "node_modules/typescript/lib"
 }
