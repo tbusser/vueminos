@@ -23,6 +23,7 @@ import {
 import type { Feedback } from '@/types/Feedback';
 
 import { generateId } from '@/utilities/id';
+import { toFeedback } from '@/utilities/toFeedback';
 
 import {
 	calculateTurnScore,
@@ -255,21 +256,14 @@ export function useRounds() {
 		// Store the turn in the turns store.
 		turnsStore.addTurn(turn);
 
-		try {
+		return toFeedback(() => {
 			// Update the stats for the current player in the current round.
 			roundsStore.updateCurrentRoundPlayerStats(
 				playerId,
 				turn.tilesDrawn - turn.tilesPlayed,
 				turn.score
 			);
-		} catch (error) {
-			return {
-				message: (error as Error).message,
-				success: false
-			};
-		}
-
-		return { success: true };
+		});
 	}
 
 	function replaceTurn(turnId: Id, turn: TurnInput): Feedback<{ playerId: Id }> {
@@ -304,19 +298,11 @@ export function useRounds() {
 			(originalTurn.tilesDrawn - originalTurn.tilesPlayed);
 		const scoreDelta = score - originalTurn.score;
 
-		try {
+		return toFeedback<{ playerId: Id }>(() => {
 			roundsStore.updateCurrentRoundPlayerStats(originalTurn.playerId, tileDelta, scoreDelta);
-		} catch (error) {
-			return {
-				message: (error as PlayerIdNotFoundError).message,
-				success: false
-			};
-		}
 
-		return {
-			playerId: originalTurn.playerId,
-			success: true
-		};
+			return { playerId: originalTurn.playerId };
+		});
 	}
 
 	/* ---------------------------------------------------------------------- */
@@ -344,24 +330,19 @@ export function useRounds() {
 			});
 		}
 
-		try {
-			roundsStore.completeCurrentRound(result.scores);
-		} catch (error) {
-			// completeCurrentRound can throw an error when there is no current
-			// round but the method already ensures there is a current at the
-			// beginning. That leaves just the PlayerIdNotFoundError to handle.
-			if (error instanceof PlayerIdNotFoundError) {
-				return {
-					message: t('error.noWinner'),
-					success: false
-				};
-			}
+		const completeResult = toFeedback(
+			() => roundsStore.completeCurrentRound(result.scores),
+			error =>
+				// completeCurrentRound can throw an error when there is no
+				// current round but the method already ensures there is a
+				// current at the beginning. That leaves just the
+				// PlayerIdNotFoundError to handle.
+				(error instanceof PlayerIdNotFoundError)
+					? t('error.noWinner')
+					: error.message
+		);
 
-			return {
-				message: (error as Error).message,
-				success: false
-			};
-		}
+		if (!completeResult.success) return completeResult;
 
 		// Clear the turns for the round which was the current round up to a
 		// moment ago. Once it is finished, its turns are no longer editable.
