@@ -37,7 +37,7 @@
 		"@types/jsdom": "^28.0.3",
 		"@types/node": "^26.1.1",
 		"@vitejs/plugin-vue": "^6.0.8",
-		"@vitest/eslint-plugin": "^1.6.23",
+		"@vitest/eslint-plugin": "^1.6.24",
 		"@vue/eslint-config-typescript": "^14.9.0",
 		"@vue/test-utils": "^2.4.11",
 		"@vue/tsconfig": "^0.9.1",
@@ -57,7 +57,7 @@
 		"vite-plugin-mkcert": "^2.1.0",
 		"vite-plugin-vue-devtools": "^8.1.5",
 		"vitest": "^4.1.10",
-		"vue-tsc": "^3.3.7"
+		"vue-tsc": "^3.3.8"
 	},
 	"packageManager": "pnpm@10.33.4+sha512.1c67b3b359b2d408119ba1ed289f34b8fc3c6873412bec6fd264fbdc82489e510fcbecb9ce9d22dae7f3b76269d8441046014bdca53b9979cd7a561ad631b800"
 }
